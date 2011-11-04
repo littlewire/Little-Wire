@@ -1,11 +1,11 @@
 ========================================
 = Short story  
 ========================================
-- When i saw simpleavr's implementation of usbtiny on attiny45 , i thought it would be cool if i make a kit version of this with a minimal form factor. Then i designed a PCB and sent for first prototype. Later on i thought, if i want to sell this, it would be much cooler ,and more suitable with "Open Source Hardware"  concept, if i bring this project one step ahead. So i tried to fit anything extra to the device and this project came out.
+- When i saw simpleavr's implementation of usbtiny on attiny45 , i thought it would be cool if i make a kit version of this with a minimal form factor. Then i designed a PCB and sent for first prototype. Later on i thought, if i want to sell this, it would be much cooler ,and more suitable with "Open Source Hardware" concept, if i bring this project one step ahead. So i tried to fit anything extra to the device and this project came out.
 
-=========================
+========================================
 = What is this?
-=========================
+========================================
 - usbtiny compatable AVR programmer  
 - 4 channel digital input / output  
 - 1 channel ADC with 10 bit resolution  
