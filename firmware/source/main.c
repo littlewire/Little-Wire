@@ -1,6 +1,6 @@
 /* Name: main.c
 
-  modified by ihsan Kehribar, 2011 June
+  modified by ihsan Kehribar, 2011 November
   
   created by chris chung, 2010 April
 
