@@ -48,6 +48,11 @@
 - There will be a link where you can buy a kit version of this soon ...
 
 ========================================
+= How to download entire repository at once?
+========================================
+Follow: https://github.com/kehribar/Little-Wire/zipball/master
+
+========================================
 = Where are the hardware files?
 ========================================
 - They are at http://solderpad.com/ihsan_kehribar/minimal-avr-programmer-and-more/
