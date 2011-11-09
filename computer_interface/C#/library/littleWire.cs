@@ -135,7 +135,7 @@ namespace  littleWireLib
         /// </summary>
         /// <param name="pin">Pin number</param>
         /// <returns>1 for HIGH, 0 for LOW</returns>
-        public byte readDigital(byte pin)
+        public byte digitalRead(byte pin)
         {
             byte[] buffer_ = new byte[8];
             int whatIsThis = 8;
@@ -149,7 +149,7 @@ namespace  littleWireLib
         /// </summary>
         /// <param name="channel">0 for RESET pin, 1 for SCK pin, 2 for internal Temperature sensor</param>
         /// <returns>Analog voltage in 10bit resoultion</returns>
-        public ushort readAdc(byte channel)
+        public ushort analogRead(byte channel)
         {
             byte[] buffer_ = new byte[8];
             int whatIsThis = 8;

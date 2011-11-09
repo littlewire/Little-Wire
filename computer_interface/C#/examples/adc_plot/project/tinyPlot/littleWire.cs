@@ -5,7 +5,7 @@ using System.Text;
 using LibUsbDotNet;
 using LibUsbDotNet.Main;
 
-namespace littleWireLib
+namespace  littleWireLib
 {
     class littleWire
     {
@@ -135,7 +135,7 @@ namespace littleWireLib
         /// </summary>
         /// <param name="pin">Pin number</param>
         /// <returns>1 for HIGH, 0 for LOW</returns>
-        public byte readDigital(byte pin)
+        public byte digitalRead(byte pin)
         {
             byte[] buffer_ = new byte[8];
             int whatIsThis = 8;
@@ -149,7 +149,7 @@ namespace littleWireLib
         /// </summary>
         /// <param name="channel">0 for RESET pin, 1 for SCK pin, 2 for internal Temperature sensor</param>
         /// <returns>Analog voltage in 10bit resoultion</returns>
-        public ushort readAdc(byte channel)
+        public ushort analogRead(byte channel)
         {
             byte[] buffer_ = new byte[8];
             int whatIsThis = 8;
@@ -183,7 +183,7 @@ namespace littleWireLib
             /// <summary>
             /// Change the Pwm prescaler. Default: 1024
             /// </summary>
-            /// <param name="value">1024 / 256 / 64 / 8 / 1</param>
+            /// <param name="value">1024/256/64/8/1</param>
             public void updatePwmPrescale(UInt16 value)
             {
                 byte[] buffer_ = new byte[8];
