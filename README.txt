@@ -16,12 +16,12 @@
 ========================================
 = What is pinout?
 ========================================
-Name	port	pinNumber	PWM			GPIO	ADC
+Name	port	pinNumber	PWM		GPIO	ADC
 -----	-----	---------	----------	------	---------
-RESET	PORTB	5			-			5		Channel_0*
-MOSI	PORTB	0			Channel_A	0		-
-MISO	PORTB	1			Channel_B	1		-
-SCK		PORTB	2			-			2		Channel_1
+RESET	PORTB	5		-		5	Channel_0*
+MOSI	PORTB	0		Channel_A	0	-
+MISO	PORTB	1		Channel_B	1	-
+SCK	PORTB	2		-		2	Channel_1
 
 * Analog reading from RESET pin isn't stable but supported. Use it at your risk.  
 
