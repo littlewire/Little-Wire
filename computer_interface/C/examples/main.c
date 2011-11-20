@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 	while(1)
 	{
 		adcValue=analogRead(myLittleWire,1);
-		printf("Voltage: %d\n", adcValue);
+		printf("Voltage: %f volts\n", (float)((adcValue*5.0)/1023.0));
 	}
 }
 
