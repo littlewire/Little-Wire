@@ -6,30 +6,43 @@
 ========================================
 = What is this?
 ========================================
-- usbtiny compatable AVR programmer  
-- 4 channel digital input / output  
-- 1 channel ADC with 10 bit resolution  
-- 2 paralel hardware PWM outputs  
-- SPI interface   
+- usbtiny compatable AVR programmer in minimal form factor with all through hole components
+- Computer controllable (via USB) additional features: 
+    - 4 channel digital input / output
+    - ADC with 10 bit resolution  
+    - 2 paralel hardware PWM outputs  
+    - SPI interface
+
+========================================
+= What is pinout?
+========================================
+Name	port	pinNumber	PWM			GPIO	ADC
+-----	-----	---------	----------	------	---------
+RESET	PORTB	5			-			5		Channel_0*
+MOSI	PORTB	0			Channel_A	0		-
+MISO	PORTB	1			Channel_B	1		-
+SCK		PORTB	2			-			2		Channel_1
+
+* Analog reading from RESET pin isn't stable but supported. Use it at your risk.  
 
 ========================================
 = Possible usages
 ========================================
-- AVR programming */summon captainObvious*  
-- LED dimming , color mixing  
+- AVR programming /summon captainObvious 
+- LED dimming, color mixing  
 - General servo driving   
 - Pan and tilt servo control of a webcam for face tracking  
-- With additional motor driver IC, 2 wheel motor driving   
+- With additional motor driver IC, 2 wheel robot driving   
 - Analog voltage recording and plotting  
 
 ========================================
 = What is included?
 ========================================
-- Eagle schematic / layout files. Also in PNG and PDF formats  
+- Eagle schematic / layout files. Also in PDF format.
 - Microcontroller firmware files and makefile  
 - C# class for Windows USB interface  
 - C# example project for analog voltage plotting based on zedGraph  
-- C function/header file for command line USB interface for Windows and Linux  
+- C function/header files for command line USB interface for Windows and Linux  
 
 ========================================
 = Reference projects
@@ -41,23 +54,3 @@
      http://www.ladyada.net/make/usbtinyisp/
   - simpleavr's implementation of usbTiny on attiny45 microcontroller
      http://www.simpleavr.com/avr/vusbtiny
-
-========================================
-= Where to buy one?
-========================================
-- There will be a link where you can buy a kit version of this soon ...
-
-========================================
-= How to download entire repository at once?
-========================================
-Follow: https://github.com/kehribar/Little-Wire/zipball/master
-
-========================================
-= Where are the hardware files?
-========================================
-- They are at http://solderpad.com/ihsan_kehribar/minimal-avr-programmer-and-more/
-
-========================================
-= When this project will be completed?
-========================================
-- As soon as possible ...
