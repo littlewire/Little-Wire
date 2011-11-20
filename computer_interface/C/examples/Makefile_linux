@@ -7,21 +7,11 @@
 # License: GNU GPL v2 (see License.txt), GNU GPL v3 or proprietary (CommercialLicense.txt)
 # This Revision: $Id: Makefile 692 2008-11-07 15:07:40Z cs $
 
-
-# Concigure the following definitions according to your system..
-
 # Use the following 4 lines on Unix 
 USBFLAGS = `libusb-config --cflags`
 USBLIBS = `libusb-config --libs`
 EXE_SUFFIX = 
 FLAG = -D LINUX
-
-# Use the following 4 lines on Windows and comment out the 3 above. You may
-# have to change the include paths to where you installed libusb-win32
-#USBFLAGS = -I C:\MinGW\include
-#USBLIBS = -L C:\MinGW\lib -lusb
-#EXE_SUFFIX = .exe
-#FLAG = 
 
 NAME = main
 

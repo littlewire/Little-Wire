@@ -1,11 +1,11 @@
 /*
 
 
+	ihsan Kehribar 
+	November 2011
 
-
-
-
-
+	
+	http://kehibar.me/projects/Little-Wire
 
 
 
