@@ -42,6 +42,7 @@
 #include <stdlib.h>
 
 #include "usbdrv.h"
+#include "twi_i2c/TinyWireM.h"
 #include "oddebug.h"
 #define sbi(register,bit) (register|=(1<<bit))
 #define cbi(register,bit) (register&=~(1<<bit))
@@ -72,7 +73,14 @@ enum
 	USBTINY_PIN_SET_LOW, // 19
 	USBTINY_PIN_READ, // 20
 	USBTINY_SINGLE_SPI, // 21
-	USBTINY_CHANGE_PWM_PRESCALE // 22
+	USBTINY_CHANGE_PWM_PRESCALE, // 22
+	USBTINY_SETUP_SPI, // 23
+	USBTINY_SETUP_I2C, // 24
+	USBTINY_I2C_BEGIN_TX, // 25
+	USBTINY_I2C_ADD_BUFFER, // 26
+	USBTINY_I2C_SEND_BUFFER, // 27
+	USBTINY_SPI_ADD_BUFFER, // 28
+	USBTINY_SPI_SEND_BUFFER // 29
 };
 
 #define	PORT	PORTB
@@ -96,14 +104,9 @@ enum
 #define	MOSI_MASK	(1 << 0)
 
 // ----------------------------------------------------------------------
-// Programmer input pins:
-//	MISO	PD3	(ACK)
-// ----------------------------------------------------------------------
-
-// ----------------------------------------------------------------------
 // Local data
 // ----------------------------------------------------------------------
-static	uchar		sck_period=50;	// SCK period in microseconds (1..250)
+static	uchar		sck_period=40;	// SCK period in microseconds (1..250)
 static	uchar		poll1;		// first poll byte for write
 static	uchar		poll2;		// second poll byte for write
 static	unsigned		address;	// read/write address
@@ -111,6 +114,10 @@ static	unsigned		timeout;	// write timeout in usec
 static	uchar		cmd0;		// current read/write command byte
 static	uchar		cmd[4];		// SPI command buffer
 static	uchar		res[4];		// SPI result buffer
+#define SPI_BUFFER_SIZE 16 
+static uint8_t spiBuffer[SPI_BUFFER_SIZE];
+static uint8_t spiBuffer_count=0;
+static uint8_t i=0;
 
 // ----------------------------------------------------------------------
 // Delay exactly <sck_period> times 0.5 microseconds (6 cycles).
@@ -162,35 +169,6 @@ static	void	spi ( uchar* cmd, uchar* res )
 		}
 		*res++ = r;
 	}
-}
-
-static uchar singleSPI(uchar cmd) // Issues only one byte command
-{
-	uchar myTemp=DDR;
-	uchar mask;
-	uchar res=0;
-	DDR|=MOSI_MASK;
-	DDR|=SCK_MASK;
-	DDR&=~MISO_MASK;
-	for	( mask = 0x80; mask; mask >>= 1 )
-	{
-		if	( cmd & mask )
-		{
-			PORT |= MOSI_MASK;
-		}
-		delay();
-		PORT |= SCK_MASK;
-		delay();
-		res <<= 1;
-		if	( PIN & MISO_MASK )
-		{
-			res++;
-		}
-		PORT &= ~MOSI_MASK;
-		PORT &= ~SCK_MASK;
-	}
-	DDR=myTemp;
-	return res;
 }
 
 // ----------------------------------------------------------------------
@@ -388,48 +366,20 @@ uchar	usbFunctionSetup(uchar data[8])
 		unsigned char temp=DDR;
 		if(data[2]==0) // Read ADC from RESET pin
 		{
-			/*cbi(ADMUX,MUX3);
-			cbi(ADMUX,MUX2);
-			cbi(ADMUX,MUX1);
-			cbi(ADMUX,MUX0);
-			
-			cbi(ADMUX,REFS0);
-			cbi(ADMUX,REFS1);
-			cbi(ADMUX,REFS2);*/
 			ADMUX=0;
 			DDR &= ~(1<<5);
 		}
 		else if(data[2]==1) // Read ADC from SCK pin
 		{
-			/*cbi(ADMUX,MUX3);
-			cbi(ADMUX,MUX2);
-			cbi(ADMUX,MUX1);
-			sbi(ADMUX,MUX0);
-			
-			cbi(ADMUX,REFS0);
-			cbi(ADMUX,REFS1);
-			cbi(ADMUX,REFS2);*/
 			ADMUX=1;
 			DDR &= ~(1<<2);
 		}
 		else if(data[2]==2) // Read ADC from internal Temperature sensor
 		{
-			/*sbi(ADMUX,MUX3);
-			sbi(ADMUX,MUX2);
-			sbi(ADMUX,MUX1);
-			sbi(ADMUX,MUX0);
-			
-			cbi(ADMUX,REFS0);
-			sbi(ADMUX,REFS1);
-			cbi(ADMUX,REFS2);*/
 			ADMUX=0b10001111;
 		}
 		ADCSRA|=(1<<ADSC);
-		while(ADCSRA & (1<<ADSC))
-		{
-			// doNothing...ss
-			//wdt_reset();
-		}
+		while(ADCSRA & (1<<ADSC));
 		data[0]=(unsigned char)ADCL;
 		data[1]=(unsigned char)ADCH;
 		usbMsgPtr = data;
@@ -470,7 +420,15 @@ uchar	usbFunctionSetup(uchar data[8])
 	if( req == USBTINY_SINGLE_SPI ) // 21
 	{
 		char sendMessage=data[2];
-		data[0]=singleSPI(sendMessage);
+		USIDR = sendMessage;
+		USISR = (1<<USIOIF);
+		cli();
+		do {
+			USICR = (1<<USIWM0)|(1<<USICS1)|(1<<USICLK)|(1<<USITC);
+			_delay_us(10);
+		} while ((USISR & (1<<USIOIF))==0);
+		sei();
+		data[0]=USIDR;
 		usbMsgPtr=data;
 		return 1;
 	}
@@ -507,6 +465,66 @@ uchar	usbFunctionSetup(uchar data[8])
 			 sbi(TCCR0B,CS00);
 		}			
 		
+		return 0;
+	}
+	if(req == USBTINY_SETUP_SPI) // 23
+	{
+		DDR |= (1<<1); // Data Out
+		DDR &= ~(1<<0); // Data Input
+		DDR |= (1<<2); // Clock output
+		
+		// data[2] indicates mode
+		// data[4] indicates clock speed
+		
+		USICR = (1<<USIWM0)|(1<<USICS1)|(1<<USICLK);
+		return 0;
+	}
+	if( req == USBTINY_SETUP_I2C ) // 24
+	{
+		i2c_begin();
+		return 0;
+	}
+	if( req == USBTINY_I2C_BEGIN_TX ) // 25
+	{
+		// data[2] has the TX adress
+		i2c_beginTransmission(data[2]);
+		return 0;
+	}
+	if( req == USBTINY_I2C_ADD_BUFFER ) // 26
+	{
+		i2c_send(data[2]);
+		return 0;
+	}
+	if( req == USBTINY_I2C_SEND_BUFFER) // 27
+	{
+		cli();
+			i2c_endTransmission(); // Actually sends the whole buffer at once here.
+		sei();
+		return 0;
+	}
+	if( req == USBTINY_SPI_ADD_BUFFER) // 28
+	{
+		if(spiBuffer_count<SPI_BUFFER_SIZE)
+		{
+			spiBuffer[spiBuffer_count]=data[2];
+			spiBuffer_count++;
+		}
+		return 0;
+	}
+	if( req == USBTINY_SPI_SEND_BUFFER) // 29
+	{
+		for(i=0;i<spiBuffer_count;i++)
+		{
+			USIDR = spiBuffer[i];
+			USISR = (1<<USIOIF);
+			cli();
+			do {
+				USICR = (1<<USIWM0)|(1<<USICS1)|(1<<USICLK)|(1<<USITC);
+				_delay_us(10);
+			} while ((USISR & (1<<USIOIF))==0);
+			sei();
+		}
+		spiBuffer_count=0;
 		return 0;
 	}
 	
@@ -558,16 +576,6 @@ int         x, optimumDev, targetValue = (unsigned)(1499 * (double)F_CPU / 10.5e
     }
     OSCCAL = optimumValue; 
 }
-/*
-Note: This calibration algorithm may try OSCCAL values of up to 192 even if
-the optimum value is far below 192. It may therefore exceed the allowed clock
-frequency of the CPU in low voltage designs!
-You may replace this search algorithm with any other algorithm you like if
-you have additional constraints such as a maximum CPU clock.
-For version 5.x RC oscillators (those with a split range of 2x128 steps, e.g.
-ATTiny25, ATTiny45, ATTiny85), it may be useful to search for the optimum in
-both regions.
-*/
 
 void    usbEventResetReady(void)
 {
@@ -607,18 +615,17 @@ int main(void) {
     usbInit();
     sei();
 		
-		ADMUX|=(0<<MUX3)|(0<<MUX2)|(0<<MUX1)|(1<<MUX0);
-		ADMUX|=(0<<REFS2)|(0<<REFS1)|(0<<REFS0) |(0<<ADLAR);
-		ADCSRA|= (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0);
-		ADCSRA|=(1<<ADEN);
-		ADCSRA|=(1<<ADSC);
-		MCUCR|=(1<<PUD);
-		while(ADCSRA & (1<<ADSC))
-		{
-			// doNothing...ss
-		}
+	// ADC init	
+	ADMUX|=(0<<MUX3)|(0<<MUX2)|(0<<MUX1)|(1<<MUX0);
+	ADMUX|=(0<<REFS2)|(0<<REFS1)|(0<<REFS0) |(0<<ADLAR);
+	ADCSRA|= (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0);
+	ADCSRA|=(1<<ADEN);
+	ADCSRA|=(1<<ADSC);
+	MCUCR|=(1<<PUD);
+	while(ADCSRA & (1<<ADSC));
 		
-    for(;;){    /* main event loop */
+    for(;;)
+	{   
         wdt_reset();
         usbPoll();
     }
