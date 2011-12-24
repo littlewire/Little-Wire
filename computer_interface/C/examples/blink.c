@@ -1,13 +1,16 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
 #include "littleWire.h"  /* Little Wire header file */
 
+#define LED   2
+#define DELAY 1*1000*1000 /* In microseconds */
+
 int main(int argc, char **argv)
 {
 	usb_dev_handle *myLittleWire = NULL;
-	unsigned int adcValue;
 
 	myLittleWire = littleWire_connect();
 
@@ -16,10 +19,14 @@ int main(int argc, char **argv)
 		return 0;
 	}
 
+	pinMode(myLittleWire, LED, 0);
+
 	while(1)
 	{
-		adcValue=analogRead(myLittleWire,1);
-		printf("Voltage: %f volts\n", (float)((adcValue*5.0)/1024.0));
+		digitalWrite(myLittleWire, LED, 1);
+		usleep(DELAY);
+		digitalWrite(myLittleWire, LED, 0);
+		usleep(DELAY);
 	}
 }
 
