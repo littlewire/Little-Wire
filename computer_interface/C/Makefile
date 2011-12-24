@@ -16,18 +16,20 @@ endif
 
 CFLAGS  = $(USBFLAGS) $(USBLIBS) -Ilibrary -O -g $(OSFLAG)
 
-EXAMPLES = adc
+EXAMPLES = adc blink
 
 .PHONY:	clean library
 
 all: library $(EXAMPLES)
 
 library:
+	@echo Building libraries...
 	$(CC) $(CFLAGS) -c library/littleWire.c
 	$(CC) $(CFLAGS) -c library/opendevice.c
 
 $(EXAMPLES): littleWire.o opendevice.o
-	$(CC) $(CFLAGS) -o $(EXAMPLES)$(EXE_SUFFIX) examples/$(EXAMPLES).c littleWire.o opendevice.o
+	@echo Building examples...
+	$(CC) $(CFLAGS) -o $@$(EXE_SUFFIX) examples/$@.c $^
 
 clean:
 	rm -f $(EXAMPLES) *.o *.exe
