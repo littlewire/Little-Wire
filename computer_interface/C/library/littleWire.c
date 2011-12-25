@@ -27,13 +27,6 @@ usb_dev_handle* littleWire_connect()
 	usb_dev_handle  *tempHandle = NULL;
 
 	usbOpenDevice(&tempHandle, vendorID, "*", productID, "*", "*", NULL, NULL );
-/*
-	if ( usbOpenDevice(&tempHandle, vendorID, "*", productID, "*", "*", NULL, NULL ) )
-	{
-		printf("Little Wire could not be found!\n");
-		return 0;
-	}
-*/
 
 	return tempHandle;
 }
