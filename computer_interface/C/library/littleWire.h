@@ -1,10 +1,10 @@
 /*
 
 
-	ihsan Kehribar 
+	ihsan Kehribar
 	November 2011
 
-	
+
 	http://kehibar.me/projects/Little-Wire
 
 
@@ -12,15 +12,22 @@
 */
 
 /********************************************************************************
-* Including header files 
+* Including header files
 ********************************************************************************/
 #if defined(LINUX)
-   #include <usb.h>			// this is libusb, see http://libusb.sourceforge.net/ 
+   #include <usb.h>			// this is libusb, see http://libusb.sourceforge.net/
 #else
-   #include <lusb0_usb.h>		// this is libusb, see http://libusb.sourceforge.net/ 
+   #include <lusb0_usb.h>		// this is libusb, see http://libusb.sourceforge.net/
 #endif
-#include "opendevice.h"			// common code moved to separate module 
+#include "opendevice.h"			// common code moved to separate module
 /*******************************************************************************/
+
+// Some useful constants
+#define INPUT	1
+#define OUTPUT	0
+
+#define LOW	0
+#define HIGH	1
 
 /********************************************************************************
 * Special definitions
@@ -101,4 +108,4 @@ void updatePwmPrescale(usb_dev_handle* littleWirePointer,unsigned int value);
 *    Returns: Received SPI message
 ********************************************************************************/
 unsigned char sendSpiMessage(usb_dev_handle* littleWirePointer,unsigned char message);
-/*******************************************************************************/       
+/*******************************************************************************/
