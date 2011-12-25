@@ -26,12 +26,15 @@ usb_dev_handle* littleWire_connect()
 	usb_init();
 	usb_dev_handle  *tempHandle = NULL;
 
+	usbOpenDevice(&tempHandle, vendorID, "*", productID, "*", "*", NULL, NULL );
+/*
 	if ( usbOpenDevice(&tempHandle, vendorID, "*", productID, "*", "*", NULL, NULL ) )
 	{
 		printf("Little Wire could not be found!\n");
 		return 0;
 	}
-	
+*/
+
 	return tempHandle;
 }
 /*******************************************************************************/
@@ -82,7 +85,7 @@ unsigned char digitalRead(usb_dev_handle* littleWirePointer,unsigned char pin)
 *     Returns: Analog voltage in 10bit resoultion
 ********************************************************************************/
 unsigned int analogRead(usb_dev_handle* littleWirePointer,unsigned char channel)
-{	
+{
 	usb_control_msg(littleWirePointer, 0xC0, 15, channel, 0, rxBuffer, 8, usbTimeout);
 	return ((rxBuffer[1] <<8) + (rxBuffer[0]));
 }
@@ -113,7 +116,7 @@ void updatePwmCompare(usb_dev_handle* littleWirePointer,unsigned char channelA, 
 *     value: 1024/256/64/8/1
 ********************************************************************************/
 void updatePwmPrescale(usb_dev_handle* littleWirePointer,unsigned int value)
-{	
+{
 	switch(value)
 	{
 		case 1024:
