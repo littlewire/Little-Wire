@@ -2,6 +2,7 @@
 
 CC=gcc
 
+# FIXME: Need to add OSX stuff
 ifeq ($(shell uname), Linux)
 	USBFLAGS = `libusb-config --cflags`
 	USBLIBS = `libusb-config --libs`
@@ -34,4 +35,4 @@ $(EXAMPLES): littleWire.o opendevice.o
 	$(CC) $(CFLAGS) -o $@$(EXE_SUFFIX) examples/$@.c $^
 
 clean:
-	rm -f $(EXAMPLES) *.o *.exe
+	rm -f $(EXAMPLES)$(EXE_SUFFIX) *.o *.exe
