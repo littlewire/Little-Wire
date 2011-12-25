@@ -15,7 +15,7 @@ else
 	OSFLAG = -D WIN
 endif
 
-LIBS    = $(USBLIBS) -lpthread
+LIBS    = $(USBLIBS)
 INCLUDE = library
 CFLAGS  = $(USBFLAGS) $(LIBS) -I$(INCLUDE) -O -g $(OSFLAG)
 
@@ -32,7 +32,7 @@ library:
 
 $(EXAMPLES): littleWire.o opendevice.o
 	@echo Building example:$(@)...
-	$(CC) $(CFLAGS) -o $@$(EXE_SUFFIX) examples/$@.c $^
+	$(CC) $(CFLAGS) -o $@$(EXE_SUFFIX) examples/$@.c $^ $(LIBS)
 
 clean:
 	rm -f $(EXAMPLES)$(EXE_SUFFIX) *.o *.exe
