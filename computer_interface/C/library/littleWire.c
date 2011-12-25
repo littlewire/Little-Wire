@@ -13,9 +13,6 @@
 
 #include "littleWire.h"
 
-static int vendorID = 0x1781;
-static int productID = 0x0c9f;
-static int usbTimeout = 5000;
 
 /********************************************************************************
 * Try to connect to the device
@@ -37,7 +34,7 @@ littleWire* littleWire_connect()
 *     pin: Pin number
 *     state: 1 for High, 0 for Low
 ********************************************************************************/
-void digitalWrite(littleWire* lwHandle,unsigned char pin, unsigned char state)
+void digitalWrite(littleWire* lwHandle, unsigned char pin, unsigned char state)
 {
 	if(state){
 		usb_control_msg(lwHandle, 0xC0, 18, pin, 0, rxBuffer, 8, usbTimeout);
@@ -52,7 +49,7 @@ void digitalWrite(littleWire* lwHandle,unsigned char pin, unsigned char state)
 *     pin: Pin number
 *     mode: 1 for input, 0 for output
 ********************************************************************************/
-void pinMode(littleWire* lwHandle,unsigned char pin, unsigned char mode)
+void pinMode(littleWire* lwHandle, unsigned char pin, unsigned char mode)
 {
 	if(mode){
 		usb_control_msg(lwHandle, 0xC0, 13, pin, 0, rxBuffer, 8, usbTimeout);
@@ -67,7 +64,7 @@ void pinMode(littleWire* lwHandle,unsigned char pin, unsigned char mode)
 *     pin: Pin number
 *     Returns: 1 for HIGH, 0 for LOW
 ********************************************************************************/
-unsigned char digitalRead(littleWire* lwHandle,unsigned char pin)
+unsigned char digitalRead(littleWire* lwHandle, unsigned char pin)
 {
 	usb_control_msg(lwHandle, 0xC0, 21, pin, 0, rxBuffer, 8, usbTimeout);
 
@@ -80,7 +77,7 @@ unsigned char digitalRead(littleWire* lwHandle,unsigned char pin)
 *     channel: 0 for RESET pin, 1 for SCK pin, 2 for internal Temperature sensor
 *     Returns: Analog voltage in 10bit resoultion
 ********************************************************************************/
-unsigned int analogRead(littleWire* lwHandle,unsigned char channel)
+unsigned int analogRead(littleWire* lwHandle, unsigned char channel)
 {
 	usb_control_msg(lwHandle, 0xC0, 15, channel, 0, rxBuffer, 8, usbTimeout);
 
@@ -102,7 +99,7 @@ void initPwm(littleWire* lwHandle)
 *     channelA: Compare value of Channel A
 *     channelB: Compare value of Channel B
 /*******************************************************************************/
-void updatePwmCompare(littleWire* lwHandle,unsigned char channelA, unsigned char channelB)
+void updatePwmCompare(littleWire* lwHandle, unsigned char channelA, unsigned char channelB)
 {
 	usb_control_msg(lwHandle, 0xC0, 17, channelA, channelB, rxBuffer, 8, usbTimeout);
 }
@@ -112,7 +109,7 @@ void updatePwmCompare(littleWire* lwHandle,unsigned char channelA, unsigned char
 * Change the Pwm prescaler. Default: 1024
 *     value: 1024/256/64/8/1
 ********************************************************************************/
-void updatePwmPrescale(littleWire* lwHandle,unsigned int value)
+void updatePwmPrescale(littleWire* lwHandle, unsigned int value)
 {
 	switch(value)
 	{
@@ -140,10 +137,11 @@ void updatePwmPrescale(littleWire* lwHandle,unsigned int value)
 *    message: Message to send
 *    Returns: Received SPI message
 ********************************************************************************/
-unsigned char sendSpiMessage(littleWire* lwHandle,unsigned char message)
+unsigned char sendSpiMessage(littleWire* lwHandle, unsigned char message)
 {
 	usb_control_msg(lwHandle, 0xC0, 21, message, 0, rxBuffer, 8, usbTimeout);
 
 	return rxBuffer[0];
 }
 /*******************************************************************************/
+
