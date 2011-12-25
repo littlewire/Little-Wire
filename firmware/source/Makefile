@@ -12,7 +12,7 @@ F_CPU   = 16500000	# in Hz
 FUSE_L  = 0xf1
 FUSE_H  = 0xdd
 FUSE_EXT  = 0xfe
-AVRDUDE = avrdude -c avrisp -b 19200 -P com6 -p t85 -V -U flash:w:main.hex
+AVRDUDE = avrdude -c avrisp -b 19200 -P com3 -p t85 -V -U flash:w:main.hex
 
 CFLAGS  = -Iusbdrv -I. -Itwi_i2c -DDEBUG_LEVEL=0
 OBJECTS = usbdrv/usbdrv.o usbdrv/usbdrvasm.o usbdrv/oddebug.o twi_i2c/TinyWireM.o twi_i2c/USI_TWI_Master.o main.o

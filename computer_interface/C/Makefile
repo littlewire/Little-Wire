@@ -3,18 +3,19 @@
 CC=gcc
 
 ifeq ($(shell uname), Linux)
-  USBFLAGS = `libusb-config --cflags`
-  USBLIBS = `libusb-config --libs`
-  EXE_SUFFIX =
-  OSFLAG = -D LINUX
+	USBFLAGS = `libusb-config --cflags`
+	USBLIBS = `libusb-config --libs`
+	EXE_SUFFIX =
+	OSFLAG = -D LINUX
 else
-  USBFLAGS = -I C:\MinGW\include
-  USBLIBS = -L C:\MinGW\lib -lusb
-  EXE_SUFFIX = .exe
-  OSFLAG = -D WIN
+	USBFLAGS = -I C:\MinGW\include
+	USBLIBS = -L C:\MinGW\lib -lusb
+	EXE_SUFFIX = .exe
+	OSFLAG = -D WIN
 endif
 
 CFLAGS  = $(USBFLAGS) $(USBLIBS) -Ilibrary -O -g $(OSFLAG)
+LIBS	= $(USBLIBS)
 
 EXAMPLES = adc blink
 
@@ -24,12 +25,12 @@ all: library $(EXAMPLES)
 
 library:
 	@echo Building libraries...
-	$(CC) $(CFLAGS) -c library/littleWire.c
-	$(CC) $(CFLAGS) -c library/opendevice.c
-
-$(EXAMPLES): littleWire.o opendevice.o
+	$(CC) $(CFLAGS) -c library/littleWire.c 
+	$(CC) $(CFLAGS) -c library/opendevice.c 
 	@echo Building examples...
-	$(CC) $(CFLAGS) -o $@$(EXE_SUFFIX) examples/$@.c $^
+$(EXAMPLES): littleWire.o opendevice.o
+	@echo Building $(@)...
+	$(CC) $(CFLAGS) -o $@$(EXE_SUFFIX) examples/$@.c $^ $(LIBS)
 
 clean:
 	rm -f $(EXAMPLES) *.o *.exe
