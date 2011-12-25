@@ -1,16 +1,14 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "littleWire.h"
 
-#include "littleWire.h"  /* Little Wire header file */
+#define LED	PIN3	// Pin LED is connected to
+#define DELAY	1	// Delay, in seconds
 
-#define LED   2
-#define DELAY 1*1000*1000 /* In microseconds */
-
-int main(int argc, char **argv)
+int main(void)
 {
-	usb_dev_handle *myLittleWire = NULL;
+	littleWire *myLittleWire = NULL;
 
 	myLittleWire = littleWire_connect();
 
@@ -19,14 +17,13 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 
-	pinMode(myLittleWire, LED, 0);
+	pinMode(myLittleWire, LED, OUTPUT);
 
-	while(1)
-	{
-		digitalWrite(myLittleWire, LED, 1);
-		usleep(DELAY);
-		digitalWrite(myLittleWire, LED, 0);
-		usleep(DELAY);
+	for(;;){
+		printf("Blink!\n");
+		digitalWrite(myLittleWire, LED, HIGH);
+		sleep(DELAY);
+		digitalWrite(myLittleWire, LED, LOW);
+		sleep(DELAY);
 	}
 }
-

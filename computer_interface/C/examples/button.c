@@ -1,38 +1,14 @@
-#ifndef LINUX
-  #error "This probably won't work outside Linux."
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
 #include <unistd.h>
 #include "littleWire.h"
 
-#define BUTTON	2
-#define DEBOUNCE 100*1000 /* in microseconds */
-
-usb_dev_handle *myLittleWire = NULL;
-
-
-void *buttonHandler(void *arg)
-{
-	int buttonPin = (int)arg;
-
-	for(;;){
-		if ( digitalRead(myLittleWire, buttonPin) == LOW ){
-			usleep(DEBOUNCE);
-			if( digitalRead(myLittleWire, buttonPin) == LOW ){
-				printf("\nButton pressed.\n");
-				//sleep(1);
-			}
-		}
-	}
-}
-
+#define BUTTON		PIN1		// Pin button is connected to (active low)
+#define DEBOUNCE	100*1000	// Debounce delay, in microseconds
 
 int main()
 {
-	pthread_t buttonThread;
+	littleWire *myLittleWire = NULL;
 
 	myLittleWire = littleWire_connect();
 
@@ -41,14 +17,16 @@ int main()
 		exit(EXIT_FAILURE);
 	}
 
-	pinMode(myLittleWire, BUTTON, INPUT);
-
-	pthread_create(&buttonThread, NULL, buttonHandler, (void*)BUTTON);
-	pthread_tryjoin_np(buttonThread, BUTTON);
+	pinMode(myLittleWire, BUTTON, 1);
 
 	for(;;){
-		// this is where main() does stuff
+		if ( digitalRead(myLittleWire, BUTTON) == 0 ){
+			usleep(DEBOUNCE);
+			if( digitalRead(myLittleWire, BUTTON) == LOW ){
+				printf("Button pressed.\n");
+			}
+		}
+
+		sleep(1);
 	}
-
-
 }
