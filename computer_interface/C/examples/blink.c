@@ -14,9 +14,9 @@ int main(int argc, char **argv)
 
 	myLittleWire = littleWire_connect();
 
-	if(!myLittleWire){
-		getchar();
-		return 0;
+	if(myLittleWire == NULL){
+		printf("Little Wire could not be found!\n");
+		exit(EXIT_FAILURE);
 	}
 
 	pinMode(myLittleWire, LED, 0);

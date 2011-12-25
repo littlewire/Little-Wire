@@ -11,15 +11,14 @@ int main(int argc, char **argv)
 
 	myLittleWire = littleWire_connect();
 
-	if(!myLittleWire){
-		getchar();
-		return 0;
+	if(myLittleWire == NULL){
+		printf("Little Wire could not be found!\n");
+		exit(EXIT_FAILURE);
 	}
 
 	while(1)
 	{
-		adcValue=analogRead(myLittleWire,1);
+		adcValue=analogRead(myLittleWire, 1);
 		printf("Voltage: %f volts\n", (float)((adcValue*5.0)/1024.0));
 	}
 }
-
