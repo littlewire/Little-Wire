@@ -14,10 +14,11 @@ else
 	OSFLAG = -D WIN
 endif
 
-CFLAGS  = $(USBFLAGS) $(USBLIBS) -Ilibrary -O -g $(OSFLAG)
-LIBS	= $(USBLIBS)
+LIBS    = $(USBLIBS) -lpthread
+INCLUDE = library
+CFLAGS  = $(USBFLAGS) $(LIBS) -I$(INCLUDE) -O -g $(OSFLAG)
 
-EXAMPLES = adc blink
+EXAMPLES = adc blink button
 
 .PHONY:	clean library
 
@@ -27,10 +28,10 @@ library:
 	@echo Building libraries...
 	$(CC) $(CFLAGS) -c library/littleWire.c 
 	$(CC) $(CFLAGS) -c library/opendevice.c 
-	@echo Building examples...
+
 $(EXAMPLES): littleWire.o opendevice.o
-	@echo Building $(@)...
-	$(CC) $(CFLAGS) -o $@$(EXE_SUFFIX) examples/$@.c $^ $(LIBS)
+	@echo Building example:$(@)...
+	$(CC) $(CFLAGS) -o $@$(EXE_SUFFIX) examples/$@.c $^
 
 clean:
 	rm -f $(EXAMPLES) *.o *.exe
