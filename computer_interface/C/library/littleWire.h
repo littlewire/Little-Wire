@@ -44,7 +44,7 @@
 #define INPUT	1
 #define OUTPUT	0
 
-#define LOW		0
+#define LOW	0
 #define HIGH	1
 
 typedef usb_dev_handle littleWire;
@@ -61,7 +61,7 @@ typedef usb_dev_handle littleWire;
 
 // ADC Channels
 #define ADC_RESET_PIN	0
-#define ADC_SCK_PIN		1
+#define ADC_SCK_PIN	1
 #define ADC_TEMP_SENS	2
 
 // PWM Pins
@@ -69,9 +69,13 @@ typedef usb_dev_handle littleWire;
 #define PWM1	PIN1
 
 // Aliases
+#define ADC0	ADC_RESET_PIN
+#define ADC1	ADC_SCK_PIN
+#define ADC2	ADC_TEMP_SENS
 #define PWMA	PWM0
 #define PWMB	PWM1
 
+// 'AVR ISP' Pins
 #define SCK_PIN		PIN2
 #define MISO_PIN	PIN1
 #define MOSI_PIN	PIN0
