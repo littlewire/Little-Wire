@@ -19,7 +19,7 @@ LIBS    = $(USBLIBS)
 INCLUDE = library
 CFLAGS  = $(USBFLAGS) $(LIBS) -I$(INCLUDE) -O -g $(OSFLAG)
 
-EXAMPLES = adc blink button
+EXAMPLES = adc blink button servo
 
 .PHONY:	clean library
 
@@ -28,9 +28,10 @@ all: library $(EXAMPLES)
 library:
 	@echo Building libraries...
 	$(CC) $(CFLAGS) -c library/littleWire.c 
+	$(CC) $(CFLAGS) -c library/littleWire_servo.c 
 	$(CC) $(CFLAGS) -c library/opendevice.c 
 
-$(EXAMPLES): littleWire.o opendevice.o
+$(EXAMPLES): littleWire.o opendevice.o littleWire_servo.o
 	@echo Building example:$(@)...
 	$(CC) $(CFLAGS) -o $@$(EXE_SUFFIX) examples/$@.c $^ $(LIBS)
 

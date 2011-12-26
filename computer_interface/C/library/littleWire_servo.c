@@ -42,7 +42,7 @@ void servo_init(littleWire* lwHandle)
 *	locationChannelA in degrees
 *	locationChannelB in degrees
 ********************************************************************************/
-void servo_locationUpdate(littleWire* lwHandle,unsigned char locationChannelA,unsigned char locationChannelB)
+void servo_updateLocation(littleWire* lwHandle,unsigned char locationChannelA,unsigned char locationChannelB)
 {
 	locationChannelA=(((locationChannelA/RANGE)*(MAX_LIMIT-MIN_LIMIT))+MIN_LIMIT)/STEP_SIZE;
 	locationChannelB=(((locationChannelB/RANGE)*(MAX_LIMIT-MIN_LIMIT))+MIN_LIMIT)/STEP_SIZE;
