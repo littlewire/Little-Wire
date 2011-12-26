@@ -1,5 +1,5 @@
-/*	
-	-- This is experimental!! --
+/*
+	-- This is experimental! --
 	Created: December 2011
 	by Omer Kilic <omerkilic@gmail.com>
 */
@@ -13,17 +13,14 @@
 #include <pthread.h>
 #include <unistd.h>
 #include "littleWire.h"
+#include "littleWire_util.h"
 
-#if defined(LINUX)
-	#define	sleep_ms(duration) sleep(duration)
-#else
-	#define	sleep_ms(duration) Sleep(duration)
-#endif
+#define BUTTON		PIN1		// Pin button is connected to (active low)
+#define DEBOUNCE	100		// Debounce time, in miliseconds
 
-#define BUTTON		MISO_PIN	// Pin button is connected to (active low)
-#define DEBOUNCE	100			// Debounce time, in miliseconds
 
 littleWire *myLittleWire = NULL;
+
 
 void *buttonHandler(void *arg)
 {
@@ -31,12 +28,12 @@ void *buttonHandler(void *arg)
 
 	for(;;){
 		if ( digitalRead(myLittleWire, buttonPin) == LOW ){
-			sleep_ms(DEBOUNCE);
+			delay(DEBOUNCE);
 			if( digitalRead(myLittleWire, buttonPin) == LOW ){
 				printf("\nButton pressed.\n");
 			}
 		}
-		sleep_ms(1);
+		delay(1000);
 	}
 }
 

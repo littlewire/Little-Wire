@@ -1,22 +1,17 @@
-/*	
+/*
 	Created: December 2011
 	by Omer Kilic <omerkilic@gmail.com>
 */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <time.h>
 #include "littleWire.h"
+#include "littleWire_util.h"
 
-#if defined(LINUX)
-	#define	sleep_ms(duration) sleep(duration)
-#else
-	#define	sleep_ms(duration) Sleep(duration)
-#endif
 
-#define LED	MOSI_PIN	// Pin LED is connected to MOSI pin
-#define DELAY 500 		// Delay, in miliseconds
+#define LED	PIN0		// Pin LED is connected to MOSI (PIN0) pin
+#define DELAY	500 		// Delay, in miliseconds
+
 
 int main(void)
 {
@@ -34,8 +29,8 @@ int main(void)
 	for(;;){
 		printf("Blink!\n");
 		digitalWrite(myLittleWire, LED, HIGH);
-		sleep_ms(DELAY);
+		delay(DELAY);
 		digitalWrite(myLittleWire, LED, LOW);
-		sleep_ms(DELAY);
+		delay(DELAY);
 	}
 }
