@@ -1,4 +1,8 @@
-// This is experimental!
+/*	
+	-- This is experimental!! --
+	Created: December 2011
+	by Omer Kilic <omerkilic@gmail.com>
+*/
 
 #ifndef LINUX
   #warning "This probably won't work outside Linux."
@@ -10,11 +14,16 @@
 #include <unistd.h>
 #include "littleWire.h"
 
-#define BUTTON		PIN1		// Pin button is connected to (active low)
-#define DEBOUNCE	100*1000	// Debounce time, in microseconds
+#if defined(LINUX)
+	#define	sleep_ms(duration) sleep(duration)
+#else
+	#define	sleep_ms(duration) Sleep(duration)
+#endif
+
+#define BUTTON		MISO_PIN	// Pin button is connected to (active low)
+#define DEBOUNCE	100			// Debounce time, in miliseconds
 
 littleWire *myLittleWire = NULL;
-
 
 void *buttonHandler(void *arg)
 {
@@ -22,16 +31,14 @@ void *buttonHandler(void *arg)
 
 	for(;;){
 		if ( digitalRead(myLittleWire, buttonPin) == LOW ){
-			usleep(DEBOUNCE);
+			sleep_ms(DEBOUNCE);
 			if( digitalRead(myLittleWire, buttonPin) == LOW ){
 				printf("\nButton pressed.\n");
 			}
 		}
-
-		sleep(1);
+		sleep_ms(1);
 	}
 }
-
 
 int main()
 {
@@ -52,6 +59,5 @@ int main()
 	for(;;){
 		// this is where main() does stuff
 	}
-
 
 }

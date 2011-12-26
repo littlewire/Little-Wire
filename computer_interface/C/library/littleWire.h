@@ -2,15 +2,28 @@
 #define LITTLEWIRE_H
 
 /*
-
-
-	ihsan Kehribar
-	November 2011
-
-
 	http://kehibar.me/projects/Little-Wire
+	
+	Copyright (C) <2011> ihsan Kehribar <ihsan@kehribar.me>
+	Modified by Omer Kilic <omerkilic@gmail.com>
+	
+	Permission is hereby granted, free of charge, to any person obtaining a copy of
+	this software and associated documentation files (the "Software"), to deal in
+	the Software without restriction, including without limitation the rights to
+	use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+	of the Software, and to permit persons to whom the Software is furnished to do
+	so, subject to the following conditions:
 
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
 
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
 
 */
 
@@ -31,7 +44,7 @@
 #define INPUT	1
 #define OUTPUT	0
 
-#define LOW	0
+#define LOW		0
 #define HIGH	1
 
 typedef usb_dev_handle littleWire;
@@ -47,9 +60,9 @@ typedef usb_dev_handle littleWire;
 #define PIN3	5
 
 // ADC Channels
-#define ADC0	0
-#define ADC1	1
-#define ADC2	2
+#define ADC_RESET_PIN	0
+#define ADC_SCK_PIN		1
+#define ADC_TEMP_SENS	2
 
 // PWM Pins
 #define PWM0	PIN0
@@ -59,10 +72,10 @@ typedef usb_dev_handle littleWire;
 #define PWMA	PWM0
 #define PWMB	PWM1
 
-#define SCK	PIN2
-#define MISO	PIN1
-#define MOSI	PIN0
-#define RESET	PIN3
+#define SCK_PIN		PIN2
+#define MISO_PIN	PIN1
+#define MOSI_PIN	PIN0
+#define RESET_PIN	PIN3
 /*******************************************************************************/
 
 /********************************************************************************
