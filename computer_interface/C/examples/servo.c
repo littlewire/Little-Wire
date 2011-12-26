@@ -1,22 +1,17 @@
-/*	
+/*
 	Created: December 2011
 	by ihsan Kehribar <ihsan@kehribar.me>
 */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <time.h>
 #include "littleWire.h"
+#include "littleWire_util.h"
 #include "littleWire_servo.h"
 
-#if defined(LINUX)
-	#define	sleep_ms(duration) sleep(duration)
-#else
-	#define	sleep_ms(duration) Sleep(duration)
-#endif
 
-#define DELAY 200 		// Delay, in miliseconds
+#define DELAY 200	// Delay, in miliseconds
+
 
 int main(void)
 {
@@ -37,6 +32,6 @@ int main(void)
 		// Set two servo channels to the same location
 		servo_updateLocation(myLittleWire,currentLocation,currentLocation);
 		currentLocation++;
-		sleep_ms(DELAY);
+		delay(DELAY);
 	}
 }
