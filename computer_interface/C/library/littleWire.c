@@ -1,5 +1,5 @@
 /*
-	http://kehibar.me/projects/Little-Wire
+	http://kehribar.me/projects/Little-Wire/
 	
 	Copyright (C) <2011> ihsan Kehribar <ihsan@kehribar.me>
 	Modified by Omer Kilic <omerkilic@gmail.com>
