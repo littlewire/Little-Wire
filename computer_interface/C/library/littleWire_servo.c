@@ -54,7 +54,7 @@ void servo_init(littleWire* lwHandle)
 ********************************************************************************/
 void servo_updateLocation(littleWire* lwHandle,unsigned char locationChannelA,unsigned char locationChannelB)
 {
-	locationChannelA=(((float)((float)(locationChannelA/RANGE))*(MAX_LIMIT-MIN_LIMIT))+MIN_LIMIT)/STEP_SIZE;
+	locationChannelA=(((locationChannelA/RANGE)*(MAX_LIMIT-MIN_LIMIT))+MIN_LIMIT)/STEP_SIZE;
 	locationChannelB=(((locationChannelB/RANGE)*(MAX_LIMIT-MIN_LIMIT))+MIN_LIMIT)/STEP_SIZE;
 	updatePwmCompare(lwHandle,locationChannelA,locationChannelB);
 }
