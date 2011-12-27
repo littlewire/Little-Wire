@@ -25,6 +25,16 @@
 */
 
 #include "littleWire_servo.h"
+#include "stdio.h"
+
+/********************************************************************************
+* Useful definitions
+********************************************************************************/
+const float MIN_LIMIT = 0.45; // in miliseconds
+const float MAX_LIMIT = 2.45; // in miliseconds
+const float STEP_SIZE = 0.062; // in miliseconds
+const float RANGE = 180.0; // in degrees
+/*******************************************************************************/
 
 /********************************************************************************
 * Servo module initialization
@@ -44,7 +54,7 @@ void servo_init(littleWire* lwHandle)
 ********************************************************************************/
 void servo_updateLocation(littleWire* lwHandle,unsigned char locationChannelA,unsigned char locationChannelB)
 {
-	locationChannelA=(((locationChannelA/RANGE)*(MAX_LIMIT-MIN_LIMIT))+MIN_LIMIT)/STEP_SIZE;
+	locationChannelA=(((float)((float)(locationChannelA/RANGE))*(MAX_LIMIT-MIN_LIMIT))+MIN_LIMIT)/STEP_SIZE;
 	locationChannelB=(((locationChannelB/RANGE)*(MAX_LIMIT-MIN_LIMIT))+MIN_LIMIT)/STEP_SIZE;
 	updatePwmCompare(lwHandle,locationChannelA,locationChannelB);
 }
