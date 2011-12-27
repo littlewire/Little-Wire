@@ -80,7 +80,10 @@ enum
 	USBTINY_I2C_ADD_BUFFER, // 26
 	USBTINY_I2C_SEND_BUFFER, // 27
 	USBTINY_SPI_ADD_BUFFER, // 28
-	USBTINY_SPI_SEND_BUFFER // 29
+	USBTINY_SPI_SEND_BUFFER, // 29
+	USBTINY_I2C_REQUEST_FROM, // 30
+	USBTINY_SPI_UPDATE_DELAY, // 31
+	USBTINY_STOP_PWM // 32
 };
 
 #define	PORT	PORTB
@@ -118,6 +121,7 @@ static	uchar		res[4];		// SPI result buffer
 static uint8_t spiBuffer[SPI_BUFFER_SIZE];
 static uint8_t spiBuffer_count=0;
 static uint8_t i=0;
+static unsigned SPI_DELAY = 10; // in microseconds. USI driven SPI mode
 
 // ----------------------------------------------------------------------
 // Delay exactly <sck_period> times 0.5 microseconds (6 cycles).
@@ -425,7 +429,7 @@ uchar	usbFunctionSetup(uchar data[8])
 		cli();
 		do {
 			USICR = (1<<USIWM0)|(1<<USICS1)|(1<<USICLK)|(1<<USITC);
-			_delay_us(10);
+			_delay_us(SPI_DELAY);
 		} while ((USISR & (1<<USIOIF))==0);
 		sei();
 		data[0]=USIDR;
@@ -473,9 +477,6 @@ uchar	usbFunctionSetup(uchar data[8])
 		DDR &= ~(1<<0); // Data Input
 		DDR |= (1<<2); // Clock output
 		
-		// data[2] indicates mode
-		// data[4] indicates clock speed
-		
 		USICR = (1<<USIWM0)|(1<<USICS1)|(1<<USICLK);
 		return 0;
 	}
@@ -495,14 +496,14 @@ uchar	usbFunctionSetup(uchar data[8])
 		i2c_send(data[2]);
 		return 0;
 	}
-	if( req == USBTINY_I2C_SEND_BUFFER) // 27
+	if( req == USBTINY_I2C_SEND_BUFFER ) // 27
 	{
 		cli();
 			i2c_endTransmission(); // Actually sends the whole buffer at once here.
 		sei();
 		return 0;
 	}
-	if( req == USBTINY_SPI_ADD_BUFFER) // 28
+	if( req == USBTINY_SPI_ADD_BUFFER ) // 28
 	{
 		if(spiBuffer_count<SPI_BUFFER_SIZE)
 		{
@@ -511,7 +512,7 @@ uchar	usbFunctionSetup(uchar data[8])
 		}
 		return 0;
 	}
-	if( req == USBTINY_SPI_SEND_BUFFER) // 29
+	if( req == USBTINY_SPI_SEND_BUFFER ) // 29
 	{
 		for(i=0;i<spiBuffer_count;i++)
 		{
@@ -520,14 +521,39 @@ uchar	usbFunctionSetup(uchar data[8])
 			cli();
 			do {
 				USICR = (1<<USIWM0)|(1<<USICS1)|(1<<USICLK)|(1<<USITC);
-				_delay_us(10);
+				_delay_us(SPI_DELAY);
 			} while ((USISR & (1<<USIOIF))==0);
 			sei();
 		}
 		spiBuffer_count=0;
 		return 0;
 	}
-	
+	if( req == USBTINY_I2C_REQUEST_FROM ) // 30
+	{
+		// data[2] -> slave address
+		// data[4] -> number of bytes
+		uint8_t numBytes = data[4];
+		uint8_t i = 0;
+		if(numBytes>8)
+			numBytes=8;
+		cli();
+			i2c_requestFrom(data[2],numBytes);
+		sei();
+		for(i=0;i<numBytes;i++)
+			data[i]=i2c_receive();
+		return numBytes;
+	}
+	if( req == USBTINY_SPI_UPDATE_DELAY )
+	{
+		//SPI_DELAY = (data[3]<<8) + data[2] ;
+		return 0;
+	}
+	if( req == USBTINY_STOP_PWM )
+	{
+		TCCR0A = 0;
+		TCCR0B = 0;
+		return 0;
+	}
 	return 0;
 }
 
