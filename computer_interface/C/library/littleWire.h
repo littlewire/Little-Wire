@@ -141,6 +141,12 @@ void initPwm(littleWire* lwHandle);
 /*******************************************************************************/
 
 /********************************************************************************
+* Stop the PWM module on the device
+********************************************************************************/
+void stopPwm(littleWire* lwHandle);
+/*******************************************************************************/
+
+/********************************************************************************
 * Update the compare values of Pwm outputs
 *     channelA: Compare value of Channel A
 *     channelB: Compare value of Channel B
@@ -161,6 +167,47 @@ void updatePwmPrescale(littleWire* lwHandle, unsigned int value);
 *    Returns: Received SPI message
 ********************************************************************************/
 unsigned char sendSpiMessage(littleWire* lwHandle, unsigned char message);
+/*******************************************************************************/
+
+/********************************************************************************
+* Update SPI signal delay amount. Tune if neccessary to fit your requirements.
+*	duration: Delay in microseconds.
+********************************************************************************/
+void updateSpiDelay(littleWire* lwHandle, unsigned int duration);
+
+/********************************************************************************
+* Initialize i2c module on Little-Wire
+********************************************************************************/
+void i2c_init(littleWire* lwHandle);
+/*******************************************************************************/
+
+/********************************************************************************
+* Start the i2c tranmission
+*	address: Slave device address
+********************************************************************************/
+void i2c_beginTransmission(littleWire* lwHandle, unsigned char address);
+/*******************************************************************************/
+
+/********************************************************************************
+* Add new byte to the i2c send buffer
+*	message: A byte to send.
+********************************************************************************/
+void i2c_send(littleWire* lwHandle,unsigned char message);
+/*******************************************************************************/
+
+/********************************************************************************
+* Send the whole message buffer to the slave at once and end the tranmssion.
+********************************************************************************/
+void i2c_endTransmission(littleWire* lwHandle);
+/*******************************************************************************/
+
+/********************************************************************************
+* Request an reply / message from a slave device.
+*	address: Slave address
+*	numBytes: Number of bytes the slave will send.
+*	responseBuffer: Array pointer which will hold the response from the slave
+********************************************************************************/
+void i2c_requestFrom(littleWire* lwHandle,unsigned char address,unsigned char numBytes,unsigned char * responseBuffer);
 /*******************************************************************************/
 
 #endif
