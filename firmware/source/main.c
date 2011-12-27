@@ -117,11 +117,11 @@ static	unsigned		timeout;	// write timeout in usec
 static	uchar		cmd0;		// current read/write command byte
 static	uchar		cmd[4];		// SPI command buffer
 static	uchar		res[4];		// SPI result buffer
-#define SPI_BUFFER_SIZE 16 
+#define SPI_BUFFER_SIZE 16
 static uint8_t spiBuffer[SPI_BUFFER_SIZE];
 static uint8_t spiBuffer_count=0;
 static uint8_t i=0;
-static unsigned SPI_DELAY = 10; // in microseconds. USI driven SPI mode
+static uint16_t SPI_DELAY=10;// in microseconds. USI driven SPI mode
 
 // ----------------------------------------------------------------------
 // Delay exactly <sck_period> times 0.5 microseconds (6 cycles).
@@ -424,12 +424,15 @@ uchar	usbFunctionSetup(uchar data[8])
 	if( req == USBTINY_SINGLE_SPI ) // 21
 	{
 		char sendMessage=data[2];
+		uint16_t n;
 		USIDR = sendMessage;
 		USISR = (1<<USIOIF);
 		cli();
 		do {
 			USICR = (1<<USIWM0)|(1<<USICS1)|(1<<USICLK)|(1<<USITC);
-			_delay_us(SPI_DELAY);
+			n=SPI_DELAY;
+			while(n--) 
+				_delay_us(1);  
 		} while ((USISR & (1<<USIOIF))==0);
 		sei();
 		data[0]=USIDR;
@@ -516,12 +519,15 @@ uchar	usbFunctionSetup(uchar data[8])
 	{
 		for(i=0;i<spiBuffer_count;i++)
 		{
+			uint16_t n;
 			USIDR = spiBuffer[i];
 			USISR = (1<<USIOIF);
 			cli();
 			do {
 				USICR = (1<<USIWM0)|(1<<USICS1)|(1<<USICLK)|(1<<USITC);
-				_delay_us(SPI_DELAY);
+				n=SPI_DELAY;
+				while(n--) 
+					_delay_us(1);  
 			} while ((USISR & (1<<USIOIF))==0);
 			sei();
 		}
@@ -533,7 +539,6 @@ uchar	usbFunctionSetup(uchar data[8])
 		// data[2] -> slave address
 		// data[4] -> number of bytes
 		uint8_t numBytes = data[4];
-		uint8_t i = 0;
 		if(numBytes>8)
 			numBytes=8;
 		cli();
@@ -543,12 +548,12 @@ uchar	usbFunctionSetup(uchar data[8])
 			data[i]=i2c_receive();
 		return numBytes;
 	}
-	if( req == USBTINY_SPI_UPDATE_DELAY )
+	if( req == USBTINY_SPI_UPDATE_DELAY ) // 31
 	{
-		//SPI_DELAY = (data[3]<<8) + data[2] ;
+		SPI_DELAY = (data[3]<<8) + data[2] ;
 		return 0;
 	}
-	if( req == USBTINY_STOP_PWM )
+	if( req == USBTINY_STOP_PWM ) // 32
 	{
 		TCCR0A = 0;
 		TCCR0B = 0;
@@ -640,7 +645,7 @@ int main(void) {
 
     usbInit();
     sei();
-		
+	
 	// ADC init	
 	ADMUX|=(0<<MUX3)|(0<<MUX2)|(0<<MUX1)|(1<<MUX0);
 	ADMUX|=(0<<REFS2)|(0<<REFS1)|(0<<REFS0) |(0<<ADLAR);
