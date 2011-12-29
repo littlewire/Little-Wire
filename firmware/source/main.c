@@ -492,7 +492,7 @@ uchar	usbFunctionSetup(uchar data[8])
 	{
 		// data[2] has the TX adress
 		i2c_beginTransmission(data[2]);
-		return 0;
+		return 1;
 	}
 	if( req == USBTINY_I2C_ADD_BUFFER ) // 26
 	{
@@ -502,9 +502,9 @@ uchar	usbFunctionSetup(uchar data[8])
 	if( req == USBTINY_I2C_SEND_BUFFER ) // 27
 	{
 		cli();
-			i2c_endTransmission(); // Actually sends the whole buffer at once here.
+			data[0]=i2c_endTransmission(); // Actually sends the whole buffer at once here.
 		sei();
-		return 0;
+		return 1;
 	}
 	if( req == USBTINY_SPI_ADD_BUFFER ) // 28
 	{

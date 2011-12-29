@@ -174,7 +174,6 @@ unsigned char sendSpiMessage(littleWire* lwHandle, unsigned char message)
 void updateSpiDelay(littleWire* lwHandle, unsigned int duration)
 {
 	usb_control_msg(lwHandle, 0xC0, 31, duration, 0, rxBuffer, 8, usbTimeout);
-
 }
 /*******************************************************************************/
 
