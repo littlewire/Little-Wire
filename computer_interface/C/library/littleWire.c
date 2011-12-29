@@ -1,9 +1,9 @@
 /*
 	http://kehribar.me/projects/Little-Wire/
-	
+
 	Copyright (C) <2011> ihsan Kehribar <ihsan@kehribar.me>
 	Modified by Omer Kilic <omerkilic@gmail.com>
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy of
 	this software and associated documentation files (the "Software"), to deal in
 	the Software without restriction, including without limitation the rights to
@@ -25,6 +25,8 @@
 */
 
 #include "littleWire.h"
+
+char rxBuffer[RX_BUFFER_SIZE];
 
 
 /********************************************************************************
