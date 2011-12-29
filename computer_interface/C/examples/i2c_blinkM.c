@@ -56,6 +56,6 @@ int main()
 		i2c_send(myLittleWire,i*3);
 		i2c_send(myLittleWire,255-i);
 		i2c_endTransmission(myLittleWire);
-		delay(30);
+		delay(10);
 	}
 }

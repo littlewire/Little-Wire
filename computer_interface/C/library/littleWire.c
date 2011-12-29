@@ -155,6 +155,16 @@ void updatePwmPrescale(littleWire* lwHandle, unsigned int value)
 /*******************************************************************************/
 
 /********************************************************************************
+* Initialize SPI module
+********************************************************************************/
+void initSpi(littleWire* lwHandle)
+{
+	usb_control_msg(lwHandle, 0xC0, 23, 0, 0, rxBuffer, 8, usbTimeout);
+}
+/*******************************************************************************/
+
+
+/********************************************************************************
 * Send one byte SPI message. Chip select is manual.
 *    message: Message to send
 *    Returns: Received SPI message
