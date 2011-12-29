@@ -36,7 +36,7 @@ littleWire* littleWire_connect()
 	littleWire  *tempHandle = NULL;
 
 	usb_init();
-	usbOpenDevice(&tempHandle, vendorID, "*", productID, "*", "*", NULL, NULL );
+	usbOpenDevice(&tempHandle, VENDOR_ID, "*", PRODUCT_ID, "*", "*", NULL, NULL );
 
 	return tempHandle;
 }
@@ -50,9 +50,9 @@ littleWire* littleWire_connect()
 void digitalWrite(littleWire* lwHandle, unsigned char pin, unsigned char state)
 {
 	if(state){
-		usb_control_msg(lwHandle, 0xC0, 18, pin, 0, rxBuffer, 8, usbTimeout);
+		usb_control_msg(lwHandle, 0xC0, 18, pin, 0, rxBuffer, 8, USB_TIMEOUT);
 	} else{
-		usb_control_msg(lwHandle, 0xC0, 19, pin, 0, rxBuffer, 8, usbTimeout);
+		usb_control_msg(lwHandle, 0xC0, 19, pin, 0, rxBuffer, 8, USB_TIMEOUT);
 	}
 }
 /*******************************************************************************/
@@ -65,9 +65,9 @@ void digitalWrite(littleWire* lwHandle, unsigned char pin, unsigned char state)
 void pinMode(littleWire* lwHandle, unsigned char pin, unsigned char mode)
 {
 	if(mode){
-		usb_control_msg(lwHandle, 0xC0, 13, pin, 0, rxBuffer, 8, usbTimeout);
+		usb_control_msg(lwHandle, 0xC0, 13, pin, 0, rxBuffer, 8, USB_TIMEOUT);
 	} else {
-		usb_control_msg(lwHandle, 0xC0, 14, pin, 0, rxBuffer, 8, usbTimeout);
+		usb_control_msg(lwHandle, 0xC0, 14, pin, 0, rxBuffer, 8, USB_TIMEOUT);
 	}
 }
 /*******************************************************************************/
@@ -79,7 +79,7 @@ void pinMode(littleWire* lwHandle, unsigned char pin, unsigned char mode)
 ********************************************************************************/
 unsigned char digitalRead(littleWire* lwHandle, unsigned char pin)
 {
-	usb_control_msg(lwHandle, 0xC0, 21, pin, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 21, pin, 0, rxBuffer, 8, USB_TIMEOUT);
 
 	return rxBuffer[0];
 }
@@ -92,7 +92,7 @@ unsigned char digitalRead(littleWire* lwHandle, unsigned char pin)
 ********************************************************************************/
 unsigned int analogRead(littleWire* lwHandle, unsigned char channel)
 {
-	usb_control_msg(lwHandle, 0xC0, 15, channel, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 15, channel, 0, rxBuffer, 8, USB_TIMEOUT);
 
 	return ((rxBuffer[1] <<8) + (rxBuffer[0]));
 }
@@ -103,7 +103,7 @@ unsigned int analogRead(littleWire* lwHandle, unsigned char channel)
 ********************************************************************************/
 void initPwm(littleWire* lwHandle)
 {
-	usb_control_msg(lwHandle, 0xC0, 16, 0, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 16, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -114,7 +114,7 @@ void initPwm(littleWire* lwHandle)
 /*******************************************************************************/
 void updatePwmCompare(littleWire* lwHandle, unsigned char channelA, unsigned char channelB)
 {
-	usb_control_msg(lwHandle, 0xC0, 17, channelA, channelB, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 17, channelA, channelB, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -127,19 +127,19 @@ void updatePwmPrescale(littleWire* lwHandle, unsigned int value)
 	switch(value)
 	{
 		case 1024:
-			usb_control_msg(lwHandle, 0xC0, 22, 4, 0, rxBuffer, 8, usbTimeout);
+			usb_control_msg(lwHandle, 0xC0, 22, 4, 0, rxBuffer, 8, USB_TIMEOUT);
 		break;
 		case 256:
-			usb_control_msg(lwHandle, 0xC0, 22, 3, 0, rxBuffer, 8, usbTimeout);
+			usb_control_msg(lwHandle, 0xC0, 22, 3, 0, rxBuffer, 8, USB_TIMEOUT);
 		break;
 		case 64:
-			usb_control_msg(lwHandle, 0xC0, 22, 2, 0, rxBuffer, 8, usbTimeout);
+			usb_control_msg(lwHandle, 0xC0, 22, 2, 0, rxBuffer, 8, USB_TIMEOUT);
 		break;
 		case 8:
-			usb_control_msg(lwHandle, 0xC0, 22, 1, 0, rxBuffer, 8, usbTimeout);
+			usb_control_msg(lwHandle, 0xC0, 22, 1, 0, rxBuffer, 8, USB_TIMEOUT);
 		break;
 		case 1:
-			usb_control_msg(lwHandle, 0xC0, 22, 0, 0, rxBuffer, 8, usbTimeout);
+			usb_control_msg(lwHandle, 0xC0, 22, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 		break;
 	}
 }
@@ -152,7 +152,7 @@ void updatePwmPrescale(littleWire* lwHandle, unsigned int value)
 ********************************************************************************/
 unsigned char sendSpiMessage(littleWire* lwHandle, unsigned char message)
 {
-	usb_control_msg(lwHandle, 0xC0, 21, message, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 21, message, 0, rxBuffer, 8, USB_TIMEOUT);
 
 	return rxBuffer[0];
 }
