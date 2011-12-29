@@ -11,10 +11,6 @@
 #include "littleWire.h"
 #include "littleWire_util.h"
 
-
-#define BUTTON		PIN1	// Pin button is connected to (active low)
-#define DEBOUNCE	100	// Debounce delay, in microseconds
-
 unsigned char receiveBuffer[8];
 int index=0;
 int addressFound=0;
