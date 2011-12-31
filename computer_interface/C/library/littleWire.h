@@ -44,8 +44,11 @@
 #define INPUT	1
 #define OUTPUT	0
 
-#define LOW	0
+#define LOW		0
 #define HIGH	1
+
+#define AUTO_CS 1
+#define MANUAL_CS 0
 
 typedef usb_dev_handle littleWire;
 /*******************************************************************************/
@@ -173,6 +176,16 @@ void initSpi(littleWire* lwHandle);
 *    Returns: Received SPI message
 ********************************************************************************/
 unsigned char sendSpiMessage(littleWire* lwHandle, unsigned char message);
+/*******************************************************************************/
+
+/********************************************************************************
+* Send multiple SPI messages. Chip select is manual.
+*    sendBuffer: Message array to send
+*    inputBuffer: Returned answer message
+*	 length: Message length - maximum 4
+*	 mode: 1 for auto chip select , 0 for manual
+********************************************************************************/
+void sendSpiMessage_multiple(littleWire* lwHandle, unsigned char * sendBuffer, unsigned char * inputBuffer, unsigned char length ,unsigned char mode);
 /*******************************************************************************/
 
 /********************************************************************************

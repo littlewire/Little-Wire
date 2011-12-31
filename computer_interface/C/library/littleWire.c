@@ -25,6 +25,7 @@
 */
 
 #include "littleWire.h"
+#include <stdio.h>
 
 
 /********************************************************************************
@@ -178,6 +179,24 @@ unsigned char sendSpiMessage(littleWire* lwHandle, unsigned char message)
 /*******************************************************************************/
 
 /********************************************************************************
+* Send multiple SPI messages. Chip select is manual.
+*    sendBuffer: Message array to send
+*    inputBuffer: Returned answer message
+*	 length: Message length - maximum 4
+*	 mode: 1 for auto chip select , 0 for manual
+********************************************************************************/
+void sendSpiMessage_multiple(littleWire* lwHandle, unsigned char * sendBuffer, unsigned char * inputBuffer, unsigned char length ,unsigned char mode)
+{
+	int i=0;
+	if(length>4)
+		length=4;
+	usb_control_msg(lwHandle, 0xC0, (0xF0 + length + (mode<<3) ), (sendBuffer[1]<<8) + sendBuffer[0] , (sendBuffer[3]<<8) + sendBuffer[2], rxBuffer, 8, usbTimeout);
+	for(i=0;i<length;i++)
+		inputBuffer[i]=rxBuffer[i];
+}
+/*******************************************************************************/
+
+/********************************************************************************
 * Update SPI signal delay amount. Tune if neccessary to fit your requirements.
 *	duration: Delay in microseconds.
 ********************************************************************************/
@@ -233,8 +252,12 @@ void i2c_endTransmission(littleWire* lwHandle)
 ********************************************************************************/
 void i2c_requestFrom(littleWire* lwHandle,unsigned char address,unsigned char numBytes,unsigned char* responseBuffer)
 {
-	int i;
+	int i,k;
 	usb_control_msg(lwHandle, 0xC0, 30, address, numBytes, rxBuffer, 8, usbTimeout);
+	
+	for(k=0;k<8;k++)
+		printf("%d-%d\n",k,rxBuffer[k]);
+	
 	for(i=0;i<numBytes;i++)
 		responseBuffer[i]=rxBuffer[i];
 }

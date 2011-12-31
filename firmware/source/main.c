@@ -492,7 +492,7 @@ uchar	usbFunctionSetup(uchar data[8])
 	{
 		// data[2] has the TX adress
 		i2c_beginTransmission(data[2]);
-		return 1;
+		return 0;
 	}
 	if( req == USBTINY_I2C_ADD_BUFFER ) // 26
 	{
@@ -504,6 +504,7 @@ uchar	usbFunctionSetup(uchar data[8])
 		cli();
 			data[0]=i2c_endTransmission(); // Actually sends the whole buffer at once here.
 		sei();
+		usbMsgPtr = data;
 		return 1;
 	}
 	if( req == USBTINY_SPI_ADD_BUFFER ) // 28
@@ -546,6 +547,7 @@ uchar	usbFunctionSetup(uchar data[8])
 		sei();
 		for(i=0;i<numBytes;i++)
 			data[i]=i2c_receive();
+		usbMsgPtr = data;
 		return numBytes;
 	}
 	if( req == USBTINY_SPI_UPDATE_DELAY ) // 31
@@ -558,6 +560,31 @@ uchar	usbFunctionSetup(uchar data[8])
 		TCCR0A = 0;
 		TCCR0B = 0;
 		return 0;
+	}
+	// Special multiple SPI message send function
+	if ( ( req & 0xF0) == 0xF0)
+	{
+		static uint16_t n;
+		cli();
+			if(req&0x08) // Auto chip select
+				PORT &= ~(1<<5);
+			for(i=0;i<(req&0x07);i++)
+			{
+				USIDR = data[2+i];
+				USISR = (1<<USIOIF);
+				do {
+					USICR = (1<<USIWM0)|(1<<USICS1)|(1<<USICLK)|(1<<USITC);
+					n=SPI_DELAY;
+					while(n--) 
+						_delay_us(1);  
+				} while ((USISR & (1<<USIOIF))==0);
+				data[i]=USIDR;
+			}
+			if(req&0x08) // Auto chip select
+				PORT |= (1<<5);
+		sei();
+		usbMsgPtr = data;
+		return (req&0x07);
 	}
 	return 0;
 }
