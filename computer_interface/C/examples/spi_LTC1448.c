@@ -27,6 +27,8 @@ int main()
 	}
 
 	initSpi(myLittleWire);
+	
+	// RESET_PIN will be used as a chip select pin
 	pinMode(myLittleWire,RESET_PIN,OUTPUT);
 	digitalWrite(myLittleWire,RESET_PIN,HIGH);
 	
@@ -47,7 +49,8 @@ int main()
 	
 		sendSpiMessage_multiple(myLittleWire,sendBuffer,receiveBuffer,3,AUTO_CS); // Send 3 consequent messages with automatic chip select mode
 	
-		/* Alternative with manual chip select 
+		// Alternative with manual chip select 
+		/*
 			digitalWrite(myLittleWire,RESET_PIN,LOW); // Chip select low		
 				sendSpiMessage_multiple(myLittleWire,sendBuffer,receiveBuffer,3,MANUAL_CS);
 			digitalWrite(myLittleWire,RESET_PIN,HIGH); // Chip select high
