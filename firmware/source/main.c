@@ -80,7 +80,10 @@ enum
 	USBTINY_I2C_ADD_BUFFER, // 26
 	USBTINY_I2C_SEND_BUFFER, // 27
 	USBTINY_SPI_ADD_BUFFER, // 28
-	USBTINY_SPI_SEND_BUFFER // 29
+	USBTINY_SPI_SEND_BUFFER, // 29
+	USBTINY_I2C_REQUEST_FROM, // 30
+	USBTINY_SPI_UPDATE_DELAY, // 31
+	USBTINY_STOP_PWM // 32
 };
 
 #define	PORT	PORTB
@@ -114,10 +117,11 @@ static	unsigned		timeout;	// write timeout in usec
 static	uchar		cmd0;		// current read/write command byte
 static	uchar		cmd[4];		// SPI command buffer
 static	uchar		res[4];		// SPI result buffer
-#define SPI_BUFFER_SIZE 16 
+#define SPI_BUFFER_SIZE 16
 static uint8_t spiBuffer[SPI_BUFFER_SIZE];
 static uint8_t spiBuffer_count=0;
 static uint8_t i=0;
+static uint16_t SPI_DELAY=10;// in microseconds. USI driven SPI mode
 
 // ----------------------------------------------------------------------
 // Delay exactly <sck_period> times 0.5 microseconds (6 cycles).
@@ -420,12 +424,15 @@ uchar	usbFunctionSetup(uchar data[8])
 	if( req == USBTINY_SINGLE_SPI ) // 21
 	{
 		char sendMessage=data[2];
+		uint16_t n;
 		USIDR = sendMessage;
 		USISR = (1<<USIOIF);
 		cli();
 		do {
 			USICR = (1<<USIWM0)|(1<<USICS1)|(1<<USICLK)|(1<<USITC);
-			_delay_us(10);
+			n=SPI_DELAY;
+			while(n--) 
+				_delay_us(1);  
 		} while ((USISR & (1<<USIOIF))==0);
 		sei();
 		data[0]=USIDR;
@@ -473,9 +480,6 @@ uchar	usbFunctionSetup(uchar data[8])
 		DDR &= ~(1<<0); // Data Input
 		DDR |= (1<<2); // Clock output
 		
-		// data[2] indicates mode
-		// data[4] indicates clock speed
-		
 		USICR = (1<<USIWM0)|(1<<USICS1)|(1<<USICLK);
 		return 0;
 	}
@@ -495,14 +499,15 @@ uchar	usbFunctionSetup(uchar data[8])
 		i2c_send(data[2]);
 		return 0;
 	}
-	if( req == USBTINY_I2C_SEND_BUFFER) // 27
+	if( req == USBTINY_I2C_SEND_BUFFER ) // 27
 	{
 		cli();
-			i2c_endTransmission(); // Actually sends the whole buffer at once here.
+			data[0]=i2c_endTransmission(); // Actually sends the whole buffer at once here.
 		sei();
-		return 0;
+		usbMsgPtr = data;
+		return 1;
 	}
-	if( req == USBTINY_SPI_ADD_BUFFER) // 28
+	if( req == USBTINY_SPI_ADD_BUFFER ) // 28
 	{
 		if(spiBuffer_count<SPI_BUFFER_SIZE)
 		{
@@ -511,23 +516,76 @@ uchar	usbFunctionSetup(uchar data[8])
 		}
 		return 0;
 	}
-	if( req == USBTINY_SPI_SEND_BUFFER) // 29
+	if( req == USBTINY_SPI_SEND_BUFFER ) // 29
 	{
 		for(i=0;i<spiBuffer_count;i++)
 		{
+			uint16_t n;
 			USIDR = spiBuffer[i];
 			USISR = (1<<USIOIF);
 			cli();
 			do {
 				USICR = (1<<USIWM0)|(1<<USICS1)|(1<<USICLK)|(1<<USITC);
-				_delay_us(10);
+				n=SPI_DELAY;
+				while(n--) 
+					_delay_us(1);  
 			} while ((USISR & (1<<USIOIF))==0);
 			sei();
 		}
 		spiBuffer_count=0;
 		return 0;
 	}
-	
+	if( req == USBTINY_I2C_REQUEST_FROM ) // 30
+	{
+		// data[2] -> slave address
+		// data[4] -> number of bytes
+		uint8_t numBytes = data[4];
+		if(numBytes>8)
+			numBytes=8;
+		cli();
+			i2c_requestFrom(data[2],numBytes);
+		sei();
+		for(i=0;i<numBytes;i++)
+			data[i]=i2c_receive();
+		usbMsgPtr = data;
+		return numBytes;
+	}
+	if( req == USBTINY_SPI_UPDATE_DELAY ) // 31
+	{
+		SPI_DELAY = (data[3]<<8) + data[2] ;
+		return 0;
+	}
+	if( req == USBTINY_STOP_PWM ) // 32
+	{
+		TCCR0A = 0;
+		TCCR0B = 0;
+		return 0;
+	}
+	// Special multiple SPI message send function
+	if ( ( req & 0xF0) == 0xF0)
+	{
+		static uint16_t n;
+		cli();
+			if(req&0x08) // Auto chip select
+				PORT &= ~(1<<5);
+			for(i=0;i<(req&0x07);i++)
+			{
+				USIDR = data[2+i];
+				USISR = (1<<USIOIF);
+				do {
+					USICR = (1<<USIWM0)|(1<<USICS1)|(1<<USICLK)|(1<<USITC);
+					n=SPI_DELAY;
+					while(n--) 
+						_delay_us(1);  
+				} while ((USISR & (1<<USIOIF))==0);
+				data[i]=USIDR;
+			}
+			if(req&0x08) // Auto chip select
+				PORT |= (1<<5);
+		sei();
+		usbMsgPtr = data;
+		return (req&0x07);
+	}
 	return 0;
 }
 
@@ -614,7 +672,7 @@ int main(void) {
 
     usbInit();
     sei();
-		
+	
 	// ADC init	
 	ADMUX|=(0<<MUX3)|(0<<MUX2)|(0<<MUX1)|(1<<MUX0);
 	ADMUX|=(0<<REFS2)|(0<<REFS1)|(0<<REFS0) |(0<<ADLAR);

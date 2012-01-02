@@ -25,6 +25,7 @@
 */
 
 #include "littleWire.h"
+#include <stdio.h>
 
 char rxBuffer[RX_BUFFER_SIZE];
 
@@ -110,6 +111,15 @@ void initPwm(littleWire* lwHandle)
 /*******************************************************************************/
 
 /********************************************************************************
+* Stop the PWM module on the device
+********************************************************************************/
+void stopPwm(littleWire* lwHandle)
+{
+	usb_control_msg(lwHandle, 0xC0, 32, 0, 0, rxBuffer, 8, usbTimeout);
+}
+/*******************************************************************************/
+
+/********************************************************************************
 * Update the compare values of Pwm outputs
 *     channelA: Compare value of Channel A
 *     channelB: Compare value of Channel B
@@ -148,6 +158,16 @@ void updatePwmPrescale(littleWire* lwHandle, unsigned int value)
 /*******************************************************************************/
 
 /********************************************************************************
+* Initialize SPI module
+********************************************************************************/
+void initSpi(littleWire* lwHandle)
+{
+	usb_control_msg(lwHandle, 0xC0, 23, 0, 0, rxBuffer, 8, usbTimeout);
+}
+/*******************************************************************************/
+
+
+/********************************************************************************
 * Send one byte SPI message. Chip select is manual.
 *    message: Message to send
 *    Returns: Received SPI message
@@ -160,3 +180,87 @@ unsigned char sendSpiMessage(littleWire* lwHandle, unsigned char message)
 }
 /*******************************************************************************/
 
+/********************************************************************************
+* Send multiple SPI messages. Chip select is manual.
+*    sendBuffer: Message array to send
+*    inputBuffer: Returned answer message
+*	 length: Message length - maximum 4
+*	 mode: 1 for auto chip select , 0 for manual
+********************************************************************************/
+void sendSpiMessage_multiple(littleWire* lwHandle, unsigned char * sendBuffer, unsigned char * inputBuffer, unsigned char length ,unsigned char mode)
+{
+	int i=0;
+	if(length>4)
+		length=4;
+	usb_control_msg(lwHandle, 0xC0, (0xF0 + length + (mode<<3) ), (sendBuffer[1]<<8) + sendBuffer[0] , (sendBuffer[3]<<8) + sendBuffer[2], rxBuffer, 8, usbTimeout);
+	for(i=0;i<length;i++)
+		inputBuffer[i]=rxBuffer[i];
+}
+/*******************************************************************************/
+
+/********************************************************************************
+* Update SPI signal delay amount. Tune if neccessary to fit your requirements.
+*	duration: Delay in microseconds.
+********************************************************************************/
+void updateSpiDelay(littleWire* lwHandle, unsigned int duration)
+{
+	usb_control_msg(lwHandle, 0xC0, 31, duration, 0, rxBuffer, 8, usbTimeout);
+}
+/*******************************************************************************/
+
+/********************************************************************************
+* Initialize i2c module on Little-Wire
+********************************************************************************/
+void i2c_init(littleWire* lwHandle)
+{
+	usb_control_msg(lwHandle, 0xC0, 24, 0, 0, rxBuffer, 8, usbTimeout);
+}
+/*******************************************************************************/
+
+/********************************************************************************
+* Start the i2c tranmission
+*	address: Slave device address
+********************************************************************************/
+void i2c_beginTransmission(littleWire* lwHandle, unsigned char address)
+{
+	usb_control_msg(lwHandle, 0xC0, 25, address, 0, rxBuffer, 8, usbTimeout);
+}
+/*******************************************************************************/
+
+/********************************************************************************
+* Add new byte to the i2c send buffer
+*	message: A byte to send.
+********************************************************************************/
+void i2c_send(littleWire* lwHandle,unsigned char message)
+{
+	usb_control_msg(lwHandle, 0xC0, 26, message, 0, rxBuffer, 8, usbTimeout);
+}
+/*******************************************************************************/
+
+/********************************************************************************
+* Send the whole message buffer to the slave at once and end the tranmssion.
+********************************************************************************/
+void i2c_endTransmission(littleWire* lwHandle)
+{
+	usb_control_msg(lwHandle, 0xC0, 27, 0, 0, rxBuffer, 8, usbTimeout);
+}
+/*******************************************************************************/
+
+/********************************************************************************
+* Request an reply / message from a slave device.
+*	address: Slave address
+*	numBytes: Number of bytes the slave will send.
+*	responseBuffer: Array pointer which will hold the response from the slave
+********************************************************************************/
+void i2c_requestFrom(littleWire* lwHandle,unsigned char address,unsigned char numBytes,unsigned char* responseBuffer)
+{
+	int i,k;
+	usb_control_msg(lwHandle, 0xC0, 30, address, numBytes, rxBuffer, 8, usbTimeout);
+	
+	for(k=0;k<8;k++)
+		printf("%d-%d\n",k,rxBuffer[k]);
+	
+	for(i=0;i<numBytes;i++)
+		responseBuffer[i]=rxBuffer[i];
+}
+/*******************************************************************************/

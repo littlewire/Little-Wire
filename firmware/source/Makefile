@@ -15,7 +15,7 @@ FUSE_EXT  = 0xfe
 AVRDUDE = avrdude -c avrisp -b 19200 -P com3 -p t85 -V -U flash:w:main.hex
 
 CFLAGS  = -Iusbdrv -I. -Itwi_i2c -DDEBUG_LEVEL=0
-OBJECTS = usbdrv/usbdrv.o usbdrv/usbdrvasm.o usbdrv/oddebug.o twi_i2c/TinyWireM.o twi_i2c/USI_TWI_Master.o main.o
+OBJECTS = usbdrv/usbdrv.o usbdrv/usbdrvasm.o usbdrv/oddebug.o twi_i2c/TinyWireM.o twi_i2c/USI_TWI_Master.o main.o 
 
 COMPILE = avr-gcc -Wall -Os -DF_CPU=$(F_CPU) $(CFLAGS) -mmcu=$(DEVICE)
 
@@ -44,7 +44,7 @@ flash: main.hex
 
 # rule for deleting dependent files (those which can be built by Make):
 clean:
-	rm -f main.hex main.lst main.obj main.cof main.list main.map main.eep.hex main.elf *.o usbdrv/*.o twi_i2c/*.o twi_spi/*.o main.s usbdrv/oddebug.s usbdrv/usbdrv.s
+	rm -f main.hex main.lst main.obj main.cof main.list main.map main.eep.hex main.elf *.o usbdrv/*.o twi_i2c/*.o  icsp/*.o main.s usbdrv/oddebug.s usbdrv/usbdrv.s
 
 # Generic rule for compiling C files:
 .c.o:

@@ -9,15 +9,15 @@
 #include "littleWire_util.h"
 #include "littleWire_servo.h"
 
+#define DELAY 10	// Delay, in miliseconds
 
-#define DELAY 200	// Delay, in miliseconds
-
+unsigned char currentLocation = 0;
+unsigned char direction=1;	
 
 int main(void)
 {
 	littleWire *myLittleWire = NULL;
-	unsigned char currentLocation = 0;
-
+	
 	myLittleWire = littleWire_connect();
 
 	if(myLittleWire == NULL){
@@ -27,11 +27,23 @@ int main(void)
 
 	servo_init(myLittleWire);
 
-	for(;;){
+	for(;;)
+	{
 		printf("Current locations: %d\n",currentLocation);
+
 		// Set two servo channels to the same location
 		servo_updateLocation(myLittleWire,currentLocation,currentLocation);
-		currentLocation++;
+
+		if(direction)
+			currentLocation++;
+		else
+			currentLocation--;
+
+		if(currentLocation==180)
+			direction=0;
+		else if(currentLocation==0)
+			direction=1;
+
 		delay(DELAY);
 	}
 }
