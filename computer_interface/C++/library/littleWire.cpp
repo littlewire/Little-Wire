@@ -1,29 +1,28 @@
-/*
-	http://kehribar.me/projects/Little-Wire/
 
-	Copyright (C) <2011> ihsan Kehribar <ihsan@kehribar.me>
-	Copyright (C) <2011> Omer Kilic <omerkilic@gmail.com>
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy of
-	this software and associated documentation files (the "Software"), to deal in
-	the Software without restriction, including without limitation the rights to
-	use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-	of the Software, and to permit persons to whom the Software is furnished to do
-	so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in all
-	copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-	SOFTWARE.
-
-*/
-
+/**
+ * @author Ihsan Kehribar <ihsan@kehribar.me>
+ * @author Omer Kilic <omerkilic@gmail.com>
+ * @version 0.9
+ *
+ * @section LICENSE
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ * of the Software, and to permit persons to whom the Software is furnished to do
+ * so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 
 #include "littleWire.h"
 
@@ -32,10 +31,6 @@
 //namespace LittleWire
 //{
 
-/********************************************************************************
-* Try to connect to the device
-*     Returns: lwHandle for success, 0 for fail
-********************************************************************************/
 littleWire::littleWire()
 {
 	this->lwHandle = NULL;
@@ -46,7 +41,12 @@ littleWire::littleWire()
 
 	// throw exception if handle == NULL?
 }
-/*******************************************************************************/
+
+littleWire::~littleWire()
+{
+	this->lwHandle = NULL;
+}
+
 
 /********************************************************************************
 * Set a GPIO pin High/Low
@@ -61,7 +61,7 @@ void littleWire::digitalWrite(unsigned char pin, unsigned char state)
 		usb_control_msg(this->lwHandle, 0xC0, 19, pin, 0, rxBuffer, 8, USB_TIMEOUT);
 	}
 }
-/*******************************************************************************/
+
 
 /********************************************************************************
 * Set a GPIO pin input/output
@@ -76,7 +76,7 @@ void littleWire::pinMode(unsigned char pin, unsigned char mode)
 		usb_control_msg(this->lwHandle, 0xC0, 14, pin, 0, rxBuffer, 8, USB_TIMEOUT);
 	}
 }
-/*******************************************************************************/
+
 
 /********************************************************************************
 * Read a state of a GPIO pin
@@ -89,7 +89,7 @@ unsigned char littleWire::digitalRead(unsigned char pin)
 
 	return rxBuffer[0];
 }
-/*******************************************************************************/
+
 
 /********************************************************************************
 * Read analog voltage from a spesific channel
@@ -102,7 +102,7 @@ unsigned int littleWire::analogRead(unsigned char channel)
 
 	return ((rxBuffer[1] <<8) + (rxBuffer[0]));
 }
-/*******************************************************************************/
+
 
 /********************************************************************************
 * Initialize the Pwm module on the device
@@ -111,7 +111,7 @@ void littleWire::pwm_init()
 {
 	usb_control_msg(this->lwHandle, 0xC0, 16, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 }
-/*******************************************************************************/
+
 
 /********************************************************************************
 * Stop the PWM module on the device
@@ -120,18 +120,18 @@ void littleWire::pwm_stop()
 {
 	usb_control_msg(this->lwHandle, 0xC0, 32, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 }
-/*******************************************************************************/
+
 
 /********************************************************************************
 * Update the compare values of Pwm outputs
 *     channelA: Compare value of Channel A
 *     channelB: Compare value of Channel B
-/*******************************************************************************/
+
 void littleWire::pwm_updateCompare(unsigned char channelA, unsigned char channelB)
 {
 	usb_control_msg(this->lwHandle, 0xC0, 17, channelA, channelB, rxBuffer, 8, USB_TIMEOUT);
 }
-/*******************************************************************************/
+
 
 /********************************************************************************
 * Change the Pwm prescaler. Default: 1024
@@ -158,7 +158,7 @@ void littleWire::pwm_updatePrescaler(unsigned int value)
 		break;
 	}
 }
-/*******************************************************************************/
+
 
 /********************************************************************************
 * Initialize SPI module
@@ -167,7 +167,7 @@ void littleWire::spi_init()
 {
 	usb_control_msg(this->lwHandle, 0xC0, 23, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 }
-/*******************************************************************************/
+
 
 
 /********************************************************************************
@@ -181,7 +181,7 @@ unsigned char littleWire::spi_sendMessage(unsigned char message)
 
 	return rxBuffer[0];
 }
-/*******************************************************************************/
+
 
 /********************************************************************************
 * Send multiple SPI messages. Chip select is manual.
@@ -199,7 +199,7 @@ void littleWire::spi_sendMessageMulti(unsigned char* sendBuffer, unsigned char* 
 	for(i=0;i<length;i++)
 		inputBuffer[i]=rxBuffer[i];
 }
-/*******************************************************************************/
+
 
 /********************************************************************************
 * Update SPI signal delay amount. Tune if neccessary to fit your requirements.
@@ -209,7 +209,7 @@ void littleWire::spi_updateDelay(unsigned int duration)
 {
 	usb_control_msg(this->lwHandle, 0xC0, 31, duration, 0, rxBuffer, 8, USB_TIMEOUT);
 }
-/*******************************************************************************/
+
 
 /********************************************************************************
 * Initialize i2c module on Little-Wire
@@ -218,7 +218,7 @@ void littleWire::i2c_init()
 {
 	usb_control_msg(lwHandle, 0xC0, 24, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 }
-/*******************************************************************************/
+
 
 /********************************************************************************
 * Start the i2c tranmission
@@ -228,7 +228,7 @@ void littleWire::i2c_beginTransmission(unsigned char address)
 {
 	usb_control_msg(this->lwHandle, 0xC0, 25, address, 0, rxBuffer, 8, USB_TIMEOUT);
 }
-/*******************************************************************************/
+
 
 /********************************************************************************
 * Add new byte to the i2c send buffer
@@ -238,7 +238,7 @@ void littleWire::i2c_send(unsigned char message)
 {
 	usb_control_msg(this->lwHandle, 0xC0, 26, message, 0, rxBuffer, 8, USB_TIMEOUT);
 }
-/*******************************************************************************/
+
 
 /********************************************************************************
 * Send the whole message buffer to the slave at once and end the tranmssion.
@@ -247,7 +247,7 @@ void littleWire::i2c_endTransmission()
 {
 	usb_control_msg(this->lwHandle, 0xC0, 27, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 }
-/*******************************************************************************/
+
 
 /********************************************************************************
 * Request an reply / message from a slave device.
@@ -266,4 +266,32 @@ void littleWire::i2c_requestFrom(unsigned char address,unsigned char numBytes,un
 	for(i=0;i<numBytes;i++)
 		responseBuffer[i]=rxBuffer[i];
 }
-/*******************************************************************************/
+
+
+/********************************************************************************
+* Servo module initialization
+********************************************************************************/
+void littleWire::servo_init()
+{
+	pwm_init(); // Initialize the PWM hardware.
+	pinMode(PWMA, OUTPUT);
+	pinMode(PWMB, OUTPUT); // Set PWM pins output.
+	pwm_updatePrescaler(1024); // Make sure the PWM prescaler is set correctly.
+}
+
+
+/********************************************************************************
+* Servo locations update
+*	locationChannelA in degrees
+*	locationChannelB in degrees
+********************************************************************************/
+void littleWire::servo_updateLocation(unsigned char locationChannelA, unsigned char locationChannelB)
+{
+	locationChannelA=(((locationChannelA/RANGE)*(MAX_LIMIT-MIN_LIMIT))+MIN_LIMIT)/STEP_SIZE;
+	locationChannelB=(((locationChannelB/RANGE)*(MAX_LIMIT-MIN_LIMIT))+MIN_LIMIT)/STEP_SIZE;
+	pwm_updateCompare(locationChannelA,locationChannelB);
+}
+
+
+//} //namespace
+

@@ -21,7 +21,7 @@ INCLUDE = library
 CFLAGS = $(USBFLAGS) $(LIBS) -I$(INCLUDE) -O -Wall -pedantic -g $(OSFLAG)
 CXXFLAGS = $(USBFLAGS) $(LIBS) -I$(INCLUDE) -O -Wall -pedantic -g $(OSFLAG)
 
-LWLIBS = opendevice littleWire #littleWire_util littleWire_servo
+LWLIBS = opendevice littleWire util
 EXAMPLES = #adc blink button servo
 
 .PHONY:	clean library docs
@@ -34,6 +34,7 @@ $(LWLIBS):
 	@echo Building libraries...
 	$(CXX) $(CXXFLAGS) -c library/littleWire.cpp
 	$(CC) $(CFLAGS) -c library/opendevice.c
+	$(CC) $(CFLAGS) -c library/util.c
 
 $(EXAMPLES): $(addsuffix .o, $(LWLIBS))
 	@echo Building example: $@...
