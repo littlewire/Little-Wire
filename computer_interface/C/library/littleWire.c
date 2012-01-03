@@ -115,7 +115,7 @@ void initPwm(littleWire* lwHandle)
 ********************************************************************************/
 void stopPwm(littleWire* lwHandle)
 {
-	usb_control_msg(lwHandle, 0xC0, 32, 0, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 32, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -162,7 +162,7 @@ void updatePwmPrescale(littleWire* lwHandle, unsigned int value)
 ********************************************************************************/
 void initSpi(littleWire* lwHandle)
 {
-	usb_control_msg(lwHandle, 0xC0, 23, 0, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 23, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -192,7 +192,7 @@ void sendSpiMessage_multiple(littleWire* lwHandle, unsigned char * sendBuffer, u
 	int i=0;
 	if(length>4)
 		length=4;
-	usb_control_msg(lwHandle, 0xC0, (0xF0 + length + (mode<<3) ), (sendBuffer[1]<<8) + sendBuffer[0] , (sendBuffer[3]<<8) + sendBuffer[2], rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, (0xF0 + length + (mode<<3) ), (sendBuffer[1]<<8) + sendBuffer[0] , (sendBuffer[3]<<8) + sendBuffer[2], rxBuffer, 8, USB_TIMEOUT);
 	for(i=0;i<length;i++)
 		inputBuffer[i]=rxBuffer[i];
 }
@@ -204,7 +204,7 @@ void sendSpiMessage_multiple(littleWire* lwHandle, unsigned char * sendBuffer, u
 ********************************************************************************/
 void updateSpiDelay(littleWire* lwHandle, unsigned int duration)
 {
-	usb_control_msg(lwHandle, 0xC0, 31, duration, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 31, duration, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -213,7 +213,7 @@ void updateSpiDelay(littleWire* lwHandle, unsigned int duration)
 ********************************************************************************/
 void i2c_init(littleWire* lwHandle)
 {
-	usb_control_msg(lwHandle, 0xC0, 24, 0, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 24, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -223,7 +223,7 @@ void i2c_init(littleWire* lwHandle)
 ********************************************************************************/
 void i2c_beginTransmission(littleWire* lwHandle, unsigned char address)
 {
-	usb_control_msg(lwHandle, 0xC0, 25, address, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 25, address, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -233,7 +233,7 @@ void i2c_beginTransmission(littleWire* lwHandle, unsigned char address)
 ********************************************************************************/
 void i2c_send(littleWire* lwHandle,unsigned char message)
 {
-	usb_control_msg(lwHandle, 0xC0, 26, message, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 26, message, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -242,7 +242,7 @@ void i2c_send(littleWire* lwHandle,unsigned char message)
 ********************************************************************************/
 void i2c_endTransmission(littleWire* lwHandle)
 {
-	usb_control_msg(lwHandle, 0xC0, 27, 0, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 27, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -255,7 +255,7 @@ void i2c_endTransmission(littleWire* lwHandle)
 void i2c_requestFrom(littleWire* lwHandle,unsigned char address,unsigned char numBytes,unsigned char* responseBuffer)
 {
 	int i,k;
-	usb_control_msg(lwHandle, 0xC0, 30, address, numBytes, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 30, address, numBytes, rxBuffer, 8, USB_TIMEOUT);
 	
 	for(k=0;k<8;k++)
 		printf("%d-%d\n",k,rxBuffer[k]);
