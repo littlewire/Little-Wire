@@ -1,9 +1,9 @@
 /*
 	http://kehribar.me/projects/Little-Wire/
-	
+
 	Copyright (C) <2011> ihsan Kehribar <ihsan@kehribar.me>
 	Modified by Omer Kilic <omerkilic@gmail.com>
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy of
 	this software and associated documentation files (the "Software"), to deal in
 	the Software without restriction, including without limitation the rights to
@@ -27,6 +27,8 @@
 #include "littleWire.h"
 #include <stdio.h>
 
+char rxBuffer[RX_BUFFER_SIZE];
+
 
 /********************************************************************************
 * Try to connect to the device
@@ -37,7 +39,7 @@ littleWire* littleWire_connect()
 	littleWire  *tempHandle = NULL;
 
 	usb_init();
-	usbOpenDevice(&tempHandle, vendorID, "*", productID, "*", "*", NULL, NULL );
+	usbOpenDevice(&tempHandle, VENDOR_ID, "*", PRODUCT_ID, "*", "*", NULL, NULL );
 
 	return tempHandle;
 }
@@ -51,9 +53,9 @@ littleWire* littleWire_connect()
 void digitalWrite(littleWire* lwHandle, unsigned char pin, unsigned char state)
 {
 	if(state){
-		usb_control_msg(lwHandle, 0xC0, 18, pin, 0, rxBuffer, 8, usbTimeout);
+		usb_control_msg(lwHandle, 0xC0, 18, pin, 0, rxBuffer, 8, USB_TIMEOUT);
 	} else{
-		usb_control_msg(lwHandle, 0xC0, 19, pin, 0, rxBuffer, 8, usbTimeout);
+		usb_control_msg(lwHandle, 0xC0, 19, pin, 0, rxBuffer, 8, USB_TIMEOUT);
 	}
 }
 /*******************************************************************************/
@@ -66,9 +68,9 @@ void digitalWrite(littleWire* lwHandle, unsigned char pin, unsigned char state)
 void pinMode(littleWire* lwHandle, unsigned char pin, unsigned char mode)
 {
 	if(mode){
-		usb_control_msg(lwHandle, 0xC0, 13, pin, 0, rxBuffer, 8, usbTimeout);
+		usb_control_msg(lwHandle, 0xC0, 13, pin, 0, rxBuffer, 8, USB_TIMEOUT);
 	} else {
-		usb_control_msg(lwHandle, 0xC0, 14, pin, 0, rxBuffer, 8, usbTimeout);
+		usb_control_msg(lwHandle, 0xC0, 14, pin, 0, rxBuffer, 8, USB_TIMEOUT);
 	}
 }
 /*******************************************************************************/
@@ -80,7 +82,7 @@ void pinMode(littleWire* lwHandle, unsigned char pin, unsigned char mode)
 ********************************************************************************/
 unsigned char digitalRead(littleWire* lwHandle, unsigned char pin)
 {
-	usb_control_msg(lwHandle, 0xC0, 21, pin, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 21, pin, 0, rxBuffer, 8, USB_TIMEOUT);
 
 	return rxBuffer[0];
 }
@@ -93,7 +95,7 @@ unsigned char digitalRead(littleWire* lwHandle, unsigned char pin)
 ********************************************************************************/
 unsigned int analogRead(littleWire* lwHandle, unsigned char channel)
 {
-	usb_control_msg(lwHandle, 0xC0, 15, channel, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 15, channel, 0, rxBuffer, 8, USB_TIMEOUT);
 
 	return ((rxBuffer[1] <<8) + (rxBuffer[0]));
 }
@@ -104,7 +106,7 @@ unsigned int analogRead(littleWire* lwHandle, unsigned char channel)
 ********************************************************************************/
 void initPwm(littleWire* lwHandle)
 {
-	usb_control_msg(lwHandle, 0xC0, 16, 0, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 16, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -113,7 +115,7 @@ void initPwm(littleWire* lwHandle)
 ********************************************************************************/
 void stopPwm(littleWire* lwHandle)
 {
-	usb_control_msg(lwHandle, 0xC0, 32, 0, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 32, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -124,7 +126,7 @@ void stopPwm(littleWire* lwHandle)
 /*******************************************************************************/
 void updatePwmCompare(littleWire* lwHandle, unsigned char channelA, unsigned char channelB)
 {
-	usb_control_msg(lwHandle, 0xC0, 17, channelA, channelB, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 17, channelA, channelB, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -137,19 +139,19 @@ void updatePwmPrescale(littleWire* lwHandle, unsigned int value)
 	switch(value)
 	{
 		case 1024:
-			usb_control_msg(lwHandle, 0xC0, 22, 4, 0, rxBuffer, 8, usbTimeout);
+			usb_control_msg(lwHandle, 0xC0, 22, 4, 0, rxBuffer, 8, USB_TIMEOUT);
 		break;
 		case 256:
-			usb_control_msg(lwHandle, 0xC0, 22, 3, 0, rxBuffer, 8, usbTimeout);
+			usb_control_msg(lwHandle, 0xC0, 22, 3, 0, rxBuffer, 8, USB_TIMEOUT);
 		break;
 		case 64:
-			usb_control_msg(lwHandle, 0xC0, 22, 2, 0, rxBuffer, 8, usbTimeout);
+			usb_control_msg(lwHandle, 0xC0, 22, 2, 0, rxBuffer, 8, USB_TIMEOUT);
 		break;
 		case 8:
-			usb_control_msg(lwHandle, 0xC0, 22, 1, 0, rxBuffer, 8, usbTimeout);
+			usb_control_msg(lwHandle, 0xC0, 22, 1, 0, rxBuffer, 8, USB_TIMEOUT);
 		break;
 		case 1:
-			usb_control_msg(lwHandle, 0xC0, 22, 0, 0, rxBuffer, 8, usbTimeout);
+			usb_control_msg(lwHandle, 0xC0, 22, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 		break;
 	}
 }
@@ -160,7 +162,7 @@ void updatePwmPrescale(littleWire* lwHandle, unsigned int value)
 ********************************************************************************/
 void initSpi(littleWire* lwHandle)
 {
-	usb_control_msg(lwHandle, 0xC0, 23, 0, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 23, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -172,7 +174,7 @@ void initSpi(littleWire* lwHandle)
 ********************************************************************************/
 unsigned char sendSpiMessage(littleWire* lwHandle, unsigned char message)
 {
-	usb_control_msg(lwHandle, 0xC0, 21, message, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 21, message, 0, rxBuffer, 8, USB_TIMEOUT);
 
 	return rxBuffer[0];
 }
@@ -190,7 +192,7 @@ void sendSpiMessage_multiple(littleWire* lwHandle, unsigned char * sendBuffer, u
 	int i=0;
 	if(length>4)
 		length=4;
-	usb_control_msg(lwHandle, 0xC0, (0xF0 + length + (mode<<3) ), (sendBuffer[1]<<8) + sendBuffer[0] , (sendBuffer[3]<<8) + sendBuffer[2], rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, (0xF0 + length + (mode<<3) ), (sendBuffer[1]<<8) + sendBuffer[0] , (sendBuffer[3]<<8) + sendBuffer[2], rxBuffer, 8, USB_TIMEOUT);
 	for(i=0;i<length;i++)
 		inputBuffer[i]=rxBuffer[i];
 }
@@ -202,7 +204,7 @@ void sendSpiMessage_multiple(littleWire* lwHandle, unsigned char * sendBuffer, u
 ********************************************************************************/
 void updateSpiDelay(littleWire* lwHandle, unsigned int duration)
 {
-	usb_control_msg(lwHandle, 0xC0, 31, duration, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 31, duration, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -211,7 +213,7 @@ void updateSpiDelay(littleWire* lwHandle, unsigned int duration)
 ********************************************************************************/
 void i2c_init(littleWire* lwHandle)
 {
-	usb_control_msg(lwHandle, 0xC0, 24, 0, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 24, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -221,7 +223,7 @@ void i2c_init(littleWire* lwHandle)
 ********************************************************************************/
 void i2c_beginTransmission(littleWire* lwHandle, unsigned char address)
 {
-	usb_control_msg(lwHandle, 0xC0, 25, address, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 25, address, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -231,7 +233,7 @@ void i2c_beginTransmission(littleWire* lwHandle, unsigned char address)
 ********************************************************************************/
 void i2c_send(littleWire* lwHandle,unsigned char message)
 {
-	usb_control_msg(lwHandle, 0xC0, 26, message, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 26, message, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -240,7 +242,7 @@ void i2c_send(littleWire* lwHandle,unsigned char message)
 ********************************************************************************/
 void i2c_endTransmission(littleWire* lwHandle)
 {
-	usb_control_msg(lwHandle, 0xC0, 27, 0, 0, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 27, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 /*******************************************************************************/
 
@@ -253,7 +255,7 @@ void i2c_endTransmission(littleWire* lwHandle)
 void i2c_requestFrom(littleWire* lwHandle,unsigned char address,unsigned char numBytes,unsigned char* responseBuffer)
 {
 	int i,k;
-	usb_control_msg(lwHandle, 0xC0, 30, address, numBytes, rxBuffer, 8, usbTimeout);
+	usb_control_msg(lwHandle, 0xC0, 30, address, numBytes, rxBuffer, 8, USB_TIMEOUT);
 	
 	for(k=0;k<8;k++)
 		printf("%d-%d\n",k,rxBuffer[k]);

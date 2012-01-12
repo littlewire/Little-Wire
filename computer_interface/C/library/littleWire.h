@@ -3,10 +3,10 @@
 
 /*
 	http://kehribar.me/projects/Little-Wire/
-	
+
 	Copyright (C) <2011> ihsan Kehribar <ihsan@kehribar.me>
 	Modified by Omer Kilic <omerkilic@gmail.com>
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy of
 	this software and associated documentation files (the "Software"), to deal in
 	the Software without restriction, including without limitation the rights to
@@ -28,7 +28,7 @@
 */
 
 /********************************************************************************
-* Including header files
+* Header files
 ********************************************************************************/
 #if defined(LINUX)
    #include <usb.h>			// this is libusb, see http://libusb.sourceforge.net/
@@ -39,18 +39,26 @@
 /*******************************************************************************/
 
 /********************************************************************************
-* Useful constants and typedefs
+* USB details
+********************************************************************************/
+#define	VENDOR_ID	0x1781
+#define	PRODUCT_ID	0x0c9f
+#define USB_TIMEOUT	5000
+#define RX_BUFFER_SIZE	64
+/*******************************************************************************/
+
+/********************************************************************************
+* Useful constants
 ********************************************************************************/
 #define INPUT	1
 #define OUTPUT	0
 
-#define LOW		0
+#define LOW	0
 #define HIGH	1
 
 #define AUTO_CS 1
 #define MANUAL_CS 0
 
-typedef usb_dev_handle littleWire;
 /*******************************************************************************/
 
 /********************************************************************************
@@ -85,15 +93,8 @@ typedef usb_dev_handle littleWire;
 #define RESET_PIN	PIN3
 /*******************************************************************************/
 
-/********************************************************************************
-* Globals
-********************************************************************************/
-static int vendorID = 0x1781;
-static int productID = 0x0c9f;
-static int usbTimeout = 5000;
-
-unsigned char rxBuffer[64];
-/*******************************************************************************/
+// Typedefs
+typedef usb_dev_handle littleWire;
 
 
 // Function Prototypes
