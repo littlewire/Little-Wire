@@ -95,3 +95,5 @@ D:\Users\SUUSER\Desktop\gitHub\Little-Wire\computer_interface\C#\examples\adc_pl
 D:\Users\SUUSER\Desktop\gitHub\Little-Wire\computer_interface\C#\examples\adc_plot\obj\x86\Debug\tinyPlot.Properties.Resources.resources
 D:\Users\SUUSER\Desktop\gitHub\Little-Wire\computer_interface\C#\examples\adc_plot\obj\x86\Debug\GenerateResource.read.1.tlog
 D:\Users\SUUSER\Desktop\gitHub\Little-Wire\computer_interface\C#\examples\adc_plot\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\Users\SUUSER\Desktop\gitHub\mirror\Little-Wire\computer_interface\C#\examples\adc_plot\obj\x86\Debug\tinyPlot.exe
+D:\Users\SUUSER\Desktop\gitHub\mirror\Little-Wire\computer_interface\C#\examples\adc_plot\obj\x86\Debug\tinyPlot.pdb

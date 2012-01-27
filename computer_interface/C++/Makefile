@@ -1,7 +1,7 @@
 # Makefile for Little-Wire
 
-CC=clang
-CXX=clang
+CC=gcc
+CXX=g++
 
 # FIXME: Need to add OSX stuff
 ifeq ($(shell uname), Linux)
@@ -21,8 +21,8 @@ INCLUDE = library
 CFLAGS = $(USBFLAGS) $(LIBS) -I$(INCLUDE) -O -Wall -pedantic -g $(OSFLAG)
 CXXFLAGS = $(USBFLAGS) $(LIBS) -I$(INCLUDE) -O -Wall -pedantic -g $(OSFLAG)
 
-LWLIBS = opendevice littleWire util
-EXAMPLES = #adc blink button servo
+LWLIBS = opendevice littleWire littleWire_util
+EXAMPLES = adc blink button servo i2c_blinkM spi_LTC1448
 
 .PHONY:	clean library docs
 
@@ -34,11 +34,11 @@ $(LWLIBS):
 	@echo Building libraries...
 	$(CXX) $(CXXFLAGS) -c library/littleWire.cpp
 	$(CC) $(CFLAGS) -c library/opendevice.c
-	$(CC) $(CFLAGS) -c library/util.c
+	$(CC) $(CFLAGS) -c library/littleWire_util.c
 
 $(EXAMPLES): $(addsuffix .o, $(LWLIBS))
 	@echo Building example: $@...
-	$(CXX) $(CXXFLAGS) -o $@$(EXE_SUFFIX) examples/$@.c $^ $(LIBS)
+	$(CXX) $(CXXFLAGS) -o $@$(EXE_SUFFIX) examples/$@.cpp $^ $(LIBS)
 
 docs:
 	doxygen ./docs/doxygen.conf

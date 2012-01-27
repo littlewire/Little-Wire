@@ -25,7 +25,6 @@
  */
 
 #include "littleWire.h"
-
 #include <iostream>
 
 //namespace LittleWire
@@ -125,7 +124,7 @@ void littleWire::pwm_stop()
 * Update the compare values of Pwm outputs
 *     channelA: Compare value of Channel A
 *     channelB: Compare value of Channel B
-
+********************************************************************************/
 void littleWire::pwm_updateCompare(unsigned char channelA, unsigned char channelB)
 {
 	usb_control_msg(this->lwHandle, 0xC0, 17, channelA, channelB, rxBuffer, 8, USB_TIMEOUT);
