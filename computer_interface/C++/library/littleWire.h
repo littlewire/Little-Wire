@@ -92,6 +92,9 @@ extern "C" {
 #define INPUT	1
 #define OUTPUT	0
 
+#define AUTO_CS	1
+#define MANUAL_CS	0
+
 #define HIGH	1
 #define LOW	0
 
@@ -109,7 +112,7 @@ private:
 
 public:
 	/**
-	 * Constructor
+	 * Simple Constructor
 	 *
 	 * @param (none)
 	 * @return (none)
@@ -117,7 +120,7 @@ public:
 	littleWire();
 
 	/**
-	 * Destructor
+	 * Simple Destructor
 	 *
 	 * @param (none)
 	 * @return (none)
@@ -125,8 +128,8 @@ public:
 	~littleWire();
 
 
-	/*! \addtogroup Pin
-	 *  Pin functions
+	/*! \addtogroup GPIO
+	 *  GPIO functions
 	 *  @{
 	 */
 
@@ -149,24 +152,29 @@ public:
 	void digitalWrite(unsigned char pin, unsigned char state);
 
 	/**
-	 * 
+	 * Read pin value
 	 *
-	 * @param
-	 * @param
-	 * @return (none)
+	 * @param pin Pin name	 
+	 * @return Pin state (\b HIGH or \b LOW)
 	 */
 	unsigned char digitalRead(unsigned char pin);
-
-	/**
-	 * 
-	 *
-	 * @param
-	 * @param
-	 * @return (none)
-	 */
-	unsigned int analogRead(unsigned char channel);
 	/*! @} */
 
+	/*! \addtogroup ADC
+	 *  Analog to Digital Converter Function
+	 *  @{
+	 */
+	
+	/**
+	 * Read analog voltage. Analog voltage reading from RESET_PIN isn't advised (it is a bit noisy) but supported. Use it at your own risk.
+	 * \n For more about internal temperature sensor, look at the Attiny85 datasheet.
+	 *
+	 * @param channel Source of ADC reading (\b ADC_RESET_PIN , \b ADC_SCK_PIN or \b ADC_TEMP_SENS)
+	 * @return 10 bit ADC result with reference to 5V
+	 */
+	unsigned int analogRead(unsigned char channel);
+	
+	/*! @} */
 
 	/*! \addtogroup PWM
 	 *  PWM Functions
@@ -174,37 +182,32 @@ public:
 	 */
 
 	/**
-	 * 
+	 * Initialize PWM module on the Little-Wire 
 	 *
-	 * @param
-	 * @param
 	 * @return (none)
 	 */
 	void pwm_init();
 
 	/**
-	 * 
+	 * De-Initialize PWM module on the Little-Wire 
 	 *
-	 * @param
-	 * @param
 	 * @return (none)
 	 */
 	void pwm_stop();
 
 	/**
-	 * 
+	 * Update the compare values of the PWM output pins. Resolution is 8 bit.
 	 *
-	 * @param
-	 * @param
+	 * @param channelA Compare value of \b PWMA pin
+	 * @param channelB Compare value of \b PWMB pin
 	 * @return (none)
 	 */
 	void pwm_updateCompare(unsigned char channelA, unsigned char channelB);
 
 	/**
-	 * 
+	 * Update the prescaler of the PWM module. Adjust this value according to your need for speed in PWM output. Default is 1024. Lower prescale means higher frequency PWM output.
 	 *
-	 * @param
-	 * @param
+	 * @param value Presecaler value (\b 1024, \b 256, \b 64, \b 8 or \b 1) 
 	 * @return (none)
 	 */
 	void pwm_updatePrescaler(unsigned int value);
@@ -215,31 +218,39 @@ public:
 	 *  SPI functions
 	 *  @{
 	 */
+	 
+	 /**
+	 * Initialize the SPI module on the Little-Wire 
+	 *
+	 * @return (none)
+	 */
 	void spi_init();
 
 	/**
-	 * 
+	 * Send and receive a single byte SPI message. Chip select is always manual
 	 *
-	 * @param
-	 * @param
-	 * @return (none)
+	 * @param message Message to send
+	 * @return Response byte
 	 */
 	unsigned char spi_sendMessage(unsigned char message);
 
 	/**
-	 * 
+	 * Send and receive multiple (up to 4 bytes) SPI messages. Chip select is automatic or manual.
+	 * \n If automatic chip select is selected, \b RESET_PIN stays HIGH in idle time , and goes to LOW while sending the messages over SPI
 	 *
-	 * @param
-	 * @param
+	 * @param sendBuffer Pointer of the array which has your messages to send.
+	 * @param inputBuffer Pointer of the array which you want to store SPI response messages.
+	 * @param length Length of the messages. ( Maximum is \b 4)
+	 * @param mode Chip select mode. (\b AUTO_CS or \b MANUAL_CS )
 	 * @return (none)
 	 */
 	void spi_sendMessageMulti(unsigned char* sendBuffer, unsigned char* inputBuffer, unsigned char length, unsigned char mode);
 
 	/**
-	 * 
+	 * Change the SPI message frequency by adjusting delay duration. By default, Little-Wire sends the SPI messages with maximum speed. 
+	 * \n If your hardware can't catch up with the speed, increase the duration value to lower the SPI speed.
 	 *
-	 * @param
-	 * @param
+	 * @param duration Amount of delay. 
 	 * @return (none)
 	 */
 	void spi_updateDelay(unsigned int duration);
@@ -247,43 +258,47 @@ public:
 
 
 	/*! \addtogroup I2C
-	 *  I2C functions
+	 *  I2C functions.
 	 *  @{
+	 */
+	 
+	 /**
+	 * Initialize the I2C module on the Little-Wire 
+	 *
+	 * @return (none)
 	 */
 	void i2c_init();
 
 	/**
-	 * 
+	 * Begin a read/write operation on I2C bus.
 	 *
-	 * @param
-	 * @param
+	 * @param address 7 bit slave address.
 	 * @return (none)
 	 */
 	void i2c_beginTransmission(unsigned char address);
 
 	/**
-	 * 
+	 * Add a message to output buffer.
 	 *
-	 * @param
-	 * @param
+	 * @param message Message to send.
 	 * @return (none)
 	 */
 	void i2c_send(unsigned char message);
 
 	/**
-	 * 
+	 * End the I2C transmission. 
+	 * \n Actually, all the messages will be sent at once when you call this function.
 	 *
-	 * @param
-	 * @param
 	 * @return (none)
 	 */
 	void i2c_endTransmission();
 
 	/**
-	 * 
+	 * Request a response from a slave device.
 	 *
-	 * @param
-	 * @param
+	 * @param address 7 bit slave address.
+	 * @param numBytes Length of the response you expect from the slave device.
+	 * @param responseBuffer Pointer of the array which you want to store I2C response messages.
 	 * @return (none)
 	 */
 	void i2c_requestFrom(unsigned char address,unsigned char numBytes,unsigned char* responseBuffer);
@@ -291,24 +306,22 @@ public:
 
 
 	/*! \addtogroup Servo
-	 *  Servo functions
+	 *  Servo functions. Higher level access to PWM module.
 	 *  @{
 	 */
 
 	/**
-	 * 
+	 * Initialize the PWM module on the Little-Wire with the Servo special settings.
 	 *
-	 * @param
-	 * @param
 	 * @return (none)
 	 */
 	void servo_init();
 
 	/**
-	 * Update servo locations
+	 * Update servo locations 
 	 *
-	 * @param locationChannelA Location of servo connected to channel A
-	 * @param locationChannelB Location of servo connected to channel B
+	 * @param locationChannelA Location of servo connected to channel A ( in degrees )
+	 * @param locationChannelB Location of servo connected to channel B ( in degrees )
 	 * @return (none)
 	 */
 	void servo_updateLocation(unsigned char locationChannelA, unsigned char locationChannelB);
@@ -320,16 +333,24 @@ public:
 
 
 /*! \mainpage Library Documentation
- *
+ * <img src="http://kehribar.me/projects/Little-Wire/little-wire.jpg" alt="Little-Wire beta in action" width="320px" height="240px">
+ * <center> <i> http://kehribar.me/projects/Little-Wire/ </i> </center>
  * \section intro_sec Introduction
  *
- * This is the introduction.
+ * This is the doxygen documentation of the C++ library of <a href="http://kehribar.me/projects/Little-Wire/">Little-Wire</a> project. 
+ * Other language interfaces (C,C#,Processing) of the <a href="http://kehribar.me/projects/Little-Wire/">Little-Wire</a> uses mostly the same names and usages.
+ * Most function names and usage are chosen as similar as possible to the <a href="http://arduino.cc">Arduino</a> library functions for to lower the learning curve.
+ 
  *
  * \section install_sec Installation
  *
- * \subsection step1 Step 1: Copy files
+ * \subsection step1 Step 1 
+ * Download Libusb
+ * \subsection step2 Step 2
+ * Copy the files under <i>library</i> to your working folder and include littleWire.h to your program.
+ * \subsection step3 Step 3 
+ * Look to the provided examples for further help.
  *  
- * etc...
  */
 #endif
 

@@ -41,8 +41,8 @@ $(EXAMPLES): $(addsuffix .o, $(LWLIBS))
 	$(CXX) $(CXXFLAGS) -o $@$(EXE_SUFFIX) examples/$@.c $^ $(LIBS)
 
 docs:
-	doxygen docs/doxygen.conf
-	cd docs/latex/; make all
+	doxygen ./docs/doxygen.conf
+	cd ./docs/latex/; make all
 
 clean:
 	rm -rf $(EXAMPLES)$(EXE_SUFFIX) *.o *.exe docs/html docs/latex

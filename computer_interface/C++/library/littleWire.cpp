@@ -47,7 +47,6 @@ littleWire::~littleWire()
 	this->lwHandle = NULL;
 }
 
-
 /********************************************************************************
 * Set a GPIO pin High/Low
 *     pin: Pin number
