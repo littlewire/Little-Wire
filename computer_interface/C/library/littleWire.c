@@ -257,9 +257,6 @@ void i2c_requestFrom(littleWire* lwHandle,unsigned char address,unsigned char nu
 	int i,k;
 	usb_control_msg(lwHandle, 0xC0, 30, address, numBytes, rxBuffer, 8, USB_TIMEOUT);
 	
-	for(k=0;k<8;k++)
-		printf("%d-%d\n",k,rxBuffer[k]);
-	
 	for(i=0;i<numBytes;i++)
 		responseBuffer[i]=rxBuffer[i];
 }
