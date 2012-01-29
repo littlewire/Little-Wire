@@ -41,9 +41,9 @@ const float RANGE = 180.0; // in degrees
 ********************************************************************************/
 void servo_init(littleWire* lwHandle)
 {
-	initPwm(lwHandle); // Initialize the PWM hardware.
+	pwm_init(lwHandle); // Initialize the PWM hardware.
 	pinMode(lwHandle,PWMA,OUTPUT); pinMode(lwHandle,PWMB,OUTPUT); // Set PWM pins output.
-	updatePwmPrescale(lwHandle,1024); // Make sure the PWM prescaler is set correctly.
+	pwm_updatePrescale(lwHandle,1024); // Make sure the PWM prescaler is set correctly.
 }
 /*******************************************************************************/
 
@@ -56,6 +56,6 @@ void servo_updateLocation(littleWire* lwHandle,unsigned char locationChannelA,un
 {
 	locationChannelA=(((locationChannelA/RANGE)*(MAX_LIMIT-MIN_LIMIT))+MIN_LIMIT)/STEP_SIZE;
 	locationChannelB=(((locationChannelB/RANGE)*(MAX_LIMIT-MIN_LIMIT))+MIN_LIMIT)/STEP_SIZE;
-	updatePwmCompare(lwHandle,locationChannelA,locationChannelB);
+	pwm_updateCompare(lwHandle,locationChannelA,locationChannelB);
 }
 /*******************************************************************************/
