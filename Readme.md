@@ -1,4 +1,4 @@
-![Little wire beta in action](./Little-Wire_beta.jpg)
+![Little wire beta in action](./Little-Wire/blob/master/Little-Wire_beta.jpg)
 
 
 = Short story  
