@@ -141,13 +141,13 @@ unsigned int analogRead(littleWire* lwHandle, unsigned char channel);
 /********************************************************************************
 * Initialize the Pwm module on the device
 ********************************************************************************/
-void initPwm(littleWire* lwHandle);
+void pwm_init(littleWire* lwHandle);
 /*******************************************************************************/
 
 /********************************************************************************
 * Stop the PWM module on the device
 ********************************************************************************/
-void stopPwm(littleWire* lwHandle);
+void pwm_stop(littleWire* lwHandle);
 /*******************************************************************************/
 
 /********************************************************************************
@@ -155,20 +155,20 @@ void stopPwm(littleWire* lwHandle);
 *     channelA: Compare value of Channel A
 *     channelB: Compare value of Channel B
 /*******************************************************************************/
-void updatePwmCompare(littleWire* lwHandle, unsigned char channelA, unsigned char channelB);
+void pwm_updateCompare(littleWire* lwHandle, unsigned char channelA, unsigned char channelB);
 /*******************************************************************************/
 
 /********************************************************************************
 * Change the Pwm prescaler. Default: 1024
 *     value: 1024/256/64/8/1
 ********************************************************************************/
-void updatePwmPrescale(littleWire* lwHandle, unsigned int value);
+void pwm_updatePrescale(littleWire* lwHandle, unsigned int value);
 /*******************************************************************************/
 
 /********************************************************************************
 * Initialize SPI module
 ********************************************************************************/
-void initSpi(littleWire* lwHandle);
+void spi_init(littleWire* lwHandle);
 /*******************************************************************************/
 
 /********************************************************************************
@@ -176,7 +176,7 @@ void initSpi(littleWire* lwHandle);
 *    message: Message to send
 *    Returns: Received SPI message
 ********************************************************************************/
-unsigned char sendSpiMessage(littleWire* lwHandle, unsigned char message);
+unsigned char spi_sendMessage(littleWire* lwHandle, unsigned char message);
 /*******************************************************************************/
 
 /********************************************************************************
@@ -186,14 +186,15 @@ unsigned char sendSpiMessage(littleWire* lwHandle, unsigned char message);
 *	 length: Message length - maximum 4
 *	 mode: 1 for auto chip select , 0 for manual
 ********************************************************************************/
-void sendSpiMessage_multiple(littleWire* lwHandle, unsigned char * sendBuffer, unsigned char * inputBuffer, unsigned char length ,unsigned char mode);
+void spi_sendMessage_multiple(littleWire* lwHandle, unsigned char * sendBuffer, unsigned char * inputBuffer, unsigned char length ,unsigned char mode);
 /*******************************************************************************/
 
 /********************************************************************************
 * Update SPI signal delay amount. Tune if neccessary to fit your requirements.
 *	duration: Delay in microseconds.
 ********************************************************************************/
-void updateSpiDelay(littleWire* lwHandle, unsigned int duration);
+void spi_updateDelay(littleWire* lwHandle, unsigned int duration);
+/*******************************************************************************/
 
 /********************************************************************************
 * Initialize i2c module on Little-Wire
