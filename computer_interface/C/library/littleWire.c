@@ -27,7 +27,7 @@
 #include "littleWire.h"
 #include <stdio.h>
 
-char rxBuffer[RX_BUFFER_SIZE];
+unsigned char rxBuffer[RX_BUFFER_SIZE]; /* This has to be unsigned for the data's sake */
 
 
 /********************************************************************************
@@ -95,9 +95,9 @@ unsigned char digitalRead(littleWire* lwHandle, unsigned char pin)
 ********************************************************************************/
 unsigned int analogRead(littleWire* lwHandle, unsigned char channel)
 {
-	usb_control_msg(lwHandle, 0xC0, 15, channel, 0, rxBuffer, 8, USB_TIMEOUT);
+	usb_control_msg(lwHandle, 0xC0, 15, channel, 0, rxBuffer, 8, USB_TIMEOUT);	
 
-	return ((rxBuffer[1] <<8) + (rxBuffer[0]));
+	return ((rxBuffer[1] *256) + (rxBuffer[0]));
 }
 /*******************************************************************************/
 

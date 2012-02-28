@@ -20,11 +20,13 @@ int main(int argc, char **argv)
 		printf("Little Wire could not be found!\n");
 		exit(EXIT_FAILURE);
 	}
+	
+	pinMode(myLittleWire,ADC_SCK_PIN,INPUT);
 
 	while(1){
 		adcValue=analogRead(myLittleWire, ADC_SCK_PIN);
 		printf("Value: %d\n",adcValue);
 		//printf("Voltage: %f volts\n", (float)((adcValue*5.0)/1024.0));
-		//delay(1000);
+		delay(100);
 	}
 }
