@@ -21,5 +21,5 @@ Bootloader usage:
 	3- Launch the fboot program with neccessary parameters
 	4- After the program connected to the com port, plug the Little Wire into the USB port
 	5- The new firmware should have been uploaded at this step. If anything goes wrong; 
-		* first, check your connected the cables properly
-		* second, unplug the Little Wire and repeat the uploading process. Even the wiring is true, sometimes the bootloader works at the second/third trial.
+		* First, check that you connected the cables properly
+		* Second, unplug the Little Wire and repeat the uploading process. Even the wiring is true, sometimes the bootloader works at the second/third trial.
