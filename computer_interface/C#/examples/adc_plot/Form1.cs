@@ -39,6 +39,8 @@ namespace tinyPlot
             myPane.YAxis.Scale.Min = 0;
             myPane.YAxis.Scale.Max = 5;
 
+            myDevice.pinMode(2, 1);
+
             myLine = myPane.AddCurve("Analog Voltage", myPoints, Color.Blue, SymbolType.None);
             myDevice.initPwm();
   

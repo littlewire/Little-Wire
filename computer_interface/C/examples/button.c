@@ -24,7 +24,7 @@ int main()
 		exit(EXIT_FAILURE);
 	}
 
-	pinMode(myLittleWire, BUTTON, 1);
+	pinMode(myLittleWire, BUTTON, INPUT);
 
 	for(;;){
 		if ( digitalRead(myLittleWire, BUTTON) == 0 ){
