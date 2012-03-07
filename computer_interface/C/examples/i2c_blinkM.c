@@ -2,8 +2,7 @@
 	Created: December 2011
 	by ihsan Kehribar <ihsan@kehribar.me>
 	
-	Tested with 10Kohm pullup resistors on SDA and SCL lines.
-	
+	Tested with 10Kohm pullup resistors on SDA and SCL lines.	
 */
 
 #include <stdio.h>
@@ -33,5 +32,6 @@ int main()
 		i2c_send(myLittleWire,i*3);
 		i2c_send(myLittleWire,255-i);
 		i2c_endTransmission(myLittleWire);
+		delay(100);
 	}
 }

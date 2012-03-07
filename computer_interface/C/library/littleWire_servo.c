@@ -25,7 +25,6 @@
 */
 
 #include "littleWire_servo.h"
-#include "stdio.h"
 
 /********************************************************************************
 * Useful definitions
@@ -43,7 +42,7 @@ void servo_init(littleWire* lwHandle)
 {
 	pwm_init(lwHandle); // Initialize the PWM hardware.
 	pinMode(lwHandle,PWMA,OUTPUT); pinMode(lwHandle,PWMB,OUTPUT); // Set PWM pins output.
-	pwm_updatePrescale(lwHandle,1024); // Make sure the PWM prescaler is set correctly.
+	pwm_updatePrescaler(lwHandle,1024); // Make sure the PWM prescaler is set correctly.
 }
 /*******************************************************************************/
 

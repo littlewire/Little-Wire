@@ -8,10 +8,8 @@
 #include "littleWire.h"
 #include "littleWire_util.h"
 
-
-#define BUTTON		PIN1	// Pin button is connected to (active low)
-#define DEBOUNCE	100	// Debounce delay, in microseconds
-
+#define BUTTON		PIN1	// Pin button is connected to pin1 (active low)
+#define DEBOUNCE	100		// Debounce delay, in miliseconds
 
 int main()
 {
@@ -33,6 +31,6 @@ int main()
 				printf("Button pressed.\n");
 			}
 		}
-		delay(1000);
+		delay(100);
 	}
 }

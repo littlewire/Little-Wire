@@ -21,12 +21,11 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 	
-	pinMode(myLittleWire,ADC_SCK_PIN,INPUT);
+	pinMode(myLittleWire,PIN2,INPUT);
 
 	while(1){
-		adcValue=analogRead(myLittleWire, ADC_SCK_PIN);
-		printf("Value: %d\n",adcValue);
-		//printf("Voltage: %f volts\n", (float)((adcValue*5.0)/1024.0));
+		adcValue=analogRead(myLittleWire, ADC_PIN2);
+		printf("Value: %d\tVoltage: %f volts\n", adcValue,(float)((adcValue*5.0)/1024.0));
 		delay(100);
 	}
 }

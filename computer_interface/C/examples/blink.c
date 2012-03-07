@@ -8,10 +8,8 @@
 #include "littleWire.h"
 #include "littleWire_util.h"
 
-
-#define LED	PIN0		// Pin LED is connected to MOSI (PIN0) pin
+#define LED		PIN1		// LED is connected to the pin1
 #define DELAY	500 		// Delay, in miliseconds
-
 
 int main(void)
 {
@@ -30,7 +28,9 @@ int main(void)
 		printf("Blink!\n");
 		digitalWrite(myLittleWire, LED, HIGH);
 		delay(DELAY);
+		printf("...\n");
 		digitalWrite(myLittleWire, LED, LOW);
 		delay(DELAY);
 	}
+	
 }

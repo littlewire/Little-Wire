@@ -31,7 +31,7 @@
 * Header files
 ********************************************************************************/
 #if defined(LINUX)
-   #include <usb.h>			// this is libusb, see http://libusb.sourceforge.net/
+   #include <usb.h>				// this is libusb, see http://libusb.sourceforge.net/
 #else
    #include <lusb0_usb.h>		// this is libusb, see http://libusb.sourceforge.net/
 #endif
@@ -53,11 +53,11 @@
 #define INPUT	1
 #define OUTPUT	0
 
-#define LOW	0
+#define LOW		0
 #define HIGH	1
 
-#define AUTO_CS 1
-#define MANUAL_CS 0
+#define AUTO_CS		1
+#define MANUAL_CS	0
 
 /*******************************************************************************/
 
@@ -65,37 +65,37 @@
 * Pin definitions
 ********************************************************************************/
 // General Purpose Pins
-#define PIN0	0
 #define PIN1	1
 #define PIN2	2
 #define PIN3	5
+#define PIN4	0
 
 // ADC Channels
-#define ADC_RESET_PIN	0
-#define ADC_SCK_PIN	1
+#define ADC_PIN3		0
+#define ADC_PIN2		1
 #define ADC_TEMP_SENS	2
 
 // PWM Pins
-#define PWM0	PIN0
-#define PWM1	PIN1
+#define PWM1	PIN4
+#define PWM2	PIN1
 
 // Aliases
-#define ADC0	ADC_RESET_PIN
-#define ADC1	ADC_SCK_PIN
+#define ADC0	ADC_PIN3
+#define ADC1	ADC_PIN2
 #define ADC2	ADC_TEMP_SENS
-#define PWMA	PWM0
-#define PWMB	PWM1
+#define PWMA	PWM1
+#define PWMB	PWM2
 
 // 'AVR ISP' Pins
 #define SCK_PIN		PIN2
 #define MISO_PIN	PIN1
-#define MOSI_PIN	PIN0
+#define MOSI_PIN	PIN4
 #define RESET_PIN	PIN3
 /*******************************************************************************/
 
 // Typedefs
 typedef usb_dev_handle littleWire;
-
+unsigned char rxBuffer[RX_BUFFER_SIZE]; /* This has to be unsigned for the data's sake */
 
 // Function Prototypes
 
@@ -162,7 +162,7 @@ void pwm_updateCompare(littleWire* lwHandle, unsigned char channelA, unsigned ch
 * Change the Pwm prescaler. Default: 1024
 *     value: 1024/256/64/8/1
 ********************************************************************************/
-void pwm_updatePrescale(littleWire* lwHandle, unsigned int value);
+void pwm_updatePrescaler(littleWire* lwHandle, unsigned int value);
 /*******************************************************************************/
 
 /********************************************************************************
@@ -191,7 +191,7 @@ void spi_sendMessage_multiple(littleWire* lwHandle, unsigned char * sendBuffer, 
 
 /********************************************************************************
 * Update SPI signal delay amount. Tune if neccessary to fit your requirements.
-*	duration: Delay in microseconds.
+*	duration: Delay amount.
 ********************************************************************************/
 void spi_updateDelay(littleWire* lwHandle, unsigned int duration);
 /*******************************************************************************/

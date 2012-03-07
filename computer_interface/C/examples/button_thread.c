@@ -15,12 +15,10 @@
 #include "littleWire.h"
 #include "littleWire_util.h"
 
-#define BUTTON		PIN1		// Pin button is connected to (active low)
-#define DEBOUNCE	100		// Debounce time, in miliseconds
-
+#define BUTTON		PIN1		// Pin button is connected to pin1 (active low)
+#define DEBOUNCE	100			// Debounce time, in miliseconds
 
 littleWire *myLittleWire = NULL;
-
 
 void *buttonHandler(void *arg)
 {

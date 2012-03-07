@@ -1,4 +1,6 @@
+
 # Makefile for Little-Wire
+# Created by Omer Kilic <omerkilic@gmail.com>
 
 CC=gcc
 
@@ -17,7 +19,7 @@ endif
 
 LIBS    = $(USBLIBS)
 INCLUDE = library
-CFLAGS  = $(USBFLAGS) $(LIBS) -I$(INCLUDE) -O -Wall -g $(OSFLAG)
+CFLAGS  = $(USBFLAGS) $(LIBS) -I$(INCLUDE) -O -g $(OSFLAG)
 
 LWLIBS = opendevice littleWire littleWire_util littleWire_servo
 EXAMPLES = adc blink button servo i2c_blinkM spi_LTC1448

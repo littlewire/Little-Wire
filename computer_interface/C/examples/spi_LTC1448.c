@@ -26,16 +26,16 @@ int main()
 		exit(EXIT_FAILURE);
 	}
 
-	initSpi(myLittleWire);
+	spi_init(myLittleWire);
 	
-	// RESET_PIN will be used as a chip select pin
-	pinMode(myLittleWire,RESET_PIN,OUTPUT);
-	digitalWrite(myLittleWire,RESET_PIN,HIGH);
+	// pin3 will be used as our chip select pin
+	pinMode(myLittleWire,PIN3,OUTPUT);
+	digitalWrite(myLittleWire,PIN3,HIGH);
 	
-	updateSpiDelay(myLittleWire,0); // Change this according to your device. If your device doesn't respond, try to increase the delay
+	spi_updateDelay(myLittleWire,0); // Change this according to your device. If your device doesn't respond, try to increase the delay
 
 	unsigned char sendBuffer[4];
-	unsigned char receiveBuffer[4];
+	unsigned char receiveBuffer[4];	
 	
 	for(;;){ // Generates triangular ramp signal
 		if(chA<4096) chA++;
@@ -47,13 +47,13 @@ int main()
 		sendBuffer[1]=((chA&0x0F)<<4)+((chB&0xF00)>>8);
 		sendBuffer[2]=(chB&0xFF);	
 	
-		sendSpiMessage_multiple(myLittleWire,sendBuffer,receiveBuffer,3,AUTO_CS); // Send 3 consequent messages with automatic chip select mode
-	
+		spi_sendMessage_multiple(myLittleWire,sendBuffer,receiveBuffer,3,AUTO_CS); // Send 3 consequent messages with automatic chip select mode
+		delay(2000);
 		// Alternative with manual chip select 
 		/*
-			digitalWrite(myLittleWire,RESET_PIN,LOW); // Chip select low		
+			digitalWrite(myLittleWire,PIN3,LOW); // Chip select low		
 				sendSpiMessage_multiple(myLittleWire,sendBuffer,receiveBuffer,3,MANUAL_CS);
-			digitalWrite(myLittleWire,RESET_PIN,HIGH); // Chip select high
+			digitalWrite(myLittleWire,PIN3,HIGH); // Chip select high
 		*/
 	}
 }
