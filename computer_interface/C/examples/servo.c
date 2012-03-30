@@ -25,8 +25,16 @@ int main(void)
 		exit(EXIT_FAILURE);
 	}
 
-	servo_init(myLittleWire);
-	
+	//servo_init(myLittleWire);
+	pinMode(myLittleWire,PIN3,OUTPUT);
+	pinMode(myLittleWire,PIN4,OUTPUT);
+	while(1)
+	{
+		digitalWrite(myLittleWire,PIN3,HIGH);
+		digitalWrite(myLittleWire,PIN3,LOW);
+		digitalWrite(myLittleWire,PIN4,HIGH);
+		digitalWrite(myLittleWire,PIN4,LOW);
+	}
 	for(;;)
 	{
 		printf("Current locations: %d\n",currentLocation);

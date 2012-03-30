@@ -46,8 +46,8 @@ int main()
 		sendBuffer[0]=(chA>>4);
 		sendBuffer[1]=((chA&0x0F)<<4)+((chB&0xF00)>>8);
 		sendBuffer[2]=(chB&0xFF);	
-	
-		spi_sendMessage_multiple(myLittleWire,sendBuffer,receiveBuffer,3,AUTO_CS); // Send 3 consequent messages with automatic chip select mode
+		while(1)
+			spi_sendMessage_multiple(myLittleWire,sendBuffer,receiveBuffer,3,AUTO_CS); // Send 3 consequent messages with automatic chip select mode
 		delay(2000);
 		// Alternative with manual chip select 
 		/*

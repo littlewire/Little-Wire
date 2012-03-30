@@ -19,9 +19,9 @@ int main()
 	littleWire myLittleWire;
 
 	for(;;){
-		adcValue=myLittleWire.analogRead(ADC_SCK_PIN);		
+		adcValue=myLittleWire.analogRead(ADC_PIN2);		
 		cout << "Voltage: " <<(float)((adcValue*5.0)/1024.0) << " volts" << endl;
-		delay(1000);
+		delay(100);
 	}
 	
 	return 0;

@@ -7,6 +7,7 @@
 	#include <windows.h>
 #endif
 
+/* Delay in miliseconds */
 void delay(unsigned int duration);
 
 #endif

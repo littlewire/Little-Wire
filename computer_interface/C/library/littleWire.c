@@ -58,7 +58,7 @@ void pinMode(littleWire* lwHandle, unsigned char pin, unsigned char mode)
 
 unsigned char digitalRead(littleWire* lwHandle, unsigned char pin)
 {
-	usb_control_msg(lwHandle, 0xC0, 21, pin, 0, rxBuffer, 8, USB_TIMEOUT);
+	usb_control_msg(lwHandle, 0xC0, 20, pin, 0, rxBuffer, 8, USB_TIMEOUT);
 
 	return rxBuffer[0];
 }
@@ -162,4 +162,3 @@ void i2c_requestFrom(littleWire* lwHandle,unsigned char address,unsigned char nu
 	for(i=0;i<numBytes;i++)
 		responseBuffer[i]=rxBuffer[i];
 }
-

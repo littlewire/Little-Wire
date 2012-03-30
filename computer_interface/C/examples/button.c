@@ -25,7 +25,7 @@ int main()
 	pinMode(myLittleWire, BUTTON, INPUT);
 
 	for(;;){
-		if ( digitalRead(myLittleWire, BUTTON) == 0 ){
+		if ( digitalRead(myLittleWire, BUTTON) == LOW ){
 			delay(DEBOUNCE);
 			if( digitalRead(myLittleWire, BUTTON) == LOW ){
 				printf("Button pressed.\n");

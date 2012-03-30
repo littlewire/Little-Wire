@@ -8,7 +8,7 @@
 #include "littleWire.h"
 #include "littleWire_util.h"
 
-#define LED		PIN1		// LED is connected to the pin1
+#define LED		PIN3		// LED is connected to the pin1
 #define DELAY	500 		// Delay, in miliseconds
 
 int main(void)

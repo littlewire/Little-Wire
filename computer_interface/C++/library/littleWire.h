@@ -50,32 +50,32 @@ extern "C" {
 /**
  * Pin definitions
  */
-/// General Purpose Pins
-#define PIN0	0
+// General Purpose Pins
 #define PIN1	1
 #define PIN2	2
 #define PIN3	5
+#define PIN4	0
 
-/// ADC Channels
-#define ADC_RESET_PIN	0
-#define ADC_SCK_PIN	1
+// ADC Channels
+#define ADC_PIN3		0
+#define ADC_PIN2		1
 #define ADC_TEMP_SENS	2
 
-/// PWM Pins
-#define PWM0	PIN0
-#define PWM1	PIN1
+// PWM Pins
+#define PWM1	PIN4
+#define PWM2	PIN1
 
-/// Aliases
-#define ADC0	ADC_RESET_PIN
-#define ADC1	ADC_SCK_PIN
+// Aliases
+#define ADC0	ADC_PIN3
+#define ADC1	ADC_PIN2
 #define ADC2	ADC_TEMP_SENS
-#define PWMA	PWM0
-#define PWMB	PWM1
+#define PWMA	PWM1
+#define PWMB	PWM2
 
-/// 'AVR ISP' Pins
+// 'AVR ISP' Pins
 #define SCK_PIN		PIN2
 #define MISO_PIN	PIN1
-#define MOSI_PIN	PIN0
+#define MOSI_PIN	PIN4
 #define RESET_PIN	PIN3
 
 /**
@@ -107,7 +107,7 @@ class littleWire
 {
 
 private:
-	char rxBuffer[RX_BUFFER_SIZE];
+	unsigned char rxBuffer[RX_BUFFER_SIZE];
 	usb_dev_handle* lwHandle;
 
 public:
@@ -136,7 +136,7 @@ public:
 	/**
 	 * Set pin as input/output
 	 *
-	 * @param pin Pin number
+	 * @param pin Pin name (\b PIN1 , \b PIN2 , \b PIN3 or \b PIN4 )
 	 * @param mode Mode of pin (\b INPUT or \b OUTPUT)
 	 * @return (none)
 	 */
@@ -145,7 +145,7 @@ public:
 	/**
 	 * Set pin value
 	 *
-	 * @param pin Pin name
+	 * @param pin Pin name (\b PIN1 , \b PIN2 , \b PIN3 or \b PIN4 )
 	 * @param state Pin state (\b HIGH or \b LOW)
 	 * @return (none)
 	 */
@@ -154,7 +154,7 @@ public:
 	/**
 	 * Read pin value
 	 *
-	 * @param pin Pin name	 
+	 * @param pin Pin name (\b PIN1 , \b PIN2 , \b PIN3 or \b PIN4 )
 	 * @return Pin state (\b HIGH or \b LOW)
 	 */
 	unsigned char digitalRead(unsigned char pin);
@@ -166,10 +166,10 @@ public:
 	 */
 	
 	/**
-	 * Read analog voltage. Analog voltage reading from RESET_PIN isn't advised (it is a bit noisy) but supported. Use it at your own risk.
+	 * Read analog voltage. Analog voltage reading from ADC_PIN3 isn't advised (it is a bit noisy) but supported. Use it at your own risk.
 	 * \n For more about internal temperature sensor, look at the Attiny85 datasheet.
 	 *
-	 * @param channel Source of ADC reading (\b ADC_RESET_PIN , \b ADC_SCK_PIN or \b ADC_TEMP_SENS)
+	 * @param channel Source of ADC reading (\b ADC_PIN2 , \b ADC_PIN3 or \b ADC_TEMP_SENS)
 	 * @return 10 bit ADC result with reference to 5V
 	 */
 	unsigned int analogRead(unsigned char channel);

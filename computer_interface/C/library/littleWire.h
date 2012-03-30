@@ -58,7 +58,6 @@
 
 #define AUTO_CS		1
 #define MANUAL_CS	0
-
 /*******************************************************************************/
 
 /********************************************************************************
@@ -132,7 +131,7 @@ unsigned char digitalRead(littleWire* lwHandle, unsigned char pin);
 
 /********************************************************************************
 * Read analog voltage from a spesific channel
-*     channel: 0 for RESET pin, 1 for SCK pin, 2 for internal Temperature sensor
+*     channel: 0 for pin3, 1 for pin2, 2 for internal Temperature sensor
 *     Returns: Analog voltage in 10bit resoultion
 ********************************************************************************/
 unsigned int analogRead(littleWire* lwHandle, unsigned char channel);
@@ -180,7 +179,7 @@ unsigned char spi_sendMessage(littleWire* lwHandle, unsigned char message);
 /*******************************************************************************/
 
 /********************************************************************************
-* Send multiple SPI messages. Chip select is manual.
+* Send multiple SPI messages. Chip select is manual/automatic.
 *    sendBuffer: Message array to send
 *    inputBuffer: Returned answer message
 *	 length: Message length - maximum 4
@@ -223,7 +222,7 @@ void i2c_endTransmission(littleWire* lwHandle);
 /*******************************************************************************/
 
 /********************************************************************************
-* Request an reply / message from a slave device.
+* Request a reply / message from a slave device.
 *	address: Slave address
 *	numBytes: Number of bytes the slave will send.
 *	responseBuffer: Array pointer which will hold the response from the slave
