@@ -13,7 +13,7 @@ extern "C"
 
 using namespace std;
 
-#define BUTTON		PIN1	// Pin button is connected to (active low)
+#define BUTTON		PIN3	// Pin button is connected to PIN3 (active low)
 #define DEBOUNCE	100		// Debounce delay, in miliseconds
 
 int main()

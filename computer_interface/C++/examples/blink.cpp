@@ -13,7 +13,7 @@ extern "C"
 
 using namespace std;
 
-#define LED		PIN3	// Pin LED is connected to MOSI (PIN0) pin
+#define LED		PIN4	// Pin LED is connected to PIN4
 #define DELAY	500		// Delay, in miliseconds
 
 int main(void)

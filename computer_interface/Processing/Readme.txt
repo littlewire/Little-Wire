@@ -1,0 +1,1 @@
+Copy the LittleWire folder under .../Documents/Processing/libraries/ path
