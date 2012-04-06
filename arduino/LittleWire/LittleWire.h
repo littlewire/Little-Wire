@@ -27,18 +27,21 @@
 #ifndef LittleWire_h
 #define LittleWire_h
 
+#include "Print.h"
+
 extern "C" {
   #include <stdlib.h>
   #include <string.h>
   #include <inttypes.h>
 }
 
+
 #if (defined(__AVR_AT90USB82__) || defined(__AVR_AT90USB162__))
 	#define SPI_SS_PIN PORTB0
 	#define SPI_SCK_PIN PORTB1
 	#define SPI_MOSI_PIN PORTB2
 	#define SPI_MISO_PIN PORTB3
-#elif (defined(__AVR_ATmega48__) || defined(_AVR_ATmega88__) || defined(__AVR_ATmega168__) || defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__))
+#elif (defined(__AVR_ATmega48__) || defined(_AVR_ATmega88__) || defined(__AVR_ATmega168__) || defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__)||defined(__AVR_ATmega8__))
 	#define SPI_SS_PIN PORTB2
 	#define SPI_SCK_PIN PORTB5
 	#define SPI_MOSI_PIN PORTB3
@@ -74,21 +77,23 @@ extern "C" {
 static volatile uint8_t*	lw_txBuffer;
 static volatile uint8_t		lw_index;
 static volatile uint8_t		lw_length;
+static volatile uint8_t		lw_temp;
 static volatile uint8_t		lw_messageSent;
+static volatile uint8_t		lw_timeout;
+static volatile uint16_t	lw_counter;
+static volatile uint8_t		lw_register;
 
-class LittleWire
-{
+class LittleWire {
   private:
 	void setup_spi(uint8_t mode, int dord, int interrupt, uint8_t clock);
-	/*static volatile uint8_t*	txBuffer;
-	static volatile uint8_t	index;
-	static volatile uint8_t	length;
-	static volatile uint8_t	messageSent;*/
   public:
 	LittleWire();
 	void begin(void);
-	void send(uint8_t* buffer,uint8_t new_length);
-	uint8_t isBusy(void);  
+	void print(uint8_t* buffer,uint8_t new_length);
+	void print(const char *str) { return print((uint8_t *)str, strlen(str)); }
+	void print(uint8_t* buffer) { return print((uint8_t *)buffer, strlen((const char*)buffer)); }
+	void print(char* buffer) { return print((uint8_t *)buffer, strlen(buffer)); }
+	uint8_t isBusy(void);
 };
 
 #endif

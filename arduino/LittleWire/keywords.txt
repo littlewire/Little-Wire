@@ -9,9 +9,9 @@
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
+print	KEYWORD2
+isBusy	KEYWORD2
 begin	KEYWORD2
-wait	KEYWORD2
-send	KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)
