@@ -46,6 +46,7 @@
 #include "oddebug.h"
 #define sbi(register,bit) (register|=(1<<bit))
 #define cbi(register,bit) (register&=~(1<<bit))
+const uint8_t LITTLE_WIRE_VERSION = 0x10;	
 enum
 {
 	// Generic requests
@@ -83,7 +84,9 @@ enum
 	USBTINY_SPI_SEND_BUFFER, // 29
 	USBTINY_I2C_REQUEST_FROM, // 30
 	USBTINY_SPI_UPDATE_DELAY, // 31
-	USBTINY_STOP_PWM // 32
+	USBTINY_STOP_PWM, // 32
+ 	USBTINY_DEBUG_SPI, // 33
+	USBTINY_VERSION_QUERY
 };
 
 #define	PORT	PORTB
@@ -560,6 +563,45 @@ uchar	usbFunctionSetup(uchar data[8])
 		TCCR0A = 0;
 		TCCR0B = 0;
 		return 0;
+	}
+	if( req == USBTINY_DEBUG_SPI ) // 33
+	{
+		uint8_t m = data[2]; // Data to send	
+		uint8_t r = 0; // Received data
+		uint8_t mask;
+		uint8_t d=data[4]; // Delay amount
+		DDR  &= ~MISO_MASK;
+		DDR  |= (RESET_MASK|SCK_MASK|MOSI_MASK);
+		PORT &= ~SCK_MASK;
+		cli();		
+		for	( mask = 0x80; mask; mask >>= 1 )
+		{
+			if	( m & mask ) { PORT |= MOSI_MASK; } /* Send the data */
+			
+			r<<=1; /* Shift the register */			
+			
+			r=r+((PIN&(1<<1))>>1); /* Sample the data */
+						
+			PORT |= SCK_MASK; /* Low to high edge */			
+			
+			_delay_loop_1(d);	
+			//while(d--) { asm volatile ("nop"); }	d=data[4]; /* Clock delay */						
+			PORT &= ~SCK_MASK; /* High to low edge */				
+			//_delay_loop_1(d);
+			//while(d--) { asm volatile ("nop"); }	d=data[4]; /* Clock delay */			
+			
+			PORT &= ~MOSI_MASK; /* Clear send data */
+		}
+		sei();
+		usbMsgPtr = data;
+		data[0]=r;
+		return 1;		
+	}
+	if( req == USBTINY_VERSION_QUERY )
+	{
+		data[0]=LITTLE_WIRE_VERSION;
+		usbMsgPtr = data;
+		return 1;		
 	}
 	// Special multiple SPI message send function
 	if ( ( req & 0xF0) == 0xF0)
