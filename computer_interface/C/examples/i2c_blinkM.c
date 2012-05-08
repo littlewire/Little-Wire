@@ -11,6 +11,7 @@
 #include "littleWire_util.h"
 
 unsigned char i=0;
+unsigned char version;
 
 int main()
 {
@@ -23,6 +24,9 @@ int main()
 		exit(EXIT_FAILURE);
 	}
 
+	version = readFirmwareVersion(myLittleWire);
+	printf("Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));
+	
 	i2c_init(myLittleWire);
 	
 	for(;;){ // Constantly change colors ...

@@ -38,6 +38,13 @@ littleWire* littleWire_connect()
 	return tempHandle;
 }
 
+unsigned char readFirmwareVersion(littleWire* lwHandle)
+{
+	usb_control_msg(lwHandle, 0xC0, 34, 0, 0, rxBuffer, 8, USB_TIMEOUT);
+
+	return rxBuffer[0];
+}
+
 void digitalWrite(littleWire* lwHandle, unsigned char pin, unsigned char state)
 {
 	if(state){

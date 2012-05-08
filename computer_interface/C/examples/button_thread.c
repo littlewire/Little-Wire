@@ -20,6 +20,8 @@
 
 littleWire *myLittleWire = NULL;
 
+unsigned char version;
+
 void *buttonHandler(void *arg)
 {
 	int buttonPin = (int)arg;
@@ -45,6 +47,9 @@ int main()
 		printf("Little Wire could not be found!\n");
 		exit(EXIT_FAILURE);
 	}
+
+	version = readFirmwareVersion(myLittleWire);
+	printf("Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));
 
 	pinMode(myLittleWire, BUTTON, INPUT);
 

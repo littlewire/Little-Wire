@@ -8,6 +8,7 @@
 #include "littleWire.h"
 #include "littleWire_util.h"
 
+unsigned char version;
 
 int main(int argc, char **argv)
 {
@@ -20,6 +21,9 @@ int main(int argc, char **argv)
 		printf("Little Wire could not be found!\n");
 		exit(EXIT_FAILURE);
 	}
+	
+	version = readFirmwareVersion(myLittleWire);
+	printf("Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));
 	
 	pinMode(myLittleWire,PIN2,INPUT);
 

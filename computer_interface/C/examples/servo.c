@@ -13,6 +13,7 @@
 
 unsigned char currentLocation = 0;
 unsigned char direction=1;	
+unsigned char version;
 
 int main(void)
 {
@@ -25,6 +26,9 @@ int main(void)
 		exit(EXIT_FAILURE);
 	}
 
+	version = readFirmwareVersion(myLittleWire);
+	printf("Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));	
+	
 	servo_init(myLittleWire);
 
 	for(;;)

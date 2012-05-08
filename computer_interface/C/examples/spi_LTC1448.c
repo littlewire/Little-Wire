@@ -12,6 +12,8 @@
 #include "littleWire.h"
 #include "littleWire_util.h"
 
+unsigned char version;
+
 int main()
 {
 	unsigned int chA=0;
@@ -26,6 +28,9 @@ int main()
 		exit(EXIT_FAILURE);
 	}
 
+	version = readFirmwareVersion(myLittleWire);
+	printf("Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));
+	
 	spi_init(myLittleWire);
 	
 	// pin3 will be used as our chip select pin
