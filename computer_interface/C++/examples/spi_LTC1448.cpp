@@ -37,9 +37,9 @@ int main()
 	
 	myLittleWire.spi_init();
 	
-	// RESET_PIN will be used as a chip select pin
-	myLittleWire.pinMode(RESET_PIN,OUTPUT);
-	myLittleWire.digitalWrite(RESET_PIN,HIGH);
+	// PIN3 will be used as a chip select pin
+	myLittleWire.pinMode(PIN3,OUTPUT);
+	myLittleWire.digitalWrite(PIN3,HIGH);
 	
 	myLittleWire.spi_updateDelay(0); // Change this according to your device. If your device doesn't respond, try to increase the delay
 
@@ -60,9 +60,9 @@ int main()
 	
 		// Alternative with manual chip select 
 		/*
-			myLittleWire.digitalWrite(RESET_PIN,LOW); // Chip select low		
+			myLittleWire.digitalWrite(PIN3,LOW); // Chip select low		
 				myLittleWire.spi_sendMessageMulti(sendBuffer,receiveBuffer,3,MANUAL_CS);
-			myLittleWire.digitalWrite(RESET_PIN,HIGH); // Chip select high
+			myLittleWire.digitalWrite(PIN3,HIGH); // Chip select high
 		*/
 	}
 }
