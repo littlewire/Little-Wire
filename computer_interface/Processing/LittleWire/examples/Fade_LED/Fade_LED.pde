@@ -13,6 +13,7 @@ LittleWire lw;
 boolean connected=false;
 boolean state=true;
 int value=0;
+int version;
 
 void setup()
 {
@@ -22,6 +23,8 @@ void setup()
   {  
    lw.pwm_init(); 
    lw.pwm_updatePrescaler(1);
+   version=lw.readFirmwareVersion();
+   System.out.printf("Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));	  
   }
   size(320, 240);
   background(0, 0, 0);

@@ -106,6 +106,33 @@ public class LittleWire {
 		System.out.println("LittleWire by ihsan Kehribar http://kehribar.me");
 	}
 	
+	/*******************************************************************************
+	* Reads the firmware version of the Little Wire \n
+	* Format: 0xXY => X: Primary version	Y: Minor version
+	*
+	* 	@param (none)
+	* 	@return Firmware version
+	*******************************************************************************/	
+	public int readFirmwareVersion()
+	{
+		if(deviceConnected)
+		{
+			try {
+				myLittleWire.controlMsg(0xC0, 34, 0,0,receiveBuffer,8,1000,false);
+				return receiveBuffer[0];
+			} catch (USBException e) {
+				e.printStackTrace();
+				return -1;
+			}
+		}
+		else
+		{
+			System.out.println("First, connect to Little-Wire!");
+			return -1;
+		}
+	}
+	/*******************************************************************************/
+	
 	public static String version() {
 		return VERSION;
 	}

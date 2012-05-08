@@ -20,6 +20,7 @@ int actual_y;
 int voltage=0;
 boolean connected=false;
 byte i=0;
+int version;
 
 void setup()
 {
@@ -29,6 +30,8 @@ void setup()
   {
   	lw.pwm_stop();
   	lw.pinMode(lw.PIN2,lw.INPUT);
+  	version=lw.readFirmwareVersion();
+    System.out.printf("Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));	  
   }	
   size(800, 512);
   background(220);

@@ -12,6 +12,7 @@ LittleWire lw;
 
 boolean connected=false;
 boolean state=false;
+int version;
 
 void setup()
 {
@@ -21,6 +22,8 @@ void setup()
   {
   	lw.pwm_stop();
     lw.pinMode(lw.PIN4, lw.OUTPUT);
+    version=lw.readFirmwareVersion();
+    System.out.printf("Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));	  
   }
   size(320, 240);
   background(255, 0, 0);
