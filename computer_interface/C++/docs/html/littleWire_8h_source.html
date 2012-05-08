@@ -154,48 +154,51 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00120"></a>00120         <a class="code" href="classlittleWire.html#a48b8616a5add99022a556a9a839e31b2">littleWire</a>();
 <a name="l00121"></a>00121 
 <a name="l00128"></a>00128         <a class="code" href="classlittleWire.html#ae18d45d978ab1862b98db53d7e2634b1">~littleWire</a>();
-<a name="l00129"></a>00129 
-<a name="l00130"></a>00130 
-<a name="l00143"></a>00143         <span class="keywordtype">void</span> <a class="code" href="group__GPIO.html#gaf657af6bcf549893b5fd7df1049dabc8">pinMode</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> pin, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> mode);
-<a name="l00144"></a>00144 
-<a name="l00152"></a>00152         <span class="keywordtype">void</span> <a class="code" href="group__GPIO.html#ga896fb0c440930e3e7ea8ed39577338a2">digitalWrite</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> pin, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> state);
-<a name="l00153"></a>00153 
-<a name="l00160"></a>00160         <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="group__GPIO.html#ga203436de9031afe3e82412f6d2045fe1">digitalRead</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> pin);
-<a name="l00175"></a>00175         <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="group__ADC.html#ga7167a646d71cc3ad8700c0d084d1c22a">analogRead</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> channel);
-<a name="l00176"></a>00176         
-<a name="l00189"></a>00189         <span class="keywordtype">void</span> <a class="code" href="group__PWM.html#gacf483e7e2f583aa03f3c04b7679f8154">pwm_init</a>();
-<a name="l00190"></a>00190 
-<a name="l00196"></a>00196         <span class="keywordtype">void</span> <a class="code" href="group__PWM.html#gae271ef531c63a6c4739ac0b74f6a9b32">pwm_stop</a>();
-<a name="l00197"></a>00197 
-<a name="l00205"></a>00205         <span class="keywordtype">void</span> <a class="code" href="group__PWM.html#ga49de16d3d4d1d12ff9be1e86fbdf4d77">pwm_updateCompare</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> channelA, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> channelB);
+<a name="l00129"></a>00129         
+<a name="l00136"></a>00136         <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classlittleWire.html#ab27313730210db2f7bf6e2f080433b57">connect</a>();
+<a name="l00137"></a>00137         
+<a name="l00145"></a>00145         <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classlittleWire.html#abd208452c78384fa4b7323ad5038f3bd">readFirmwareVersion</a>();
+<a name="l00146"></a>00146 
+<a name="l00159"></a>00159         <span class="keywordtype">void</span> <a class="code" href="group__GPIO.html#gaf657af6bcf549893b5fd7df1049dabc8">pinMode</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> pin, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> mode);
+<a name="l00160"></a>00160 
+<a name="l00168"></a>00168         <span class="keywordtype">void</span> <a class="code" href="group__GPIO.html#ga896fb0c440930e3e7ea8ed39577338a2">digitalWrite</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> pin, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> state);
+<a name="l00169"></a>00169 
+<a name="l00176"></a>00176         <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="group__GPIO.html#ga203436de9031afe3e82412f6d2045fe1">digitalRead</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> pin);
+<a name="l00191"></a>00191         <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="group__ADC.html#ga7167a646d71cc3ad8700c0d084d1c22a">analogRead</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> channel);
+<a name="l00192"></a>00192         
+<a name="l00205"></a>00205         <span class="keywordtype">void</span> <a class="code" href="group__PWM.html#gacf483e7e2f583aa03f3c04b7679f8154">pwm_init</a>();
 <a name="l00206"></a>00206 
-<a name="l00213"></a>00213         <span class="keywordtype">void</span> <a class="code" href="group__PWM.html#ga00985706f6aa20cad938832f6d3303d7">pwm_updatePrescaler</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> value);
-<a name="l00227"></a>00227         <span class="keywordtype">void</span> <a class="code" href="group__SPI.html#ga5ccf0433ba234ff754d8c8c18009684a">spi_init</a>();
-<a name="l00228"></a>00228 
-<a name="l00235"></a>00235         <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="group__SPI.html#ga842fef3abf87f0e5afcc5406609f4858">spi_sendMessage</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> message);
-<a name="l00236"></a>00236 
-<a name="l00247"></a>00247         <span class="keywordtype">void</span> <a class="code" href="group__SPI.html#ga5f31e9d5d09a0175a60414c8755f67d1">spi_sendMessageMulti</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>* sendBuffer, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>* inputBuffer, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> length, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> mode);
-<a name="l00248"></a>00248 
-<a name="l00256"></a>00256         <span class="keywordtype">void</span> <a class="code" href="group__SPI.html#ga8205ede07ac2bb5b8062a288a46d9591">spi_updateDelay</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> duration);
-<a name="l00270"></a>00270         <span class="keywordtype">void</span> <a class="code" href="group__I2C.html#ga45c2707d5c9e7bb34ef692ec93d41548">i2c_init</a>();
-<a name="l00271"></a>00271 
-<a name="l00278"></a>00278         <span class="keywordtype">void</span> <a class="code" href="group__I2C.html#ga54ec09723ddf46eb8a34851346270689">i2c_beginTransmission</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> address);
-<a name="l00279"></a>00279 
-<a name="l00286"></a>00286         <span class="keywordtype">void</span> <a class="code" href="group__I2C.html#ga9d3d4407ab4d6ed0ac1d55b017540507">i2c_send</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> message);
+<a name="l00212"></a>00212         <span class="keywordtype">void</span> <a class="code" href="group__PWM.html#gae271ef531c63a6c4739ac0b74f6a9b32">pwm_stop</a>();
+<a name="l00213"></a>00213 
+<a name="l00221"></a>00221         <span class="keywordtype">void</span> <a class="code" href="group__PWM.html#ga49de16d3d4d1d12ff9be1e86fbdf4d77">pwm_updateCompare</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> channelA, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> channelB);
+<a name="l00222"></a>00222 
+<a name="l00229"></a>00229         <span class="keywordtype">void</span> <a class="code" href="group__PWM.html#ga00985706f6aa20cad938832f6d3303d7">pwm_updatePrescaler</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> value);
+<a name="l00243"></a>00243         <span class="keywordtype">void</span> <a class="code" href="group__SPI.html#ga5ccf0433ba234ff754d8c8c18009684a">spi_init</a>();
+<a name="l00244"></a>00244 
+<a name="l00251"></a>00251         <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="group__SPI.html#ga842fef3abf87f0e5afcc5406609f4858">spi_sendMessage</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> message);
+<a name="l00252"></a>00252 
+<a name="l00263"></a>00263         <span class="keywordtype">void</span> <a class="code" href="group__SPI.html#ga5f31e9d5d09a0175a60414c8755f67d1">spi_sendMessageMulti</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>* sendBuffer, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>* inputBuffer, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> length, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> mode);
+<a name="l00264"></a>00264 
+<a name="l00272"></a>00272         <span class="keywordtype">void</span> <a class="code" href="group__SPI.html#ga8205ede07ac2bb5b8062a288a46d9591">spi_updateDelay</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> duration);
+<a name="l00286"></a>00286         <span class="keywordtype">void</span> <a class="code" href="group__I2C.html#ga45c2707d5c9e7bb34ef692ec93d41548">i2c_init</a>();
 <a name="l00287"></a>00287 
-<a name="l00294"></a>00294         <span class="keywordtype">void</span> <a class="code" href="group__I2C.html#gac0a74856bfaa7babff9d94fc437e6971">i2c_endTransmission</a>();
+<a name="l00294"></a>00294         <span class="keywordtype">void</span> <a class="code" href="group__I2C.html#ga54ec09723ddf46eb8a34851346270689">i2c_beginTransmission</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> address);
 <a name="l00295"></a>00295 
-<a name="l00304"></a>00304         <span class="keywordtype">void</span> <a class="code" href="group__I2C.html#gad5605b7ee59aaae635f4a5cb6f44d12c">i2c_requestFrom</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> address,<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> numBytes,<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>* responseBuffer);
-<a name="l00318"></a>00318         <span class="keywordtype">void</span> <a class="code" href="group__Servo.html#ga1cebb38b9d7b43f6d6d026f10eb46e5b">servo_init</a>();
-<a name="l00319"></a>00319 
-<a name="l00327"></a>00327         <span class="keywordtype">void</span> <a class="code" href="group__Servo.html#gab0656f06cf8e73d91ae4b1e5148da4e9">servo_updateLocation</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> locationChannelA, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> locationChannelB);
-<a name="l00330"></a>00330 };
-<a name="l00331"></a>00331 
-<a name="l00332"></a>00332 <span class="comment">//} //namespace</span>
-<a name="l00333"></a>00333 
-<a name="l00334"></a>00334 
-<a name="l00355"></a>00355 <span class="preprocessor">#endif</span>
-<a name="l00356"></a>00356 <span class="preprocessor"></span>
+<a name="l00302"></a>00302         <span class="keywordtype">void</span> <a class="code" href="group__I2C.html#ga9d3d4407ab4d6ed0ac1d55b017540507">i2c_send</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> message);
+<a name="l00303"></a>00303 
+<a name="l00310"></a>00310         <span class="keywordtype">void</span> <a class="code" href="group__I2C.html#gac0a74856bfaa7babff9d94fc437e6971">i2c_endTransmission</a>();
+<a name="l00311"></a>00311 
+<a name="l00320"></a>00320         <span class="keywordtype">void</span> <a class="code" href="group__I2C.html#gad5605b7ee59aaae635f4a5cb6f44d12c">i2c_requestFrom</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> address,<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> numBytes,<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>* responseBuffer);
+<a name="l00334"></a>00334         <span class="keywordtype">void</span> <a class="code" href="group__Servo.html#ga1cebb38b9d7b43f6d6d026f10eb46e5b">servo_init</a>();
+<a name="l00335"></a>00335 
+<a name="l00343"></a>00343         <span class="keywordtype">void</span> <a class="code" href="group__Servo.html#gab0656f06cf8e73d91ae4b1e5148da4e9">servo_updateLocation</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> locationChannelA, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> locationChannelB);
+<a name="l00346"></a>00346 };
+<a name="l00347"></a>00347 
+<a name="l00348"></a>00348 <span class="comment">//} //namespace</span>
+<a name="l00349"></a>00349 
+<a name="l00350"></a>00350 
+<a name="l00371"></a>00371 <span class="preprocessor">#endif</span>
+<a name="l00372"></a>00372 <span class="preprocessor"></span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -214,7 +217,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 30 2012 07:44:26 for Little-Wire by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue May 8 2012 22:39:53 for Little-Wire by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

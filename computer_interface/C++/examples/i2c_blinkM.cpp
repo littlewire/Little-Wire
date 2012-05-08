@@ -15,12 +15,24 @@ extern "C"
 }
 
 using namespace std;
+unsigned char version;
 
 int main()
 {
 	unsigned char i=0;
 	littleWire myLittleWire;
 
+	if(myLittleWire.connect() == 0)
+	{
+		printf("Little Wire could not be found!\n");
+		exit(EXIT_FAILURE);
+	}
+	
+	version = myLittleWire.readFirmwareVersion();
+	printf("Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));	
+
+	myLittleWire.pwm_stop();
+	
 	myLittleWire.i2c_init();
 	
 	for(;;){ // Constantly change colors ...

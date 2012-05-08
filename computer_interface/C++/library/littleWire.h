@@ -126,7 +126,23 @@ public:
 	 * @return (none)
 	 */
 	~littleWire();
-
+	
+	/**
+	 * Tries to connect to the device
+	 *
+	 * @param (none)
+	 * @return Nonzero for healty connection
+	 */	
+	unsigned char connect();
+	
+	/**
+	 * Reads the firmware version of the Little Wire \n
+	 * Format: 0xXY => X: Primary version	Y: Minor version
+	 *
+	 * @param (none)
+	 * @return Firmware version
+	 */	
+	unsigned char readFirmwareVersion();
 
 	/*! \addtogroup GPIO
 	 *  GPIO functions

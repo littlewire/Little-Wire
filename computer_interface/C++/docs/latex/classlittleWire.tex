@@ -17,6 +17,10 @@
 \item 
 \hyperlink{classlittleWire_ae18d45d978ab1862b98db53d7e2634b1}{$\sim$little\-Wire} ()
 \item 
+unsigned char \hyperlink{classlittleWire_ab27313730210db2f7bf6e2f080433b57}{connect} ()
+\item 
+unsigned char \hyperlink{classlittleWire_abd208452c78384fa4b7323ad5038f3bd}{read\-Firmware\-Version} ()
+\item 
 void \hyperlink{group__GPIO_gaf657af6bcf549893b5fd7df1049dabc8}{pin\-Mode} (unsigned char pin, unsigned char mode)
 \item 
 void \hyperlink{group__GPIO_ga896fb0c440930e3e7ea8ed39577338a2}{digital\-Write} (unsigned char pin, unsigned char state)
@@ -109,6 +113,44 @@ void \hyperlink{group__Servo_gab0656f06cf8e73d91ae4b1e5148da4e9}{servo\-\_\-upda
 \end{DoxyParams}
 \begin{DoxyReturn}{\-Returns}
 (none) 
+\end{DoxyReturn}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classlittleWire_ab27313730210db2f7bf6e2f080433b57}{\index{little\-Wire@{little\-Wire}!connect@{connect}}
+\index{connect@{connect}!littleWire@{little\-Wire}}
+\subsubsection[{connect}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char {\bf little\-Wire\-::connect} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classlittleWire_ab27313730210db2f7bf6e2f080433b57}
+\-Tries to connect to the device
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em (none)} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-Nonzero for healty connection 
+\end{DoxyReturn}
+\hypertarget{classlittleWire_abd208452c78384fa4b7323ad5038f3bd}{\index{little\-Wire@{little\-Wire}!read\-Firmware\-Version@{read\-Firmware\-Version}}
+\index{read\-Firmware\-Version@{read\-Firmware\-Version}!littleWire@{little\-Wire}}
+\subsubsection[{read\-Firmware\-Version}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char {\bf little\-Wire\-::read\-Firmware\-Version} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classlittleWire_abd208452c78384fa4b7323ad5038f3bd}
+\-Reads the firmware version of the \-Little \-Wire \par
+ \-Format\-: 0x\-X\-Y =$>$ \-X\-: \-Primary version \-Y\-: \-Minor version
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em (none)} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-Firmware version 
 \end{DoxyReturn}
 
 

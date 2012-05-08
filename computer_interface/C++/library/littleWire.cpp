@@ -33,17 +33,29 @@
 littleWire::littleWire()
 {
 	this->lwHandle = NULL;
-
-	usb_init();
-
-	usbOpenDevice(&this->lwHandle, VENDOR_ID, (char*)"*", PRODUCT_ID, (char*)"*", (char*)"*", NULL, NULL );
-
-	// throw exception if handle == NULL?
 }
 
 littleWire::~littleWire()
 {
 	this->lwHandle = NULL;
+}
+
+unsigned char littleWire::connect()
+{
+	usb_init();
+	usbOpenDevice(&this->lwHandle, VENDOR_ID, (char*)"*", PRODUCT_ID, (char*)"*", (char*)"*", NULL, NULL );
+	
+	if(this->lwHandle == NULL)
+		return 0;
+	else
+		return 1;
+}
+
+unsigned char littleWire::readFirmwareVersion()
+{
+	usb_control_msg(this->lwHandle, 0xC0, 34, 0, 0, (char*)rxBuffer, 8, USB_TIMEOUT);
+
+	return rxBuffer[0];
 }
 
 void littleWire::digitalWrite(unsigned char pin, unsigned char state)

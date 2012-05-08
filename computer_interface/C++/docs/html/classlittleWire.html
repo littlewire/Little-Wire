@@ -95,6 +95,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlittleWire.html#a48b8616a5add99022a556a9a839e31b2">littleWire</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlittleWire.html#ae18d45d978ab1862b98db53d7e2634b1">~littleWire</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlittleWire.html#ab27313730210db2f7bf6e2f080433b57">connect</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlittleWire.html#abd208452c78384fa4b7323ad5038f3bd">readFirmwareVersion</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__GPIO.html#gaf657af6bcf549893b5fd7df1049dabc8">pinMode</a> (unsigned char pin, unsigned char mode)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__GPIO.html#ga896fb0c440930e3e7ea8ed39577338a2">digitalWrite</a> (unsigned char pin, unsigned char state)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__GPIO.html#ga203436de9031afe3e82412f6d2045fe1">digitalRead</a> (unsigned char pin)</td></tr>
@@ -176,6 +178,56 @@ LICENSE</h2>
 
 </div>
 </div>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ab27313730210db2f7bf6e2f080433b57"></a><!-- doxytag: member="littleWire::connect" ref="ab27313730210db2f7bf6e2f080433b57" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char <a class="el" href="classlittleWire.html#ab27313730210db2f7bf6e2f080433b57">littleWire::connect</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Tries to connect to the device</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">(none)</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Nonzero for healty connection </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="abd208452c78384fa4b7323ad5038f3bd"></a><!-- doxytag: member="littleWire::readFirmwareVersion" ref="abd208452c78384fa4b7323ad5038f3bd" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char <a class="el" href="classlittleWire.html#abd208452c78384fa4b7323ad5038f3bd">littleWire::readFirmwareVersion</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Reads the firmware version of the Little Wire <br/>
+ Format: 0xXY =&gt; X: Primary version Y: Minor version</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">(none)</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Firmware version </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>library/<a class="el" href="littleWire_8h_source.html">littleWire.h</a></li>
 <li>library/littleWire.cpp</li>
@@ -198,7 +250,7 @@ LICENSE</h2>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 30 2012 07:44:26 for Little-Wire by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue May 8 2012 22:39:53 for Little-Wire by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

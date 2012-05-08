@@ -12,6 +12,7 @@ extern "C"
 }
 
 using namespace std;
+unsigned char version;
 
 #define DELAY 10	// Delay, in miliseconds
 
@@ -21,6 +22,17 @@ int main(void)
 	unsigned char direction=1;	
 	littleWire myLittleWire;
 
+	if(myLittleWire.connect() == 0)
+	{
+		printf("Little Wire could not be found!\n");
+		exit(EXIT_FAILURE);
+	}
+	
+	version = myLittleWire.readFirmwareVersion();
+	printf("Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));		
+	
+	myLittleWire.pwm_stop();
+	
 	myLittleWire.servo_init();
 
 	for(;;)
