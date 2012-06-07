@@ -6,17 +6,20 @@
 
 - When i saw simpleavr's implementation of usbtiny on attiny45 , i thought it would be cool if i make a kit version of this with a minimal form factor. Then i designed a PCB and sent for first prototype. Later on i thought, if i want to sell this, it would be much cooler ,and more suitable with "Open Source Hardware" concept, if i bring this project one step ahead. So i tried to fit anything extra to the device and this project came out.
 
-### What is this?
+### Features
 
-- usbtiny compatable AVR programmer in minimal form factor with all through hole components
-- Computer controllable (via USB) additional features: 
+- USB controlled multi-tool with: 
     - 4 channel digital input / output
-    - ADC with 10 bit resolution
+    - ADC (10 bit resolution)
     - 2 paralel hardware PWM outputs  
     - SPI interface
     - I2C interface
-- Includes onboard serial bootloader for firmware upgrades! 
-- USB to UART converter , by loading an other firmware (CDC-232 port)
+    - USBtiny compatible AVR programmer
+- Printf style debugging over AVR-ISP pins
+- USB to UART converter (alternative firmware -- CDC-232 port)
+- Onboard serial bootloader for firmware upgrades 
+- Minimal form factor and all through-hole components
+- Open Source Hardware design
 
 ### Possible usages
 
@@ -39,12 +42,12 @@
 - Bootloader source files
 - C function/header files for command line USB interface for Windows and Linux
 - C++ class for Windows and Linux 
-- C# class for Windows USB interface  
-- Example C projects for almost every feature of the board   
+- Processing library for Windows ( With reduced feature set ... ) 
+- C# class for Windows USB interface ( in development ... )
+- Example C projects for almost every feature of the board
 - Example C++ projects for almost every feature of the board  
+- Example Processing projects
 - Example C# project for analog voltage plotting based on zedGraph
-- Example C# projects for almost every feature of the board
-- Processing library for Windows ( in developement ... ) 
 
 
 ### Reference projects
