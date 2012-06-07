@@ -1,6 +1,6 @@
 ![Little wire beta in action](./Little-Wire/raw/master/Little-Wire_beta.jpg)
 
-<center>http://kehribar.me/projects/Little-Wire/<center>
+<center>http://littlewire.cc<center>
 
 ### Short story  
 
