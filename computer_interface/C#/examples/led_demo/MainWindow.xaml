@@ -1,0 +1,31 @@
+﻿<Window x:Class="led_demo.Main"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="LittleWire LED Demo" Height="165" Width="355" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" ResizeMode="NoResize">
+    <Grid>
+        <Button Height="60" HorizontalAlignment="Left" Margin="29,42,0,0" Name="button_pin1" VerticalAlignment="Top" Width="60" Click="button_pin1_Click">
+            <StackPanel>
+                <Image Source="/led_demo;component/light_bulb_off.png" Stretch="None" Name="bulb1" />
+            </StackPanel>
+        </Button>
+        <Button Height="60" HorizontalAlignment="Left" Margin="105,42,0,0" Name="button_pin2" VerticalAlignment="Top" Width="60" Click="button_pin2_Click">
+            <StackPanel>
+                <Image Source="/led_demo;component/light_bulb_off.png" Stretch="None" Name="bulb2" />
+            </StackPanel>
+        </Button>
+        <Button Height="60" HorizontalAlignment="Left" Margin="181,42,0,0" Name="button_pin3" VerticalAlignment="Top" Width="60" Click="button_pin3_Click">
+            <StackPanel>
+                <Image Source="/led_demo;component/light_bulb_off.png" Stretch="None" Name="bulb3" />
+            </StackPanel>
+        </Button>
+        <Button Height="60" HorizontalAlignment="Left" Margin="257,42,0,0" Name="button_pin4" VerticalAlignment="Top" Width="60" Click="button_pin4_Click">
+            <StackPanel>
+                <Image Source="/led_demo;component/light_bulb_off.png" Stretch="None" Name="bulb4" />
+            </StackPanel>
+        </Button>
+        <Label Content="Pin 1" Height="25" HorizontalAlignment="Left" Margin="29,17,0,0" Name="label1" VerticalAlignment="Top" Width="60" HorizontalContentAlignment="Center" />
+        <Label Content="Pin 2" Height="25" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="105,17,0,0" Name="label2" VerticalAlignment="Top" Width="60" />
+        <Label Content="Pin 3" Height="25" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="181,17,0,0" Name="label3" VerticalAlignment="Top" Width="60" />
+        <Label Content="Pin 4" Height="25" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="257,17,0,0" Name="label4" VerticalAlignment="Top" Width="60" />
+    </Grid>
+</Window>
