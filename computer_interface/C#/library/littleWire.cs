@@ -7,8 +7,26 @@ using LibUsbDotNet.Main;
 
 namespace  littleWireLib
 {
-    class littleWire
+    public class littleWire
     {
+        // Pin mappings
+        public static byte PIN1 = 1;
+        public static byte PIN2 = 2;
+        public static byte PIN3 = 5;
+        public static byte PIN4 = 0;
+
+        // Pin directions
+        public static byte IN = 1;
+        public static byte OUT = 0;
+
+        // Pin directions (aliases)
+        public static byte INPUT = IN;
+        public static byte OUTPUT = OUT;
+
+        // Pin states
+        public static byte HIGH = 1;
+        public static byte LOW = 0;
+
         private static UsbDeviceFinder MyUsbFinder;
         private static UsbDevice MyUsbDevice;
         private UsbSetupPacket MySetupPacket;
