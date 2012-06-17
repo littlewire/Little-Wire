@@ -70,5 +70,8 @@
     - USIi2c library for I2C implementation
         http://arduino.cc/playground/Code/USIi2c
         
-## Please note: 
-	Do not use the Adafruit USB VID/PID without written permission from Adafruit Industries, LLC and Limor "Ladyada" Fried (support@adafruit.com). Permission is granted for littlewire Ihsan Kehribar and Seeed Studio by Adafruit Industries, LLC to use the Adafruit USB VID/PID for littlewire (SKU:AVR06071P)
+### Please note: 
+	Do not use the Adafruit USB VID/PID without written permission from Adafruit Industries, 
+	LLC and Limor "Ladyada" Fried (support@adafruit.com). Permission is granted for 
+	littlewire, Ihsan Kehribar and Seeed Studio by Adafruit Industries, LLC to use the 
+	Adafruit USB VID/PID for littlewire (SKU:AVR06071P)
