@@ -115,6 +115,14 @@ extern void usbEventResetReady(void);
 
 /* -------------------------- Device Description --------------------------- */
 
+/*
+	Please note: Do not use the Adafruit USB VID/PID without written permission 
+	from Adafruit Industries, LLC and Limor "Ladyada" Fried 
+	(support@adafruit.com). Permission is granted for littlewire, Ihsan Kehribar 
+	and Seeed Studio by Adafruit Industries, LLC to use the Adafruit 
+	USB VID/PID for littlewire (SKU:AVR06071P)
+*/
+
 #define  USB_CFG_VENDOR_ID       0x81, 0x17
 /* USB vendor ID for the device, low byte first. If you have registered your
  * own Vendor ID, define it here. Otherwise you use obdev's free shared
