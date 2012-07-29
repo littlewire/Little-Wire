@@ -173,7 +173,7 @@ void spi_sendMessage(littleWire* lwHandle, unsigned char * sendBuffer, unsigned 
 
 unsigned char debugSpi(littleWire* lwHandle, unsigned char message)
 {
-	lwStatus=usb_control_msg(lwHandle, 0xC0, 23, 0, 0, rxBuffer, 8, USB_TIMEOUT);
+	lwStatus=usb_control_msg(lwHandle, 0xC0, 33, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 	lwStatus=usb_control_msg(lwHandle, 0xC0, 40, 0, 0, rxBuffer, 8, USB_TIMEOUT);
 	return rxBuffer[0];
 }
