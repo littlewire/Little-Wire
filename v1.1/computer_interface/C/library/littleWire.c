@@ -314,9 +314,9 @@ int onewire_nextAddress(littleWire* lwHandle)
       {
          // reset the search
          LastDiscrepancy = 0;
-         LastDeviceFlag = FALSE;
+         LastDeviceFlag = 0;
          LastFamilyDiscrepancy = 0;
-         return FALSE;
+         return 0;
       }
 
       // issue the search command 
@@ -392,9 +392,9 @@ int onewire_nextAddress(littleWire* lwHandle)
 
          // check for last device
          if (LastDiscrepancy == 0)
-            LastDeviceFlag = TRUE;
+            LastDeviceFlag = 1;
          
-         search_result = TRUE;
+         search_result = 1;
       }
    }
 
@@ -402,9 +402,9 @@ int onewire_nextAddress(littleWire* lwHandle)
    if (!search_result || !ROM_NO[0])
    {
       LastDiscrepancy = 0;
-      LastDeviceFlag = FALSE;
+      LastDeviceFlag = 0;
       LastFamilyDiscrepancy = 0;
-      search_result = FALSE;
+      search_result = 0;
    }
 
    return search_result;
@@ -416,7 +416,7 @@ int onewire_firstAddress(littleWire* lwHandle)
 
    // reset the search state
    LastDiscrepancy = 0;
-   LastDeviceFlag = FALSE;
+   LastDeviceFlag = 0;
    LastFamilyDiscrepancy = 0;
 
    return onewire_nextAddress(temp);
