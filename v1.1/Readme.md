@@ -1,6 +1,6 @@
 ## This is the beta release V1.1!
 
-![Little wire beta in action](./Little-Wire/raw/master/v1.1/Little-Wire_beta.jpg)
+![Little wire beta in action](https://github.com/kehribar/Little-Wire/raw/master/v1.1/Little-Wire_beta.jpg)
 
 <center>http://littlewire.cc<center>
 
