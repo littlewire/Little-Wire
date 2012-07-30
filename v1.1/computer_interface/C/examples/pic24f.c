@@ -548,22 +548,6 @@ int main (int argc, char *argv[])
 	
 #endif
 
-
-#if 0 /* memory reading doesn't work well ... */
-	enterICSP();
-	int error=0;
-	for(q=0x00;q<config1Location[deviceIndex]+1;q+=2)
-	{
-		value = readAddress(q);
-		if(value!=bigMemory[q])
-		{			
-			printf("#address: %d\t #actual: %X\t #read: %X\n",q,bigMemory[q],value);
-		}
-
-	}
-	exitICSP();
-#endif
-
 	// enterICSP();
 		printf("\n");
 		printf("-----------------------------------------\n");
