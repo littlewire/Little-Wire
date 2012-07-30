@@ -6,8 +6,14 @@
 	Overall program memory reading and verifying doesn't work.
 	Tested with bus pirate firmware and worked well. 
 	
-	YOU HAVE TO PUT SOME KIND OF LEVEL CONVERSION CIRCUIT BETWEEN
-	LITTLE WIRE AND THE TARGET PIC!
+	<ignore>
+		// YOU HAVE TO PUT SOME KIND OF LEVEL CONVERSION CIRCUIT BETWEEN
+		// LITTLE WIRE AND THE TARGET PIC!
+	</ignore>
+	
+	=> Pic24f series are apperently 5V tolerant in digital pins. You 
+	don't have to put voltage level conversion but it is advised to 
+	do so. 
 	
 	pin2 -> MCLR
 	pin0 -> PGC
@@ -31,7 +37,7 @@ FILE *inputFile;
 char *name = "./log.txt";
 int myIndex=0;
 unsigned long instructions[64];
-unsigned long bigMemory[0xABFF];
+unsigned long bigMemory[0x0157FF];
 int deviceIndex;
 unsigned long config1;
 unsigned long config2;
@@ -159,7 +165,10 @@ void exitICSP()
 
 unsigned long readAddress(unsigned long address24bit)
 {
-	unsigned long value;
+	unsigned long value1=0x00;
+	unsigned long value2=0x00;
+	unsigned long value3=0x00;
+	
 	unsigned long temp;
 	
 	temp = address24bit;
@@ -168,11 +177,20 @@ unsigned long readAddress(unsigned long address24bit)
 	sendSix(0x880190,0);
 	sendSix(0x200006|((temp & 0x0000FFFF)<<4),0);
 	sendSix(0x207847,1);
+	
 	sendSix(0xBA0B96,2);
+	value1 = sendRegout();
 	
-	value = sendRegout();
+	// sendSix(0xBADBB6,2);
+	// sendSix(0xBAD3D6,2);
+	// value2 = sendRegout();
 	
-	return value;
+	// sendSix(0xBA0BB6,2);
+	// value3 = sendRegout();
+	
+	sendSix(0x040200,1);
+	
+	return value1 | ((value2&0xFF)<<16);
 }
 
 void eraseFlash() 
@@ -358,17 +376,17 @@ int main (int argc, char *argv[])
 			printf("> Device name:\t\t%s\n",deviceList[deviceIndex]);
 		
 		value = readAddress(0xFF0002);
-		printf("> REVID:\t\t0x%4X\n",value);		
-		value = readAddress(0x00ABFE);
-		
+		printf("> REVID:\t\t0x%4X\n",value);				
+		value = readAddress(config1Location[deviceIndex]);		
 		printf("> Config #1:\t\t0x%4X\n",value);	
-		value = readAddress(0x00ABFC);
+		value = readAddress(config2Location[deviceIndex]);
 		printf("> Config #2:\t\t0x%4X\n",value);
+		
 		printf("-----------------------------------------\n");
 	
 	exitICSP();
 	
-#if 1	
+#if 1
 	enterICSP();
 		printf("\n");
 		printf("-----------------------------------------\n");
@@ -378,8 +396,8 @@ int main (int argc, char *argv[])
 	exitICSP();
 	
 	/* prefill the memory map */
-	for(q=0;q<0xABFF;q+=2)
-		bigMemory[q]=0xFFFFFF;
+	for(q=0;q<config1Location[deviceIndex]+1;q+=2)
+		bigMemory[q]=0x00FFFF;
 	
 	printf("\n");
 	printf("-----------------------------------------\n");
@@ -468,13 +486,13 @@ int main (int argc, char *argv[])
 		}			
 	}	
 
-	for(i = 0; i< 0xABFF; i=i+16)
+	for(i = 0; i< config1Location[deviceIndex]+1; i=i+16)
 		fprintf(fp,"%6X : --> :\t%6X\t%6X\t%6X\t%6X\t%6X\t%6X\t%6X\t%6X\n",i,bigMemory[i],bigMemory[i+2],bigMemory[i+4],bigMemory[i+6],bigMemory[i+8],bigMemory[i+10],bigMemory[i+12],bigMemory[i+14]);
 	
 	if(configOverride)
 	{
-		bigMemory[config1Location[deviceIndex]]=config1;
-		bigMemory[config2Location[deviceIndex]]=config2;
+		bigMemory[config1Location[deviceIndex]]=0xFF0000|config1;
+		bigMemory[config2Location[deviceIndex]]=0xFF0000|config2;
 	}
 	
 	enterICSP();
@@ -484,7 +502,7 @@ int main (int argc, char *argv[])
 	printf("-----------------------------------------\n");
 	printf("- Start sending packets\n");
 	printf("-----------------------------------------\n");	
-	for(i=0;i<0xABFF;i=i+128)
+	for(i=0;i<config1Location[deviceIndex]+1;i=i+128)
 	{
 		int isNull = 1;		
 		
@@ -497,14 +515,18 @@ int main (int argc, char *argv[])
 		{
 			if((instructions[q] != 0xFFFFFF))
 				isNull = 0;
-		}
+		}		
 		
 		if(!isNull)
-		{
+		{			
+			isNull = 1;	
+			
 			for(q=0;q<64;q++)
 			{
 				if((instructions[q] != 0x00FFFF))
+				{
 					isNull = 0;
+				}	
 			}
 		}
 		
@@ -527,11 +549,18 @@ int main (int argc, char *argv[])
 
 
 #if 0 /* memory reading doesn't work well ... */
-	for(q=0x00;q<0x00ABFC;q+=2)
+	enterICSP();
+	int error=0;
+	for(q=0x00;q<config1Location[deviceIndex]+1;q+=2)
 	{
-		value = readAddress(q);		
-		printf("#%8X\t\t%8X\n",q,value);
+		value = readAddress(q);
+		if(value!=bigMemory[q])
+		{			
+			printf("#address: %d\t #actual: %X\t #read: %X\n",q,bigMemory[q],value);
+		}
+
 	}
+	exitICSP();
 #endif
 
 	enterICSP();
@@ -539,9 +568,9 @@ int main (int argc, char *argv[])
 		printf("-----------------------------------------\n");
 		printf("- Read config registers again\n");
 		printf("-----------------------------------------\n");
-		value = readAddress(0x00ABFE);
+		value = readAddress(config1Location[deviceIndex]);		
 		printf("> Config #1:\t\t0x%4X\n",value);	
-		value = readAddress(0x00ABFC);
+		value = readAddress(config2Location[deviceIndex]);
 		printf("> Config #2:\t\t0x%4X\n",value);
 		printf("-----------------------------------------\n");
 	exitICSP();
