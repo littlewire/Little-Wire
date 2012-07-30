@@ -255,7 +255,7 @@ void writeInstruction(unsigned long address,unsigned long* buf)
    // Step 7: Initiate write cycle
    sendSix(0xA8E761,2);
 
-   // Step 8: Poll WR bit
+   // Step 8: Poll WR bit   
    unsigned long nvmcon;
    do
    {
@@ -265,7 +265,7 @@ void writeInstruction(unsigned long address,unsigned long* buf)
        nvmcon = sendRegout();
        sendSix(0x000000,0);	   
    } while ((nvmcon & 0x8000));
-
+   
    // Reset device
    sendSix(0x040200,1);
 #endif
@@ -370,6 +370,7 @@ int main (int argc, char *argv[])
 		if(deviceIndex==0xDEAD)
 		{
 			printf("> Target Device is not compatible with this program!\n");
+			exitICSP();
 			return 0;
 		}
 		else
@@ -384,16 +385,16 @@ int main (int argc, char *argv[])
 		
 		printf("-----------------------------------------\n");
 	
-	exitICSP();
+	// exitICSP();
 	
 #if 1
-	enterICSP();
+	// enterICSP();
 		printf("\n");
 		printf("-----------------------------------------\n");
 		printf("> Erasing the flash ... \n");
 		printf("-----------------------------------------\n");
 		eraseFlash();
-	exitICSP();
+	// exitICSP();
 	
 	/* prefill the memory map */
 	for(q=0;q<config1Location[deviceIndex]+1;q+=2)
@@ -495,7 +496,7 @@ int main (int argc, char *argv[])
 		bigMemory[config2Location[deviceIndex]]=0xFF0000|config2;
 	}
 	
-	enterICSP();
+	// enterICSP();
 	gettimeofday(&start, NULL);
 	/* setup memory packets and send the 'valuable' ones */
 	printf("\n");
@@ -543,7 +544,7 @@ int main (int argc, char *argv[])
 	printf("> Elapsed time: %f seconds\n",((end.tv_sec + (end.tv_usec/1000000.0))-(start.tv_sec + (start.tv_usec/1000000.0))));
 	printf("-----------------------------------------\n");
 	
-	exitICSP();	
+	// exitICSP();	
 	
 #endif
 
@@ -563,7 +564,7 @@ int main (int argc, char *argv[])
 	exitICSP();
 #endif
 
-	enterICSP();
+	// enterICSP();
 		printf("\n");
 		printf("-----------------------------------------\n");
 		printf("- Read config registers again\n");
