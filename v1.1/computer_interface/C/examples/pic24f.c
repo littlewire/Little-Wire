@@ -156,11 +156,9 @@ void enterICSP()
 
 void exitICSP() 
 {
-	pinMode(lw,PIN2,OUTPUT);
-	digitalWrite(lw,PIN2,LOW);
-	delay(10);
-	pinMode(lw,PIN2,INPUT);
-	digitalWrite(lw,PIN2,LOW);
+	clearMCLR();
+		delay(10);
+	setMCLR();
 }
 
 unsigned long readAddress(unsigned long address24bit)
