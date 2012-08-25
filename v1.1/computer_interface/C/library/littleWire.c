@@ -422,5 +422,29 @@ int onewire_firstAddress(littleWire* lwHandle)
    return onewire_nextAddress(temp);
 }
 
+int littleWire_error () {
+        if (lwStatus<0) return lwStatus;
+        else return 0;
+}
+
+char *littleWire_errorName () {
+        if (lwStatus<0) switch (lwStatus) {
+                case -1: return "I/O Error"; break;
+                case -2: return "Invalid paramenter"; break;
+                case -3: return "Access error"; break;
+                case -4: return "No device"; break;
+                case -5: return "Not found"; break;
+                case -6: return "Busy"; break;
+                case -7: return "Timeout"; break;
+                case -8: return "Overflow"; break;
+                case -9: return "Pipe"; break;
+                case -10: return "Interrupted"; break;
+                case -11: return "No memory"; break;
+                case -12: return "Not supported"; break;
+                case -99: return "Other"; break;
+                default: return "unknown";
+        }               
+        else return 0;
+}
 
 
