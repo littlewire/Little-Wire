@@ -22,7 +22,7 @@ INCLUDE = library
 CFLAGS  = $(USBFLAGS) $(LIBS) -I$(INCLUDE) -O -g $(OSFLAG)
 
 LWLIBS = opendevice littleWire littleWire_util littleWire_servo
-EXAMPLES = pic24f adc blink button servo i2c_blinkM spi_LTC1448 onewire softPWM hardwarePWM debugConsole
+EXAMPLES = pic24f adc blink button servo i2c_blinkM spi_LTC1448 onewire softPWM hardwarePWM debugConsole lwbuttond
 
 .PHONY:	clean library
 
