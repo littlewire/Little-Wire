@@ -86,6 +86,7 @@ void run_command (int pin, char * cmd) {
 	}
 }
 
+#define BUFSIZE 160
 int main(int argc, char *argv[]) {
 	littleWire *myLittleWire = NULL;
 	unsigned char version;
@@ -93,6 +94,7 @@ int main(int argc, char *argv[]) {
 	int i;		// index for various loops
 	int pin;	// index for input number
 	char c;
+	char buf[BUFSIZE];   // buffer for syslog output
 
 	/*
 		work the command line switches
@@ -166,8 +168,18 @@ int main(int argc, char *argv[]) {
             sleep(10);
         } else {
 
+            version = readFirmwareVersion(myLittleWire);
+
+            if (rc=littleWire_error()) {
+                printf("lwbuttond: Error reading firmware version: '%s' (%d)\n",littleWire_errorName(),rc);
+                snprintf(buf,BUFSIZE,"Error reading firmware version: '%s' (%d)\n",littleWire_errorName(),rc);
+                syslog(LOG_INFO,buf);
+            }
+
+            rc=snprintf(buf,BUFSIZE,"Connected to Little Wire device, firmware version %d.%d\n",((version & 0xF0)>>4),(version&0x0F));
+            syslog(LOG_INFO,buf);
+
             if (verbose) {
-                version = readFirmwareVersion(myLittleWire);
                 printf("lwbuttond: Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));
             }
 
