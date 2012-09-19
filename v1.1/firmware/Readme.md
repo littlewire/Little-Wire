@@ -4,7 +4,7 @@ To burn the bootloader firmware:
 
 To burn the (bootloader+main) combined firmware: 
 
-	avrdude -c usbtiny -p t85 -U flash:w:combined.hex -U lfuse:w:0xe1:m -U hfuse:w:0x5d:m -U efuse:w:0xfe:m
+	avrdude -c usbtiny -p t85 -U flash:w:combined_v1-1.hex -U lfuse:w:0xe1:m -U hfuse:w:0x5d:m -U efuse:w:0xfe:m
  	
 To upload main.hex over the bootloader: (for Com3 / ttyUSB0)
 	
