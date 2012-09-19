@@ -378,4 +378,18 @@ void softPWM_write(littleWire* lwHandle,unsigned char ch1,unsigned char ch2,unsi
 int customMessage(littleWire* lwHandle,unsigned char* receiveBuffer,unsigned char command,unsigned char d1,unsigned char d2, unsigned char d3, unsigned char d4);
 /*******************************************************************************/
 
+
+/********************************************************************************
+* Returns an error code if there was an error.
+********************************************************************************/
+int littleWire_error ();
+/*******************************************************************************/
+
+
+/********************************************************************************
+* Returns a text tescription of an error code.
+********************************************************************************/
+char *littleWire_errorName ();
+/*******************************************************************************/
+
 #endif
