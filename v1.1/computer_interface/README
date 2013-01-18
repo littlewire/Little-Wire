@@ -1,3 +1,11 @@
+-- EDIT --
+
+You can find experimental C++ and C# libraries from https://github.com/kehribar/Little-Wire/tree/master/v1.1/computer_interface
+
+When they are stable enough, i will pull them to the main branch.
+
+-- EDIT --
+
 Hi!
 
 Since maintaining different languages at the same time is a very demanding task, I only updated the C library for the V1.1 firmware. I saw that most people use C to interface with the Little Wire. 
