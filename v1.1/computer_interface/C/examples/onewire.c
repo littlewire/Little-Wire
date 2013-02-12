@@ -23,6 +23,11 @@ int t=0;
 
 int main(void)
 {
+        unsigned char temphigh;
+        unsigned char templow;
+        unsigned char tempdecimal;
+        unsigned char scratch;
+
 	lw = littleWire_connect();
 
 	if(lw == NULL){
@@ -121,9 +126,33 @@ int main(void)
 		
 		for(i=0;i<9;i++)
 		{	
-			printf("%2X\t",onewire_readByte(lw));				
+                        scratch = onewire_readByte(lw);
+                        printf("%2X\t",scratch);
+                        if (i == 0)
+                                templow = scratch;
+                        if (i == 1)
+                                temphigh = scratch;
 		}
-		printf("\n");
+
+		switch (templow & 0x0c) {
+                        case 0x00:
+                                tempdecimal = 0;
+                                break;
+                        case 0x04:
+                                tempdecimal = 25;
+                                break;
+                        case 0x08:
+                                tempdecimal = 5;
+                                break;
+                        case 0x0c:
+                                tempdecimal = 75;
+                                break;
+                        default:
+                                tempdecimal = 0;
+                }
+
+                printf("> TEMP %c%d.%d", ((temphigh & 0x80) == 0x80) ? '-' : ' ', ((templow & 0xf0) >> 4) | ((temphigh & 0x07) << 4), tempdecimal);
+                printf("\n");
 		
 		if(lwStatus<0)
 		{
