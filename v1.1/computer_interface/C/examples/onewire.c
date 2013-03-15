@@ -98,8 +98,8 @@ int main(void)
 		
 		onewire_writeByte(lw,0x44); /* CONVERT! command */		
 
-		// wait for conversion ?
-		delay(450);
+		// wait for conversion - this is important, if you allways get 85 deg. C, increase tis value 
+		delay(650);
 		
 		// send reset signal and read the presence value
 		if(!onewire_resetPulse(lw)) // if this returns zero, sensor is unplugged		
