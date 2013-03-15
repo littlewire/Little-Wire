@@ -3,8 +3,14 @@
 	by ihsan Kehribar <ihsan@kehribar.me>
 	
 	Example program to search onewire bus and read temperature from
-	DS1820 type digital sensors.
+	DS1820 type digital sensors. Temperature reading in deg. Centigrate - native to the sensor.
 	
+	How to connect to LittleWire: 
+		- Connect GND pin on sensor (left pin) to GND on Little-Wire
+		- Connect DQ pin on sensor to PIN2 on Little-Wire
+		- Connect Vdd pin on sensor (right) to +5V on Little-Wire
+		- Connect R4k7 (4.7k = 4700 Ohm resistor) between DQ pin and Vdd pin
+
 	Data pin: PIN2
 */
 
@@ -36,10 +42,10 @@ int main(void)
 	}
 	
 	version = readFirmwareVersion(lw);
-	printf("> Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));
+	printf("> Little Wire found with firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));
 	if(version==0x10)
 	{
-		printf("This example requires the new 1.1 version firmware. Please update soon.\n");
+		printf("This example requires the new 1.1 version of Little-Wire firmware. Please update soon.\n");
 		return 0;
 	}
 	
@@ -64,14 +70,14 @@ int main(void)
 	}
 
 	if(i>0)
-		printf("> End of search with %d device(s) found\r\n",i);	
+		printf("> End of search with %d onewire device(s) found\r\n",i);	
 	else
 	{
-		printf("> No device has been found!\n");
+		printf("> No onewire device has been found!\n");
 		return 0;
 	}
 	
-	printf("> Start the talking with the last device found\n");
+	printf("> Start the talking with the last onewire device found\n");
 	
 	delay(2000);
 	
@@ -178,16 +184,15 @@ int main(void)
                         break;
                 }
         	switch (templow & 0x08) {
-                	case 0x08:
+				case 0x08:
                         	tempdecimal += 5000;
                         break;
                 }
 
 		tempdecimal /= 10;
 
-		//decide whether this is positive, or negative temperature value
-                printf("> TEMP %c%d.%d", ((temphigh & 0x80) == 0x80) ? '-' : ' ', ((templow & 0xf0) >> 4) | ((temphigh & 0x07) << 4), tempdecimal);
-		printf("\n");
+		//decide whether this is positive, or negative temperature value and either print minus sign, or not
+                printf("> TEMP %c%d.%d deg. C\n", ((temphigh & 0x80) == 0x80) ? '-' : ' ', ((templow & 0xf0) >> 4) | ((temphigh & 0x07) << 4), tempdecimal);
 		
 		if(lwStatus<0)
 		{
