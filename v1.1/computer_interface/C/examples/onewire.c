@@ -23,10 +23,10 @@ int t=0;
 
 int main(void)
 {
-        unsigned char temphigh;
-        unsigned char templow;
-        unsigned char tempdecimal;
-        unsigned char scratch;
+	unsigned char temphigh;
+	unsigned char templow;
+	unsigned int tempdecimal;
+	unsigned char scratch;
 
 	lw = littleWire_connect();
 
@@ -96,10 +96,10 @@ int main(void)
 		onewire_writeByte(lw,ROM_NO[6]);
 		onewire_writeByte(lw,ROM_NO[7]); /* Address ends */	
 		
-		onewire_writeByte(lw,0x44); /* CONVERT! command */		
+		onewire_writeByte(lw,0x44); /* CONVERT T command */
 
-		// wait for conversion ?
-		delay(450);
+		// wait for conversion - this is important, if you allways get 85 deg. C, increase tis value 
+		delay(650);
 		
 		// send reset signal and read the presence value
 		if(!onewire_resetPulse(lw)) // if this returns zero, sensor is unplugged		
@@ -120,39 +120,74 @@ int main(void)
 		onewire_writeByte(lw,ROM_NO[6]);
 		onewire_writeByte(lw,ROM_NO[7]); /* Address ends */	
 		
-		onewire_writeByte(lw,0xBE); /* Read register command */
+		onewire_writeByte(lw,0xBE); /* Read register (scratchpad) command */
 		
-		printf("> ");
+		printf("> SCRATCH:");
 		
-		for(i=0;i<9;i++)
+		for(i=0;i<9;i++) //read 9 bytes from SCRATCHPAD
 		{	
                         scratch = onewire_readByte(lw);
-                        printf("%2X\t",scratch);
-                        if (i == 0)
+                        printf(":%2X",scratch);
+                        if (i == 0) // LSB temperature register byte (0)
                                 templow = scratch;
-                        if (i == 1)
+                        if (i == 1) // MSB temperature register byte (1)
                                 temphigh = scratch;
 		}
 
-		switch (templow & 0x0c) {
-                        case 0x00:
-                                tempdecimal = 0;
-                                break;
-                        case 0x04:
-                                tempdecimal = 25;
-                                break;
-                        case 0x08:
-                                tempdecimal = 5;
-                                break;
-                        case 0x0c:
-                                tempdecimal = 75;
-                                break;
-                        default:
-                                tempdecimal = 0;
+		char ch; 
+		ch = templow;
+		printf("\nLSB %c%c%c%c%c%c%c%c",
+			(ch&0x80)?'1':'0',
+			(ch&0x40)?'1':'0',
+			(ch&0x20)?'1':'0',
+			(ch&0x10)?'1':'0',
+			(ch&0x08)?'1':'0',
+			(ch&0x04)?'1':'0',
+			(ch&0x02)?'1':'0',
+			(ch&0x01)?'1':'0'
+		);	
+
+		 ch = temphigh;
+			printf("\nMSB %c%c%c%c%c%c%c%c\n",
+			(ch&0x80)?'1':'0',
+			(ch&0x40)?'1':'0',
+			(ch&0x20)?'1':'0',
+			(ch&0x10)?'1':'0',
+			(ch&0x08)?'1':'0',
+			(ch&0x04)?'1':'0',
+			(ch&0x02)?'1':'0',
+			(ch&0x01)?'1':'0'
+		);
+
+		tempdecimal = 0;
+
+		switch (templow & 0x01) {
+			case 0x01:
+				tempdecimal = 625;
+				break;
+		}
+
+	       switch (templow & 0x02) {
+			case 0x02:
+                        	tempdecimal += 1250;
+                        	break;
+		}
+        	switch (templow & 0x04) {
+                	case 0x04:
+                        	tempdecimal += 2500;
+                        break;
+                }
+        	switch (templow & 0x08) {
+                	case 0x08:
+                        	tempdecimal += 5000;
+                        break;
                 }
 
+		tempdecimal /= 10;
+
+		//decide whether this is positive, or negative temperature value
                 printf("> TEMP %c%d.%d", ((temphigh & 0x80) == 0x80) ? '-' : ' ', ((templow & 0xf0) >> 4) | ((temphigh & 0x07) << 4), tempdecimal);
-                printf("\n");
+		printf("\n");
 		
 		if(lwStatus<0)
 		{
