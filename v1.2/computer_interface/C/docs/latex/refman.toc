@@ -1,0 +1,67 @@
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
+\contentsline {chapter}{\numberline {2}Module Index}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Modules}{3}{section.2.1}
+\contentsline {chapter}{\numberline {3}Module Documentation}{5}{chapter.3}
+\contentsline {section}{\numberline {3.1}General}{5}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Detailed Description}{5}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Function Documentation}{5}{subsection.3.1.2}
+\contentsline {subsubsection}{\numberline {3.1.2.1}custom\discretionary {-}{}{}Message}{5}{subsubsection.3.1.2.1}
+\contentsline {subsubsection}{\numberline {3.1.2.2}little\discretionary {-}{}{}Wire\discretionary {-}{}{}\_\discretionary {-}{}{}connect}{6}{subsubsection.3.1.2.2}
+\contentsline {subsubsection}{\numberline {3.1.2.3}little\discretionary {-}{}{}Wire\discretionary {-}{}{}\_\discretionary {-}{}{}error}{6}{subsubsection.3.1.2.3}
+\contentsline {subsubsection}{\numberline {3.1.2.4}little\discretionary {-}{}{}Wire\discretionary {-}{}{}\_\discretionary {-}{}{}error\discretionary {-}{}{}Name}{6}{subsubsection.3.1.2.4}
+\contentsline {subsubsection}{\numberline {3.1.2.5}read\discretionary {-}{}{}Firmware\discretionary {-}{}{}Version}{6}{subsubsection.3.1.2.5}
+\contentsline {section}{\numberline {3.2}G\discretionary {-}{}{}P\discretionary {-}{}{}I\discretionary {-}{}{}O}{8}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Detailed Description}{8}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Function Documentation}{8}{subsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.1}digital\discretionary {-}{}{}Read}{8}{subsubsection.3.2.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2.2}digital\discretionary {-}{}{}Write}{8}{subsubsection.3.2.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.3}internal\discretionary {-}{}{}Pullup}{8}{subsubsection.3.2.2.3}
+\contentsline {subsubsection}{\numberline {3.2.2.4}pin\discretionary {-}{}{}Mode}{9}{subsubsection.3.2.2.4}
+\contentsline {section}{\numberline {3.3}A\discretionary {-}{}{}D\discretionary {-}{}{}C}{10}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Detailed Description}{10}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Function Documentation}{10}{subsection.3.3.2}
+\contentsline {subsubsection}{\numberline {3.3.2.1}analog\discretionary {-}{}{}\_\discretionary {-}{}{}init}{10}{subsubsection.3.3.2.1}
+\contentsline {subsubsection}{\numberline {3.3.2.2}analog\discretionary {-}{}{}Read}{10}{subsubsection.3.3.2.2}
+\contentsline {section}{\numberline {3.4}P\discretionary {-}{}{}W\discretionary {-}{}{}M}{11}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Detailed Description}{11}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Function Documentation}{11}{subsection.3.4.2}
+\contentsline {subsubsection}{\numberline {3.4.2.1}pwm\discretionary {-}{}{}\_\discretionary {-}{}{}init}{11}{subsubsection.3.4.2.1}
+\contentsline {subsubsection}{\numberline {3.4.2.2}pwm\discretionary {-}{}{}\_\discretionary {-}{}{}stop}{11}{subsubsection.3.4.2.2}
+\contentsline {subsubsection}{\numberline {3.4.2.3}pwm\discretionary {-}{}{}\_\discretionary {-}{}{}update\discretionary {-}{}{}Compare}{11}{subsubsection.3.4.2.3}
+\contentsline {subsubsection}{\numberline {3.4.2.4}pwm\discretionary {-}{}{}\_\discretionary {-}{}{}update\discretionary {-}{}{}Prescaler}{12}{subsubsection.3.4.2.4}
+\contentsline {section}{\numberline {3.5}S\discretionary {-}{}{}P\discretionary {-}{}{}I}{13}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Detailed Description}{13}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}Function Documentation}{13}{subsection.3.5.2}
+\contentsline {subsubsection}{\numberline {3.5.2.1}debug\discretionary {-}{}{}Spi}{13}{subsubsection.3.5.2.1}
+\contentsline {subsubsection}{\numberline {3.5.2.2}spi\discretionary {-}{}{}\_\discretionary {-}{}{}init}{13}{subsubsection.3.5.2.2}
+\contentsline {subsubsection}{\numberline {3.5.2.3}spi\discretionary {-}{}{}\_\discretionary {-}{}{}send\discretionary {-}{}{}Message}{13}{subsubsection.3.5.2.3}
+\contentsline {subsubsection}{\numberline {3.5.2.4}spi\discretionary {-}{}{}\_\discretionary {-}{}{}update\discretionary {-}{}{}Delay}{14}{subsubsection.3.5.2.4}
+\contentsline {section}{\numberline {3.6}I2\discretionary {-}{}{}C}{15}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Detailed Description}{15}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}Function Documentation}{15}{subsection.3.6.2}
+\contentsline {subsubsection}{\numberline {3.6.2.1}i2c\discretionary {-}{}{}\_\discretionary {-}{}{}init}{15}{subsubsection.3.6.2.1}
+\contentsline {subsubsection}{\numberline {3.6.2.2}i2c\discretionary {-}{}{}\_\discretionary {-}{}{}read}{15}{subsubsection.3.6.2.2}
+\contentsline {subsubsection}{\numberline {3.6.2.3}i2c\discretionary {-}{}{}\_\discretionary {-}{}{}start}{15}{subsubsection.3.6.2.3}
+\contentsline {subsubsection}{\numberline {3.6.2.4}i2c\discretionary {-}{}{}\_\discretionary {-}{}{}update\discretionary {-}{}{}Delay}{16}{subsubsection.3.6.2.4}
+\contentsline {subsubsection}{\numberline {3.6.2.5}i2c\discretionary {-}{}{}\_\discretionary {-}{}{}write}{16}{subsubsection.3.6.2.5}
+\contentsline {section}{\numberline {3.7}Onewire}{17}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}Detailed Description}{17}{subsection.3.7.1}
+\contentsline {subsection}{\numberline {3.7.2}Function Documentation}{17}{subsection.3.7.2}
+\contentsline {subsubsection}{\numberline {3.7.2.1}onewire\discretionary {-}{}{}\_\discretionary {-}{}{}first\discretionary {-}{}{}Address}{17}{subsubsection.3.7.2.1}
+\contentsline {subsubsection}{\numberline {3.7.2.2}onewire\discretionary {-}{}{}\_\discretionary {-}{}{}next\discretionary {-}{}{}Address}{17}{subsubsection.3.7.2.2}
+\contentsline {subsubsection}{\numberline {3.7.2.3}onewire\discretionary {-}{}{}\_\discretionary {-}{}{}read\discretionary {-}{}{}Bit}{17}{subsubsection.3.7.2.3}
+\contentsline {subsubsection}{\numberline {3.7.2.4}onewire\discretionary {-}{}{}\_\discretionary {-}{}{}read\discretionary {-}{}{}Byte}{18}{subsubsection.3.7.2.4}
+\contentsline {subsubsection}{\numberline {3.7.2.5}onewire\discretionary {-}{}{}\_\discretionary {-}{}{}reset\discretionary {-}{}{}Pulse}{18}{subsubsection.3.7.2.5}
+\contentsline {subsubsection}{\numberline {3.7.2.6}onewire\discretionary {-}{}{}\_\discretionary {-}{}{}send\discretionary {-}{}{}Bit}{18}{subsubsection.3.7.2.6}
+\contentsline {subsubsection}{\numberline {3.7.2.7}onewire\discretionary {-}{}{}\_\discretionary {-}{}{}write\discretionary {-}{}{}Byte}{18}{subsubsection.3.7.2.7}
+\contentsline {section}{\numberline {3.8}S\discretionary {-}{}{}O\discretionary {-}{}{}F\discretionary {-}{}{}T\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}P\discretionary {-}{}{}W\discretionary {-}{}{}M}{20}{section.3.8}
+\contentsline {subsection}{\numberline {3.8.1}Detailed Description}{20}{subsection.3.8.1}
+\contentsline {subsection}{\numberline {3.8.2}Function Documentation}{20}{subsection.3.8.2}
+\contentsline {subsubsection}{\numberline {3.8.2.1}soft\discretionary {-}{}{}P\discretionary {-}{}{}W\discretionary {-}{}{}M\discretionary {-}{}{}\_\discretionary {-}{}{}state}{20}{subsubsection.3.8.2.1}
+\contentsline {subsubsection}{\numberline {3.8.2.2}soft\discretionary {-}{}{}P\discretionary {-}{}{}W\discretionary {-}{}{}M\discretionary {-}{}{}\_\discretionary {-}{}{}write}{20}{subsubsection.3.8.2.2}
+\contentsline {section}{\numberline {3.9}Servo}{21}{section.3.9}
+\contentsline {subsection}{\numberline {3.9.1}Detailed Description}{21}{subsection.3.9.1}
+\contentsline {subsection}{\numberline {3.9.2}Function Documentation}{21}{subsection.3.9.2}
+\contentsline {subsubsection}{\numberline {3.9.2.1}servo\discretionary {-}{}{}\_\discretionary {-}{}{}init}{21}{subsubsection.3.9.2.1}
+\contentsline {subsubsection}{\numberline {3.9.2.2}servo\discretionary {-}{}{}\_\discretionary {-}{}{}update\discretionary {-}{}{}Location}{21}{subsubsection.3.9.2.2}
+\contentsline {part}{Index}{22}{table.3.34}

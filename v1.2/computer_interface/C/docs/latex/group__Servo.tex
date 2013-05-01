@@ -1,0 +1,69 @@
+\hypertarget{group__Servo}{\section{Servo}
+\label{group__Servo}\index{Servo@{Servo}}
+}
+
+
+Servo functions. Higher level access to P\-W\-M module.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__Servo_gad7a9e11655603d3f5bfc9b0183d4bf4b}{servo\-\_\-init} (little\-Wire $\ast$lw\-Handle)
+\item 
+void \hyperlink{group__Servo_ga9973bbea10985d69ca46693b2145bb84}{servo\-\_\-update\-Location} (little\-Wire $\ast$lw\-Handle, unsigned char location\-Channel\-A, unsigned char location\-Channel\-B)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Servo functions. Higher level access to P\-W\-M module. 
+
+\subsection{Function Documentation}
+\hypertarget{group__Servo_gad7a9e11655603d3f5bfc9b0183d4bf4b}{\index{Servo@{Servo}!servo\-\_\-init@{servo\-\_\-init}}
+\index{servo\-\_\-init@{servo\-\_\-init}!Servo@{Servo}}
+\subsubsection[{servo\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void servo\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle}
+\end{DoxyParamCaption}
+)}}\label{group__Servo_gad7a9e11655603d3f5bfc9b0183d4bf4b}
+Initialize the P\-W\-M module on the Little-\/\-Wire with the Servo special settings.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(none) 
+\end{DoxyReturn}
+
+
+Definition at line 39 of file little\-Wire\-\_\-servo.\-c.
+
+\hypertarget{group__Servo_ga9973bbea10985d69ca46693b2145bb84}{\index{Servo@{Servo}!servo\-\_\-update\-Location@{servo\-\_\-update\-Location}}
+\index{servo\-\_\-update\-Location@{servo\-\_\-update\-Location}!Servo@{Servo}}
+\subsubsection[{servo\-\_\-update\-Location}]{\setlength{\rightskip}{0pt plus 5cm}void servo\-\_\-update\-Location (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle, }
+\item[{unsigned char}]{location\-Channel\-A, }
+\item[{unsigned char}]{location\-Channel\-B}
+\end{DoxyParamCaption}
+)}}\label{group__Servo_ga9973bbea10985d69ca46693b2145bb84}
+Update servo locations
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+{\em location\-Channel\-A} & Location of servo connected to channel A ( in degrees ) \\
+\hline
+{\em location\-Channel\-B} & Location of servo connected to channel B ( in degrees ) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(none) 
+\end{DoxyReturn}
+
+
+Definition at line 52 of file little\-Wire\-\_\-servo.\-c.
+

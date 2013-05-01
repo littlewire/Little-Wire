@@ -1,0 +1,156 @@
+\hypertarget{group__General}{\section{General}
+\label{group__General}\index{General@{General}}
+}
+
+
+General library functions.  
+
+
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__General_ga60ebdb67927ed8072efb1ecf6e7379c9}{typedef usb\-\_\-dev\-\_\-handle {\bfseries little\-Wire}}\label{group__General_ga60ebdb67927ed8072efb1ecf6e7379c9}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+little\-Wire $\ast$ \hyperlink{group__General_gaba04ab4b25e585fbdcabffcb78545833}{little\-Wire\-\_\-connect} ()
+\item 
+unsigned char \hyperlink{group__General_gaafb8bda520f90f80ad865909a8150ff9}{read\-Firmware\-Version} (little\-Wire $\ast$lw\-Handle)
+\item 
+int \hyperlink{group__General_ga59ee076a1cfdaf48f3bc7a71dd66d143}{custom\-Message} (little\-Wire $\ast$lw\-Handle, unsigned char $\ast$receive\-Buffer, unsigned char command, unsigned char d1, unsigned char d2, unsigned char d3, unsigned char d4)
+\item 
+int \hyperlink{group__General_ga582d34d4f68dfd4a985abcb5a47d40bd}{little\-Wire\-\_\-error} ()
+\item 
+char $\ast$ \hyperlink{group__General_ga9608a04124f93a5c02576369698e64e9}{little\-Wire\-\_\-error\-Name} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+General library functions. 
+
+\subsection{Function Documentation}
+\hypertarget{group__General_ga59ee076a1cfdaf48f3bc7a71dd66d143}{\index{General@{General}!custom\-Message@{custom\-Message}}
+\index{custom\-Message@{custom\-Message}!General@{General}}
+\subsubsection[{custom\-Message}]{\setlength{\rightskip}{0pt plus 5cm}int custom\-Message (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle, }
+\item[{unsigned char $\ast$}]{receive\-Buffer, }
+\item[{unsigned char}]{command, }
+\item[{unsigned char}]{d1, }
+\item[{unsigned char}]{d2, }
+\item[{unsigned char}]{d3, }
+\item[{unsigned char}]{d4}
+\end{DoxyParamCaption}
+)}}\label{group__General_ga59ee076a1cfdaf48f3bc7a71dd66d143}
+Sends a custom message to the device. \par
+ Useful when developing new features in the firmware.
+
+
+\begin{DoxyParams}{Parameters}
+{\em receive\-Buffer} & Returned data buffer \\
+\hline
+{\em command} & Firmware command \\
+\hline
+{\em d1} & data\mbox{[}0\mbox{]} for the command \\
+\hline
+{\em d2} & data\mbox{[}1\mbox{]} for the command \\
+\hline
+{\em d3} & data\mbox{[}2\mbox{]} for the command \\
+\hline
+{\em d4} & data\mbox{[}3\mbox{]} for the command \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+status 
+\end{DoxyReturn}
+
+
+Definition at line 273 of file little\-Wire.\-c.
+
+\hypertarget{group__General_gaba04ab4b25e585fbdcabffcb78545833}{\index{General@{General}!little\-Wire\-\_\-connect@{little\-Wire\-\_\-connect}}
+\index{little\-Wire\-\_\-connect@{little\-Wire\-\_\-connect}!General@{General}}
+\subsubsection[{little\-Wire\-\_\-connect}]{\setlength{\rightskip}{0pt plus 5cm}little\-Wire$\ast$ little\-Wire\-\_\-connect (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{group__General_gaba04ab4b25e585fbdcabffcb78545833}
+Tries to connect to the device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em (none)} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+little\-Wire pointer for healthy connection, N\-U\-L\-L for a failed trial. 
+\end{DoxyReturn}
+
+
+Definition at line 60 of file little\-Wire.\-c.
+
+\hypertarget{group__General_ga582d34d4f68dfd4a985abcb5a47d40bd}{\index{General@{General}!little\-Wire\-\_\-error@{little\-Wire\-\_\-error}}
+\index{little\-Wire\-\_\-error@{little\-Wire\-\_\-error}!General@{General}}
+\subsubsection[{little\-Wire\-\_\-error}]{\setlength{\rightskip}{0pt plus 5cm}int little\-Wire\-\_\-error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{group__General_ga582d34d4f68dfd4a985abcb5a47d40bd}
+Returns the numeric value of the status of the last communication attempt
+
+
+\begin{DoxyParams}{Parameters}
+{\em (none)} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Numeric value of the status of the last communication attempt 
+\end{DoxyReturn}
+
+
+Definition at line 427 of file little\-Wire.\-c.
+
+\hypertarget{group__General_ga9608a04124f93a5c02576369698e64e9}{\index{General@{General}!little\-Wire\-\_\-error\-Name@{little\-Wire\-\_\-error\-Name}}
+\index{little\-Wire\-\_\-error\-Name@{little\-Wire\-\_\-error\-Name}!General@{General}}
+\subsubsection[{little\-Wire\-\_\-error\-Name}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ little\-Wire\-\_\-error\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{group__General_ga9608a04124f93a5c02576369698e64e9}
+Returns the string version of the last communication attempt status if there was an error
+
+
+\begin{DoxyParams}{Parameters}
+{\em (none)} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String version of the last communication attempt status if there was an error 
+\end{DoxyReturn}
+
+
+Definition at line 432 of file little\-Wire.\-c.
+
+\hypertarget{group__General_gaafb8bda520f90f80ad865909a8150ff9}{\index{General@{General}!read\-Firmware\-Version@{read\-Firmware\-Version}}
+\index{read\-Firmware\-Version@{read\-Firmware\-Version}!General@{General}}
+\subsubsection[{read\-Firmware\-Version}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char read\-Firmware\-Version (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle}
+\end{DoxyParamCaption}
+)}}\label{group__General_gaafb8bda520f90f80ad865909a8150ff9}
+Reads the firmware version of the Little Wire \par
+ Format\-: 0x\-X\-Y =$>$ X\-: Primary version Y\-: Minor version
+
+
+\begin{DoxyParams}{Parameters}
+{\em (none)} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Firmware version 
+\end{DoxyReturn}
+
+
+Definition at line 70 of file little\-Wire.\-c.
+

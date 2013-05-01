@@ -1,0 +1,71 @@
+\hypertarget{group__ADC}{\section{A\-D\-C}
+\label{group__ADC}\index{A\-D\-C@{A\-D\-C}}
+}
+
+
+Analog to digital converter functions.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__ADC_gacf9d5c0c4f230eac945f97691c82f599}{analog\-\_\-init} (little\-Wire $\ast$lw\-Handle, unsigned char voltage\-Ref)
+\item 
+unsigned int \hyperlink{group__ADC_gaa644fc71be28e975bf5732bf610e81b9}{analog\-Read} (little\-Wire $\ast$lw\-Handle, unsigned char channel)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Analog to digital converter functions. 
+
+\subsection{Function Documentation}
+\hypertarget{group__ADC_gacf9d5c0c4f230eac945f97691c82f599}{\index{A\-D\-C@{A\-D\-C}!analog\-\_\-init@{analog\-\_\-init}}
+\index{analog\-\_\-init@{analog\-\_\-init}!ADC@{A\-D\-C}}
+\subsubsection[{analog\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void analog\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle, }
+\item[{unsigned char}]{voltage\-Ref}
+\end{DoxyParamCaption}
+)}}\label{group__ADC_gacf9d5c0c4f230eac945f97691c82f599}
+Initialize the analog module. V\-R\-E\-F\-\_\-\-V\-C\-C is the standard voltage coming from the U\-S\-B plug \par
+ Others are the Attiny's internal voltage references.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+{\em voltage\-Ref} & ({\bfseries V\-R\-E\-F\-\_\-\-V\-C\-C} , {\bfseries V\-R\-E\-F\-\_\-110m\-V} or {\bfseries V\-R\-E\-F\-\_\-2560m\-V} ) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(none) 
+\end{DoxyReturn}
+
+
+Definition at line 111 of file little\-Wire.\-c.
+
+\hypertarget{group__ADC_gaa644fc71be28e975bf5732bf610e81b9}{\index{A\-D\-C@{A\-D\-C}!analog\-Read@{analog\-Read}}
+\index{analog\-Read@{analog\-Read}!ADC@{A\-D\-C}}
+\subsubsection[{analog\-Read}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int analog\-Read (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle, }
+\item[{unsigned char}]{channel}
+\end{DoxyParamCaption}
+)}}\label{group__ADC_gaa644fc71be28e975bf5732bf610e81b9}
+Read analog voltage. Analog voltage reading from A\-D\-C\-\_\-\-P\-I\-N3 isn't advised (it is a bit noisy) but supported. Use it at your own risk. \par
+ For more about internal temperature sensor, look at the Attiny85 datasheet.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+{\em channel} & Source of A\-D\-C reading ({\bfseries A\-D\-C\-\_\-\-P\-I\-N2} , {\bfseries A\-D\-C\-\_\-\-P\-I\-N3} or {\bfseries A\-D\-C\-\_\-\-T\-E\-M\-P\-\_\-\-S\-E\-N\-S} ) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+10 bit A\-D\-C result 
+\end{DoxyReturn}
+
+
+Definition at line 116 of file little\-Wire.\-c.
+
