@@ -1,0 +1,186 @@
+\hypertarget{group__Onewire}{\section{Onewire}
+\label{group__Onewire}\index{Onewire@{Onewire}}
+}
+
+
+Onewire functions.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__Onewire_gad9a7968da3c0e6a22c93a2f861f56308}{onewire\-\_\-send\-Bit} (little\-Wire $\ast$lw\-Handle, unsigned char bit\-Value)
+\item 
+void \hyperlink{group__Onewire_ga97530a60cae61320e5a9cd87788b97ef}{onewire\-\_\-write\-Byte} (little\-Wire $\ast$lw\-Handle, unsigned char message\-To\-Send)
+\item 
+unsigned char \hyperlink{group__Onewire_ga8056dd5d6ee015abfdf10d0b1533c2c5}{onewire\-\_\-read\-Byte} (little\-Wire $\ast$lw\-Handle)
+\item 
+unsigned char \hyperlink{group__Onewire_ga7d6330de45dfa5527a48813a7d7ab4f3}{onewire\-\_\-read\-Bit} (little\-Wire $\ast$lw\-Handle)
+\item 
+unsigned char \hyperlink{group__Onewire_ga1da45189d08a3c6e030a53c0f936cb0a}{onewire\-\_\-reset\-Pulse} (little\-Wire $\ast$lw\-Handle)
+\item 
+int \hyperlink{group__Onewire_ga802601429c0c4b2593bdf5f123c4894d}{onewire\-\_\-first\-Address} (little\-Wire $\ast$lw\-Handle)
+\item 
+int \hyperlink{group__Onewire_ga0fed6927e5e160f57751bc6e66e7b4bf}{onewire\-\_\-next\-Address} (little\-Wire $\ast$lw\-Handle)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Onewire functions. 
+
+\subsection{Function Documentation}
+\hypertarget{group__Onewire_ga802601429c0c4b2593bdf5f123c4894d}{\index{Onewire@{Onewire}!onewire\-\_\-first\-Address@{onewire\-\_\-first\-Address}}
+\index{onewire\-\_\-first\-Address@{onewire\-\_\-first\-Address}!Onewire@{Onewire}}
+\subsubsection[{onewire\-\_\-first\-Address}]{\setlength{\rightskip}{0pt plus 5cm}int onewire\-\_\-first\-Address (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle}
+\end{DoxyParamCaption}
+)}}\label{group__Onewire_ga802601429c0c4b2593bdf5f123c4894d}
+Start searching for device address on the onewire bus. \par
+ Read the 8 byte address from {\bfseries R\-O\-M\-\_\-\-N\-O} array
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nonzero if any device found 
+\end{DoxyReturn}
+
+
+Definition at line 413 of file little\-Wire.\-c.
+
+\hypertarget{group__Onewire_ga0fed6927e5e160f57751bc6e66e7b4bf}{\index{Onewire@{Onewire}!onewire\-\_\-next\-Address@{onewire\-\_\-next\-Address}}
+\index{onewire\-\_\-next\-Address@{onewire\-\_\-next\-Address}!Onewire@{Onewire}}
+\subsubsection[{onewire\-\_\-next\-Address}]{\setlength{\rightskip}{0pt plus 5cm}int onewire\-\_\-next\-Address (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle}
+\end{DoxyParamCaption}
+)}}\label{group__Onewire_ga0fed6927e5e160f57751bc6e66e7b4bf}
+Try to find the next adress on the onewire bus. \par
+ Read the 8 byte address from {\bfseries R\-O\-M\-\_\-\-N\-O} array
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nonzero if any new device found 
+\end{DoxyReturn}
+
+
+Definition at line 294 of file little\-Wire.\-c.
+
+\hypertarget{group__Onewire_ga7d6330de45dfa5527a48813a7d7ab4f3}{\index{Onewire@{Onewire}!onewire\-\_\-read\-Bit@{onewire\-\_\-read\-Bit}}
+\index{onewire\-\_\-read\-Bit@{onewire\-\_\-read\-Bit}!Onewire@{Onewire}}
+\subsubsection[{onewire\-\_\-read\-Bit}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char onewire\-\_\-read\-Bit (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle}
+\end{DoxyParamCaption}
+)}}\label{group__Onewire_ga7d6330de45dfa5527a48813a7d7ab4f3}
+Read a single bit over onewire bus
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Read bit ( {\bfseries 1} or {\bfseries 0} ) 
+\end{DoxyReturn}
+
+
+Definition at line 246 of file little\-Wire.\-c.
+
+\hypertarget{group__Onewire_ga8056dd5d6ee015abfdf10d0b1533c2c5}{\index{Onewire@{Onewire}!onewire\-\_\-read\-Byte@{onewire\-\_\-read\-Byte}}
+\index{onewire\-\_\-read\-Byte@{onewire\-\_\-read\-Byte}!Onewire@{Onewire}}
+\subsubsection[{onewire\-\_\-read\-Byte}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char onewire\-\_\-read\-Byte (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle}
+\end{DoxyParamCaption}
+)}}\label{group__Onewire_ga8056dd5d6ee015abfdf10d0b1533c2c5}
+Read a byte over onewire bus.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Read byte 
+\end{DoxyReturn}
+
+
+Definition at line 238 of file little\-Wire.\-c.
+
+\hypertarget{group__Onewire_ga1da45189d08a3c6e030a53c0f936cb0a}{\index{Onewire@{Onewire}!onewire\-\_\-reset\-Pulse@{onewire\-\_\-reset\-Pulse}}
+\index{onewire\-\_\-reset\-Pulse@{onewire\-\_\-reset\-Pulse}!Onewire@{Onewire}}
+\subsubsection[{onewire\-\_\-reset\-Pulse}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char onewire\-\_\-reset\-Pulse (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle}
+\end{DoxyParamCaption}
+)}}\label{group__Onewire_ga1da45189d08a3c6e030a53c0f936cb0a}
+Send a reset pulse over onewire bus
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nonzero if any device presents on the bus 
+\end{DoxyReturn}
+
+
+Definition at line 253 of file little\-Wire.\-c.
+
+\hypertarget{group__Onewire_gad9a7968da3c0e6a22c93a2f861f56308}{\index{Onewire@{Onewire}!onewire\-\_\-send\-Bit@{onewire\-\_\-send\-Bit}}
+\index{onewire\-\_\-send\-Bit@{onewire\-\_\-send\-Bit}!Onewire@{Onewire}}
+\subsubsection[{onewire\-\_\-send\-Bit}]{\setlength{\rightskip}{0pt plus 5cm}void onewire\-\_\-send\-Bit (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle, }
+\item[{unsigned char}]{bit\-Value}
+\end{DoxyParamCaption}
+)}}\label{group__Onewire_gad9a7968da3c0e6a22c93a2f861f56308}
+Send a single bit over onewire bus.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+{\em bit\-Value} & {\bfseries 1} or {\bfseries 0} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(none) 
+\end{DoxyReturn}
+
+
+Definition at line 227 of file little\-Wire.\-c.
+
+\hypertarget{group__Onewire_ga97530a60cae61320e5a9cd87788b97ef}{\index{Onewire@{Onewire}!onewire\-\_\-write\-Byte@{onewire\-\_\-write\-Byte}}
+\index{onewire\-\_\-write\-Byte@{onewire\-\_\-write\-Byte}!Onewire@{Onewire}}
+\subsubsection[{onewire\-\_\-write\-Byte}]{\setlength{\rightskip}{0pt plus 5cm}void onewire\-\_\-write\-Byte (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle, }
+\item[{unsigned char}]{message\-To\-Send}
+\end{DoxyParamCaption}
+)}}\label{group__Onewire_ga97530a60cae61320e5a9cd87788b97ef}
+Send a byte over onewire bus.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+{\em message\-To\-Send} & Message to send \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(none) 
+\end{DoxyReturn}
+
+
+Definition at line 232 of file little\-Wire.\-c.
+

@@ -1,0 +1,154 @@
+\hypertarget{group__I2C}{\section{I2\-C}
+\label{group__I2C}\index{I2\-C@{I2\-C}}
+}
+
+
+Inter I\-C communication functions.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__I2C_ga88584118e5b0ccd7330bb092235c4e73}{i2c\-\_\-init} (little\-Wire $\ast$lw\-Handle)
+\item 
+unsigned char \hyperlink{group__I2C_ga4cf5bd085f03b27b9ae80d10bfec50b1}{i2c\-\_\-start} (little\-Wire $\ast$lw\-Handle, unsigned char address7bit, unsigned char direction)
+\item 
+void \hyperlink{group__I2C_ga9f47567fc7fb0ae1a32b62c7cb228c4c}{i2c\-\_\-write} (little\-Wire $\ast$lw\-Handle, unsigned char $\ast$send\-Buffer, unsigned char length, unsigned char end\-With\-Stop)
+\item 
+void \hyperlink{group__I2C_ga5c3a23af7577b89b67cb62d9e192938c}{i2c\-\_\-read} (little\-Wire $\ast$lw\-Handle, unsigned char $\ast$read\-Buffer, unsigned char length, unsigned char end\-With\-Stop)
+\item 
+void \hyperlink{group__I2C_ga29e1be10e6e628f8ad0a4a27da868a81}{i2c\-\_\-update\-Delay} (little\-Wire $\ast$lw\-Handle, unsigned int duration)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Inter I\-C communication functions. 
+
+\subsection{Function Documentation}
+\hypertarget{group__I2C_ga88584118e5b0ccd7330bb092235c4e73}{\index{I2\-C@{I2\-C}!i2c\-\_\-init@{i2c\-\_\-init}}
+\index{i2c\-\_\-init@{i2c\-\_\-init}!I2C@{I2\-C}}
+\subsubsection[{i2c\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void i2c\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle}
+\end{DoxyParamCaption}
+)}}\label{group__I2C_ga88584118e5b0ccd7330bb092235c4e73}
+Initialize the I2\-C module on the Little-\/\-Wire
+
+\begin{DoxyReturn}{Returns}
+(none) 
+\end{DoxyReturn}
+
+
+Definition at line 186 of file little\-Wire.\-c.
+
+\hypertarget{group__I2C_ga5c3a23af7577b89b67cb62d9e192938c}{\index{I2\-C@{I2\-C}!i2c\-\_\-read@{i2c\-\_\-read}}
+\index{i2c\-\_\-read@{i2c\-\_\-read}!I2C@{I2\-C}}
+\subsubsection[{i2c\-\_\-read}]{\setlength{\rightskip}{0pt plus 5cm}void i2c\-\_\-read (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle, }
+\item[{unsigned char $\ast$}]{read\-Buffer, }
+\item[{unsigned char}]{length, }
+\item[{unsigned char}]{end\-With\-Stop}
+\end{DoxyParamCaption}
+)}}\label{group__I2C_ga5c3a23af7577b89b67cb62d9e192938c}
+Read byte(s) over i2c bus
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+{\em read\-Buffer} & Returned message array \\
+\hline
+{\em length} & Message length -\/$>$ Max = 8 \\
+\hline
+{\em end\-With\-Stop} & Should we send a S\-T\-O\-P condition after this buffer? ( {\bfseries E\-N\-D\-\_\-\-W\-I\-T\-H\-\_\-\-S\-T\-O\-P} or {\bfseries N\-O\-\_\-\-S\-T\-O\-P} ) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(none) 
+\end{DoxyReturn}
+
+
+Definition at line 207 of file little\-Wire.\-c.
+
+\hypertarget{group__I2C_ga4cf5bd085f03b27b9ae80d10bfec50b1}{\index{I2\-C@{I2\-C}!i2c\-\_\-start@{i2c\-\_\-start}}
+\index{i2c\-\_\-start@{i2c\-\_\-start}!I2C@{I2\-C}}
+\subsubsection[{i2c\-\_\-start}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char i2c\-\_\-start (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle, }
+\item[{unsigned char}]{address7bit, }
+\item[{unsigned char}]{direction}
+\end{DoxyParamCaption}
+)}}\label{group__I2C_ga4cf5bd085f03b27b9ae80d10bfec50b1}
+Start the i2c communication
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+{\em address} & 7 bit slave address. \\
+\hline
+{\em direction} & ( {\bfseries R\-E\-A\-D} or {\bfseries W\-R\-I\-T\-E} ) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if received A\-C\-K 
+\end{DoxyReturn}
+
+
+Definition at line 191 of file little\-Wire.\-c.
+
+\hypertarget{group__I2C_ga29e1be10e6e628f8ad0a4a27da868a81}{\index{I2\-C@{I2\-C}!i2c\-\_\-update\-Delay@{i2c\-\_\-update\-Delay}}
+\index{i2c\-\_\-update\-Delay@{i2c\-\_\-update\-Delay}!I2C@{I2\-C}}
+\subsubsection[{i2c\-\_\-update\-Delay}]{\setlength{\rightskip}{0pt plus 5cm}void i2c\-\_\-update\-Delay (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle, }
+\item[{unsigned int}]{duration}
+\end{DoxyParamCaption}
+)}}\label{group__I2C_ga29e1be10e6e628f8ad0a4a27da868a81}
+Update i2c signal delay amount. Tune if neccessary to fit your requirements.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+{\em duration} & Delay amount \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(none) 
+\end{DoxyReturn}
+
+
+Definition at line 222 of file little\-Wire.\-c.
+
+\hypertarget{group__I2C_ga9f47567fc7fb0ae1a32b62c7cb228c4c}{\index{I2\-C@{I2\-C}!i2c\-\_\-write@{i2c\-\_\-write}}
+\index{i2c\-\_\-write@{i2c\-\_\-write}!I2C@{I2\-C}}
+\subsubsection[{i2c\-\_\-write}]{\setlength{\rightskip}{0pt plus 5cm}void i2c\-\_\-write (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle, }
+\item[{unsigned char $\ast$}]{send\-Buffer, }
+\item[{unsigned char}]{length, }
+\item[{unsigned char}]{end\-With\-Stop}
+\end{DoxyParamCaption}
+)}}\label{group__I2C_ga9f47567fc7fb0ae1a32b62c7cb228c4c}
+Send byte(s) over i2c bus
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+{\em send\-Buffer} & Message array to send \\
+\hline
+{\em length} & Message length -\/$>$ Max = 4 \\
+\hline
+{\em end\-With\-Stop} & Should we send a S\-T\-O\-P condition after this buffer? ( {\bfseries E\-N\-D\-\_\-\-W\-I\-T\-H\-\_\-\-S\-T\-O\-P} or {\bfseries N\-O\-\_\-\-S\-T\-O\-P} ) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(none) 
+\end{DoxyReturn}
+
+
+Definition at line 202 of file little\-Wire.\-c.
+

@@ -1,0 +1,129 @@
+\hypertarget{group__SPI}{\section{S\-P\-I}
+\label{group__SPI}\index{S\-P\-I@{S\-P\-I}}
+}
+
+
+Serial peripheral interface functions.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__SPI_ga8972ae84f46f4d109fee83ef7a06afad}{spi\-\_\-init} (little\-Wire $\ast$lw\-Handle)
+\item 
+void \hyperlink{group__SPI_gac30a17fa6b874ba0635d0e36bc02337f}{spi\-\_\-send\-Message} (little\-Wire $\ast$lw\-Handle, unsigned char $\ast$send\-Buffer, unsigned char $\ast$input\-Buffer, unsigned char length, unsigned char mode)
+\item 
+unsigned char \hyperlink{group__SPI_gacd555aed378114c940468a2d529466d9}{debug\-Spi} (little\-Wire $\ast$lw\-Handle, unsigned char message)
+\item 
+void \hyperlink{group__SPI_ga77fc1ca40b5336a2855bde16a1082f6c}{spi\-\_\-update\-Delay} (little\-Wire $\ast$lw\-Handle, unsigned int duration)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Serial peripheral interface functions. 
+
+\subsection{Function Documentation}
+\hypertarget{group__SPI_gacd555aed378114c940468a2d529466d9}{\index{S\-P\-I@{S\-P\-I}!debug\-Spi@{debug\-Spi}}
+\index{debug\-Spi@{debug\-Spi}!SPI@{S\-P\-I}}
+\subsubsection[{debug\-Spi}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char debug\-Spi (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle, }
+\item[{unsigned char}]{message}
+\end{DoxyParamCaption}
+)}}\label{group__SPI_gacd555aed378114c940468a2d529466d9}
+Send one byte S\-P\-I message over M\-O\-S\-I pin. Slightly slower than the actual one. \par
+ There isn't any chip select control involved. Useful for debug console app
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+{\em message} & Message to send \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Received S\-P\-I message 
+\end{DoxyReturn}
+
+
+Definition at line 174 of file little\-Wire.\-c.
+
+\hypertarget{group__SPI_ga8972ae84f46f4d109fee83ef7a06afad}{\index{S\-P\-I@{S\-P\-I}!spi\-\_\-init@{spi\-\_\-init}}
+\index{spi\-\_\-init@{spi\-\_\-init}!SPI@{S\-P\-I}}
+\subsubsection[{spi\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void spi\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle}
+\end{DoxyParamCaption}
+)}}\label{group__SPI_ga8972ae84f46f4d109fee83ef7a06afad}
+Initialize the S\-P\-I module on the Little-\/\-Wire
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(none) 
+\end{DoxyReturn}
+
+
+Definition at line 158 of file little\-Wire.\-c.
+
+\hypertarget{group__SPI_gac30a17fa6b874ba0635d0e36bc02337f}{\index{S\-P\-I@{S\-P\-I}!spi\-\_\-send\-Message@{spi\-\_\-send\-Message}}
+\index{spi\-\_\-send\-Message@{spi\-\_\-send\-Message}!SPI@{S\-P\-I}}
+\subsubsection[{spi\-\_\-send\-Message}]{\setlength{\rightskip}{0pt plus 5cm}void spi\-\_\-send\-Message (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle, }
+\item[{unsigned char $\ast$}]{send\-Buffer, }
+\item[{unsigned char $\ast$}]{input\-Buffer, }
+\item[{unsigned char}]{length, }
+\item[{unsigned char}]{mode}
+\end{DoxyParamCaption}
+)}}\label{group__SPI_gac30a17fa6b874ba0635d0e36bc02337f}
+Send S\-P\-I message(s). S\-P\-I Mode is 0.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+{\em send\-Buffer} & Message array to send \\
+\hline
+{\em input\-Buffer} & Returned answer message \\
+\hline
+{\em length} & Message length -\/ maximum 4 \\
+\hline
+{\em mode} & {\bfseries A\-U\-T\-O\-\_\-\-C\-S} or {\bfseries M\-A\-N\-U\-A\-L\-\_\-\-C\-S} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(none) 
+\end{DoxyReturn}
+
+
+Definition at line 163 of file little\-Wire.\-c.
+
+\hypertarget{group__SPI_ga77fc1ca40b5336a2855bde16a1082f6c}{\index{S\-P\-I@{S\-P\-I}!spi\-\_\-update\-Delay@{spi\-\_\-update\-Delay}}
+\index{spi\-\_\-update\-Delay@{spi\-\_\-update\-Delay}!SPI@{S\-P\-I}}
+\subsubsection[{spi\-\_\-update\-Delay}]{\setlength{\rightskip}{0pt plus 5cm}void spi\-\_\-update\-Delay (
+\begin{DoxyParamCaption}
+\item[{little\-Wire $\ast$}]{lw\-Handle, }
+\item[{unsigned int}]{duration}
+\end{DoxyParamCaption}
+)}}\label{group__SPI_ga77fc1ca40b5336a2855bde16a1082f6c}
+Change the S\-P\-I message frequency by adjusting delay duration. By default, Little-\/\-Wire sends the S\-P\-I messages with maximum speed. \par
+ If your hardware can't catch up with the speed, increase the duration value to lower the S\-P\-I speed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lw\-Handle} & little\-Wire device pointer \\
+\hline
+{\em duration} & Amount of delay. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(none) 
+\end{DoxyReturn}
+
+
+Definition at line 181 of file little\-Wire.\-c.
+
