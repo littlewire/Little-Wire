@@ -350,14 +350,14 @@ unsigned char i2c_start(littleWire* lwHandle, unsigned char address7bit, unsigne
 void i2c_write(littleWire* lwHandle, unsigned char* sendBuffer, unsigned char length, unsigned char endWithStop);
 
 /**
-   * Read byte(s) over i2c bus
-   * 
-   * @param lwHandle littleWire device pointer
-   * @param readBuffer Returned message array
-   * @param length Message length -> Max = 8
-   * @param endWithStop Should we send a STOP condition after this buffer? ( \b END_WITH_STOP or \b NO_STOP )
-   * @return (none)
-   */
+  * Read byte(s) over i2c bus
+  * 
+  * @param lwHandle littleWire device pointer
+  * @param readBuffer Returned message array
+  * @param length Message length -> Max = 8
+  * @param endWithStop Should we send a STOP condition after this buffer? ( \b END_WITH_STOP or \b NO_STOP )
+  * @return (none)
+  */
 void i2c_read(littleWire* lwHandle, unsigned char* readBuffer, unsigned char length, unsigned char endWithStop);
 
 /**
