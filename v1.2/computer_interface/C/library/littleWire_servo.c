@@ -1,8 +1,7 @@
 /*
-	http://kehribar.me/projects/Little-Wire/pwm_servo.php
-		Higher level servo driving library.
+	Higher level servo driving library for Little Wire.
 
-	Copyright (C) <2011> ihsan Kehribar <ihsan@kehribar.me>
+	Copyright (C) <2013> ihsan Kehribar <ihsan@kehribar.me>
 	
 	Permission is hereby granted, free of charge, to any person obtaining a copy of
 	this software and associated documentation files (the "Software"), to deal in
@@ -21,7 +20,6 @@
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
-
 */
 
 #include "littleWire_servo.h"
