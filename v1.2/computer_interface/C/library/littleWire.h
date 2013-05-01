@@ -468,7 +468,7 @@ void softPWM_write(littleWire* lwHandle,unsigned char ch1,unsigned char ch2,unsi
 /**
 * @mainpage Introduction
 
-TODO: Write introduction
+TODO: Write an introduction
 TODO: Find a way to add the examples
 
 */
