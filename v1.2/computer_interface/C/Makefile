@@ -28,7 +28,7 @@ CFLAGS  = $(USBFLAGS) $(LIBS) -I$(INCLUDE) -O -g $(OSFLAG)
 LWLIBS = opendevice littleWire littleWire_util littleWire_servo
 EXAMPLES = pic24f adc blink button servo i2c_blinkM spi_LTC1448 onewire softPWM hardwarePWM debugConsole lwbuttond
 
-.PHONY:	clean library
+.PHONY:	clean library docs
 
 all: library $(EXAMPLES)
 
@@ -42,5 +42,9 @@ $(EXAMPLES): $(addsuffix .o, $(LWLIBS))
 	@echo Building example: $@...
 	$(CC) $(CFLAGS) -o $@$(EXE_SUFFIX) examples/$@.c $^ $(LIBS)
 
+docs:
+	doxygen ./docs/doxygen.conf
+	cd ./docs/latex/; make all
+
 clean:
-	rm -f $(EXAMPLES)$(EXE_SUFFIX) *.o *.exe
+	rm -rf $(EXAMPLES)$(EXE_SUFFIX) *.o *.exe *.dSYM docs/html docs/latex
