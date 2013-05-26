@@ -15,8 +15,8 @@ else ifeq ($(shell uname), Darwin)
 	EXE_SUFFIX =
 	OSFLAG = -D LINUX
 else
-	USBFLAGS = -I C:\MinGW\include
-	USBLIBS = -L C:\MinGW\lib -lusb
+	USBFLAGS = -I \include
+	USBLIBS = -L \lib -lusb
 	EXE_SUFFIX = .exe
 	OSFLAG = -D WIN
 endif
@@ -25,8 +25,8 @@ LIBS    = $(USBLIBS)
 INCLUDE = library
 CFLAGS  = $(USBFLAGS) $(LIBS) -I$(INCLUDE) -O -g $(OSFLAG)
 
-LWLIBS = opendevice littleWire littleWire_util littleWire_servo
-EXAMPLES = pic24f adc blink button servo i2c_blinkM spi_LTC1448 onewire softPWM hardwarePWM debugConsole lwbuttond
+LWLIBS = opendevice littleWire littleWire_util littleWire_servo 
+EXAMPLES = pic24f adc blink blink_ws2812 button servo i2c_blinkM spi_LTC1448 onewire softPWM hardwarePWM debugConsole lwbuttond
 
 .PHONY:	clean library docs
 
