@@ -28,9 +28,9 @@ int main(void)
 	
 	version = readFirmwareVersion(lw);
 	printf("> Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));	
-	if(version==0x10)
+	if(version<0x12)
 	{
-		printf("> This example requires the new 1.1 version firmware. Please update soon.\n");
+		printf("> This example requires the new 1.2 version firmware. Please update soon.\n");
 		return 0;
 	}	
 	
