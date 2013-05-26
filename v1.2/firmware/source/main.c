@@ -1326,9 +1326,8 @@ int main(void) {
 			_delay_ms(1); // Hack: Make sure USB communication has finished before atomic block.
 				ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
 				{
-					for (i=0; i<ws2812_ptr; i+=3)
-						ws2812_sendarray_mask(&ws2812_grb,ws2812_ptr,ws2812_mask);	  //mask=1<<(data[2]&7)					
-						ws2812_ptr=0;
+					ws2812_sendarray_mask(&ws2812_grb,ws2812_ptr,ws2812_mask);	  //mask=1<<(data[2]&7)					
+					ws2812_ptr=0;
 				}				
 				jobState=0;
 			break;
