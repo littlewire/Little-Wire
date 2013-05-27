@@ -272,12 +272,17 @@ void softPWM_write(littleWire* lwHandle,unsigned char ch1,unsigned char ch2,unsi
 
 void ws2812_write(littleWire* lwHandle, unsigned char pin, unsigned char r,unsigned char g,unsigned char b)
 {
-	lwStatus=usb_control_msg(lwHandle, 0xC0, 54, (g<<8) | pin, (b<<8) | r, rxBuffer, 8, USB_TIMEOUT);
+	lwStatus=usb_control_msg(lwHandle, 0xC0, 54, (g<<8) | pin | 0x30, (b<<8) | r, rxBuffer, 8, USB_TIMEOUT);
+}
+
+void ws2812_flush(littleWire* lwHandle, unsigned char pin)
+{
+	lwStatus=usb_control_msg(lwHandle, 0xC0, 54, pin | 0x10, 0, rxBuffer, 8, USB_TIMEOUT);
 }
 
 void ws2812_preload(littleWire* lwHandle, unsigned char r,unsigned char g,unsigned char b)
 {
-	lwStatus=usb_control_msg(lwHandle, 0xC0, 55, (g<<8) , (b<<8) | r, rxBuffer, 8, USB_TIMEOUT);
+	lwStatus=usb_control_msg(lwHandle, 0xC0, 54, (g<<8) | 0x20, (b<<8) | r, rxBuffer, 8, USB_TIMEOUT);
 }
 	
 int customMessage(littleWire* lwHandle,unsigned char* receiveBuffer,unsigned char command,unsigned char d1,unsigned char d2, unsigned char d3, unsigned char d4)
