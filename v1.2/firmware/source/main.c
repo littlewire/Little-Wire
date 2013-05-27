@@ -146,12 +146,17 @@ static uint8_t softPWM=0;
 static uint8_t cmp0,cmp1,cmp2,compare0,compare1,compare2;
 static uint8_t adcSetting=0;
 static uint32_t temp;
-static uint8_t ws2812_grb[64*3];
-static uint8_t ws2812_mask;
-static uint8_t ws2812_ptr=0;
 volatile uint8_t 	jobState=0;
 #define DATA_PIN 2
 // ----------------------------------------------------------------------
+// ws2812 support
+#define ws2812_maxleds 64
+static uint8_t ws2812_grb[ws2812_maxleds*3];
+static uint8_t ws2812_mask;
+static uint8_t ws2812_ptr=0;
+
+// ----------------------------------------------------------------------
+
 
 // MCLR	0x04 (100)  => SCK 	-pin2
 // PGD	0x02 (010)  => MISO -pin1
@@ -352,45 +357,36 @@ uchar usbFunctionWrite(uchar *data, uchar len)
 
 /*
 	Bitbang WS2812 write - T. Böscke May 26th, 2013
+						 - clean up May 27th, 2013
 	
 	This routine writes an array of bytes with RGB values to the Dataout pin
 	using the fast 800kHz clockless WS2811/2812 protocol.
-	
-	The description of the protocol in the datasheet is somewhat confusing and
-	it appears that some timing values have been rounded. 
 	
 	The order of the color-data is GRB 8:8:8. Serial data transmission begins 
 	with the most significant bit in each byte.
 	
 	The total length of each bit is 1.25µs (20 cycles @ 16Mhz)
 	* At 0µs the dataline is pulled high.
-	* To send a zero the dataline is pulled low after 0.375µs (6 cycles).
-	* To send a one the dataline is pulled low after 0.625µs (10 cycles).
+	* To send a zero the dataline is pulled low after 0.375µs (6+1 cycles).
+	* To send a one the dataline is pulled low after 0.625µs (10+1 cycles).
 	
 	After the entire bitstream has been written, the dataout pin has to remain low
 	for at least 50µs (reset condition).
-	
-	Note: Code should be compiled with optimizations switched on or the timing
-	will be off. -O1 is minimum.
 
-	timing is slightly different on xmega and reduced avr due to single cycle sbi/cbi
 */
-#define ws2812_port _SFR_IO_ADDR(PORTB)		// Data port register
+#define ws2812_port PORTB		// Data port register
 
-void ws2812_sendarray_mask(uint8_t *data,uint8_t datlen,uint8_t maskhi)
+void ws2812_sendarray_mask(uint8_t *data,uint16_t datlen,uint8_t maskhi)
 {
 	uint8_t curbyte,ctr,masklo;
-	
-	masklo=~maskhi;
+	masklo	=~maskhi&ws2812_port;
+	maskhi |=ws2812_port;
 	
 	while (datlen--) {
 		curbyte=*data++;
 		
 		asm volatile(
-		"		in	%0,%2		\n\t"		
-		"		or	%3,%0		\n\t"
-		"		and	%4,%0		\n\t"
-				
+		
 		"		ldi	%0,8		\n\t"		// 0
 		"loop%=:out	%2,	%3		\n\t"		// 1
 		"		lsl	%1			\n\t"		// 2
@@ -403,8 +399,8 @@ void ws2812_sendarray_mask(uint8_t *data,uint8_t datlen,uint8_t maskhi)
 
 		"		rjmp .+0		\n\t"		// 9
 		
-		"		brcc .+2		\n\t"		// 11l / 10h
-		"		out	%2,	%4		\n\t"		// -   / 11h
+		"		nop				\n\t"		// 10
+		"		out	%2,	%4		\n\t"		// 11
 		"		breq end%=		\n\t"		// 12      nt. 13 taken
 
 		"		rjmp .+0		\n\t"		// 14
@@ -413,12 +409,13 @@ void ws2812_sendarray_mask(uint8_t *data,uint8_t datlen,uint8_t maskhi)
 		"		rjmp loop%=		\n\t"		// 20
 		"end%=:					\n\t"
 		:	"=&d" (ctr)
-		:	"r" (curbyte), "I" (ws2812_port), "r" (maskhi), "r" (masklo)
+		:	"r" (curbyte), "I" (_SFR_IO_ADDR(ws2812_port)), "r" (maskhi), "r" (masklo)
 		);
 		
 		// loop overhead including byte load is 6+1 cycles
 	}
 }
+
 
 
 /* ------------------------------------------------------------------------- */
@@ -776,22 +773,21 @@ uchar	usbFunctionSetup(uchar data[8])
 	
 	if( req == 54 ) /* WS2812_write */
 	{
-		jobState=17;
-		DDRB|=mask;
-		ws2812_mask=mask;
-		ws2812_grb[ws2812_ptr++]=data[3];
-		ws2812_grb[ws2812_ptr++]=data[4];
-		ws2812_grb[ws2812_ptr++]=data[5];
-		return 0;
-	}	
 
-	if( req == 55 ) /* WS2812_preload */
-	{
-		ws2812_grb[ws2812_ptr++]=data[3];
-		ws2812_grb[ws2812_ptr++]=data[4];
-		ws2812_grb[ws2812_ptr++]=data[5];		
-		if (ws2812_ptr>63*3) {ws2812_ptr=0;}  // wrap around if buffer overflows.		
-		return 0;
+		if ((data[2]&0x20)&&(ws2812_ptr<ws2812_maxleds*3))  // bit 5 set = add to buffer
+		{
+			ws2812_grb[ws2812_ptr++]=data[3];
+			ws2812_grb[ws2812_ptr++]=data[4];
+			ws2812_grb[ws2812_ptr++]=data[5];
+		}	
+		
+		if ((data[2]&0x10)&&(ws2812_ptr>0))  // bit 4 set = send buffer to ws2812
+		{
+			jobState=17;
+			DDRB|=mask;
+			ws2812_mask=mask;
+		}	
+		return 0;	
 	}	
 
 // end ws2812 support	
@@ -1326,7 +1322,7 @@ int main(void) {
 			_delay_ms(1); // Hack: Make sure USB communication has finished before atomic block.
 				ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
 				{
-					ws2812_sendarray_mask(&ws2812_grb,ws2812_ptr,ws2812_mask);	  //mask=1<<(data[2]&7)					
+					ws2812_sendarray_mask(ws2812_grb,ws2812_ptr,ws2812_mask);	  //mask=1<<(data[2]&7)					
 					ws2812_ptr=0;
 				}				
 				jobState=0;

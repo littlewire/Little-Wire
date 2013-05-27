@@ -473,12 +473,12 @@ void softPWM_write(littleWire* lwHandle,unsigned char ch1,unsigned char ch2,unsi
   */
 
   /**
-  * Writes to a WS2812 RGB-LED. This call initiates the write to the ws2812 led string. 
-  * If RGB values were preloaded with the preload, call they will be written by this instruction. 
-  * If no values were preloaded the value passed to this function will be loaded to the string.
-  * A maximum of 64 LEDs can be controlled by calling the preload function 63 times and
-  * passing the final LED data with this function.
+  * Writes to a WS2812 RGB-LED. This function writes the passed rgb values to a WS2812 led string
+  * connected to the given pin. Use this if you want to control a single LED.
   *
+  * If RGB values were preloaded with the preload call, the values passed in this call are added
+  * to the buffer and the entire buffer is written to the LED string. This feature can be used to
+  * reduce the number of USB transmissions for a string.
   *
   * @param lwHandle littleWire device pointer
   * @param r value of the red channel
@@ -490,7 +490,18 @@ void softPWM_write(littleWire* lwHandle,unsigned char ch1,unsigned char ch2,unsi
 void ws2812_write(littleWire* lwHandle, unsigned char pin,unsigned char r,unsigned char g,unsigned char b);
 
   /**
-  * Preloads a RGB value to the internal buffer. Up to 63 values can be preloaded.
+  * This function flushes the contents of the littlewire internal RGB buffer to the LED string.
+  *
+  * @param lwHandle littleWire device pointer
+  * @param r value of the red channel
+  * @param g value of the green channel
+  * @param b value of the blue channel
+  * @return (none)
+  */
+void ws2812_flush(littleWire* lwHandle, unsigned char pin);
+
+  /**
+  * Preloads a RGB value to the internal buffer. Up to 64 values can be preloaded. Further writes will be ignored
   *
   * @param lwHandle littleWire device pointer
   * @param r value of the red channel
