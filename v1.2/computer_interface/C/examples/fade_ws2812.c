@@ -2,7 +2,9 @@
 	Created: July 2012
 	by ihsan Kehribar <ihsan@kehribar.me>
 	
-	Connect an RGB led to the PIN1, PIN2, PIN4
+	May 2013: Adapted to ws2812 LEDS - T. Böscke
+	
+	Connect a ws2812 RGB led to PIN1
 */
 
 #include <stdio.h>
@@ -31,9 +33,9 @@ int main()
 
 	version = readFirmwareVersion(lw);
 	printf("> Little Wire firmware version: %d.%d\n",((version & 0xF0)>>4),(version&0x0F));	
-	if(version==0x10)
+	if(version<0x12)
 	{
-		printf("> This example requires the new 1.1 version firmware. Please update soon.\n");
+		printf("> This example requires the new 1.2 version firmware. Please update soon.\n");
 		return 0;
 	}
 	
