@@ -104,8 +104,44 @@ int lwStatus;
 
 typedef usb_dev_handle littleWire;
 
+typedef struct lwCollection
+{
+  struct usb_device* lw_device;
+  int serialNumber;  
+}lwCollection;
+
+lwCollection lwResults[16];
+
+int lw_totalDevices;
+
 /**
-  * Tries to connect to the device.
+  * Tries to cache all the littleWire devices and stores them in lwResults array. \n
+  * Don't actually connects to any of the device(s).
+  *
+  * @param (none)
+  * @return Total number of littleWire devices found in the USB system.
+  */
+int littlewire_search();
+
+/**
+  * Tries to connect to the spesific littleWire device by array id. 
+  *
+  * @param desiredID array index of the lwResults array.
+  * @return littleWire pointer for healthy connection, NULL for a failed trial.
+  */
+littleWire* littlewire_connect_byID(int desiredID);
+
+/**
+  * Tries to connect to the spesific littleWire with a given serial number. \n
+  * If multiple devices have the same serial number, it connects to the last one it finds 
+  *
+  * @param mySerial Serial number of the desired littlewire device.
+  * @return littleWire pointer for healthy connection, NULL for a failed trial.
+  */
+littleWire* littlewire_connect_bySerialNum(int mySerial);
+
+/**
+  * Tries to connect to the first littleWire device that libusb can find. 
   *
   * @param (none)
   * @return littleWire pointer for healthy connection, NULL for a failed trial.

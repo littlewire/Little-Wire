@@ -57,6 +57,82 @@ static unsigned char dscrc_table[] = {
       116, 42,200,150, 21, 75,169,247,182,232, 10, 84,215,137,107, 53};
 /*****************************************************************************/
 
+int littlewire_search()
+{
+  struct usb_bus *bus;
+  struct usb_device *dev;
+
+  usb_init();
+  usb_find_busses();
+  usb_find_devices();
+
+  lw_totalDevices = 0;
+
+  for (bus = usb_busses; bus; bus = bus->next)
+  {
+    for (dev = bus->devices; dev; dev = dev->next)
+    {
+      usb_dev_handle *udev;
+      char description[256];
+      char string[256];
+      int ret, i;
+
+      if((dev->descriptor.idVendor == VENDOR_ID) && (dev->descriptor.idProduct == PRODUCT_ID))
+      {
+        udev = usb_open(dev);      
+        if (udev) 
+        {          
+          if (dev->descriptor.iSerialNumber) 
+          {
+            ret = usb_get_string_simple(udev, dev->descriptor.iSerialNumber, string, sizeof(string));
+            if (ret > 0)
+            {
+              lwResults[lw_totalDevices].serialNumber = atoi(string);
+              lwResults[lw_totalDevices].lw_device = dev;
+            }
+          }
+          usb_close(dev);
+          lw_totalDevices++;        
+        }
+      }
+    }
+  }
+
+  return lw_totalDevices;
+}
+
+littleWire* littlewire_connect_byID(int desiredID)
+{
+  littleWire  *tempHandle = NULL;
+  
+  if(desiredID > (lw_totalDevices-1))
+  {
+    return tempHandle;
+  }
+
+  tempHandle = usb_open(lwResults[desiredID].lw_device);
+
+  return tempHandle;
+}
+
+littleWire* littlewire_connect_bySerialNum(int mySerial)
+{
+  littleWire  *tempHandle = NULL;
+  int temp_id;
+  int i;
+
+  for(i=0;i<lw_totalDevices;i++)
+  {
+    if(lwResults[i].serialNumber == mySerial)
+    {
+      temp_id = i;
+    }
+  }
+
+  tempHandle = littlewire_connect_byID(temp_id);
+  return tempHandle;
+}
+
 littleWire* littleWire_connect()
 {
 	littleWire  *tempHandle = NULL;
