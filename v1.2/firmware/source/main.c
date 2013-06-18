@@ -102,8 +102,14 @@ enum
 };
 
 #define	PORT	PORTB
-#define	DDR		DDRB
-#define	PIN		PINB
+#define	DDR	DDRB
+#define	PIN	PINB
+
+void initSerialNumber();
+int usbDescriptorStringSerialNumber[] = {
+    USB_STRING_DESCRIPTOR_HEADER( USB_CFG_SERIAL_NUMBER_LEN ),
+    USB_CFG_SERIAL_NUMBER
+};
 
 //
 // to reduce pin count so that this can fit in a 8 pin tiny
@@ -791,7 +797,23 @@ uchar	usbFunctionSetup(uchar data[8])
 	}	
 
 // end ws2812 support	
-	
+
+	/* Change serial number ... */
+	if( req == 55)
+	{
+		eeprom_write_byte((EE_addr+0),data[2]);
+		eeprom_write_byte((EE_addr+1),data[3]);
+		eeprom_write_byte((EE_addr+2),data[4]);
+
+		// data[0] = eeprom_read_byte(EE_addr+0);
+		// data[1] = eeprom_read_byte(EE_addr+1);
+		// data[2] = eeprom_read_byte(EE_addr+2);
+		// usbMsgPtr = data;
+		// return 3;
+		
+		return 0;		
+	}
+ 
 	if ((req & 0xF0) == 0xD0) /* pic24f send bytes */
 	{
 		rxBuffer[0]=req&0x07; // length
@@ -1031,6 +1053,8 @@ int main(void) {
     if(calibrationValue != 0xff){
         OSCCAL = calibrationValue;
     }
+
+    initSerialNumber();
     
     usbDeviceDisconnect();
     for(i=0;i<20;i++){  /* 300 ms disconnect */
@@ -1361,4 +1385,40 @@ int main(void) {
 		
     }
     return 0;
+}
+
+void initSerialNumber()
+{
+    uint8_t eepromProblem = 0;	
+
+    char val1 = eeprom_read_byte(EE_addr+0);
+    char val2 = eeprom_read_byte(EE_addr+1);
+    char val3 = eeprom_read_byte(EE_addr+2);
+
+    // ascii 48 -> '0' , 57 -> '9'
+
+    if((val1 < 48) || (val1 > 57))
+    {
+    	eepromProblem = 1;
+    }
+    else if((val2 < 48) || (val2 > 57))
+    {
+    	eepromProblem = 1;
+    }
+    else if((val3 < 48) || (val3 > 57))
+    {
+    	eepromProblem = 1;
+    }
+
+    /* default serial number ... */
+    if(eepromProblem)
+    {
+    	eeprom_write_byte((EE_addr+0),'5');
+    	eeprom_write_byte((EE_addr+1),'1');
+    	eeprom_write_byte((EE_addr+2),'2');
+    }
+
+	usbDescriptorStringSerialNumber[1] = eeprom_read_byte(EE_addr+0);
+	usbDescriptorStringSerialNumber[2] = eeprom_read_byte(EE_addr+1);
+	usbDescriptorStringSerialNumber[3] = eeprom_read_byte(EE_addr+2);
 }
