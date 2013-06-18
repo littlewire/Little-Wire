@@ -147,7 +147,7 @@ static	uint16_t	I2C_DELAY=0;// in microseconds. USI driven SPI mode
 // ----------------------------------------------------------------------
 volatile	uint8_t		sendBuffer[9];
 volatile	uint8_t		rxBuffer[8];
-static uint8_t i,k,t,q,r;
+static uint8_t k,t,q,r;
 static uint8_t counter=0;
 static uint8_t softPWM=0;
 static uint8_t cmp0,cmp1,cmp2,compare0,compare1,compare2;
@@ -171,6 +171,7 @@ static uint8_t ws2812_ptr=0;
 
 static inline void ClockControlBits(uint8_t value)
 {
+	uint8_t i;
 	DDRB |= 0x02;
 	uint8_t mask = 0x01;
 	while (mask != 0x10)
@@ -189,6 +190,7 @@ static inline void ClockControlBits(uint8_t value)
 
 static inline void ClockLowXTimes(uint8_t value)
 {
+	uint8_t i;
 	DDRB |= 0x02;
 	uint8_t length = value;	
 	while(length)
@@ -204,6 +206,7 @@ static inline void ClockLowXTimes(uint8_t value)
 
 static inline void ClockByte(uint8_t value)
 {
+	uint8_t i;
 	DDRB |= 0x02; // switch PGD to output
 
 	uint8_t mask = 0x01;	
@@ -223,6 +226,7 @@ static inline void ClockByte(uint8_t value)
 
 static inline void PinByte(uint8_t *value)
 {
+	uint8_t i;
 	DDRB &= ~0x02; // Switch PGD to input
 	PORTB |= 0x02; // activate pull-up...
 
@@ -433,6 +437,7 @@ uchar	usbFunctionSetup(uchar data[8])
 // ----------------------------------------------------------------------
 // Handle a non-standard SETUP packet.
 // ----------------------------------------------------------------------
+	uint8_t i;
 	uchar	bit;
 	uchar	mask;
 	uchar*	addr;
@@ -927,6 +932,7 @@ void usbEventResetReady(void)
 
 void I2C_WriteBit( unsigned char c )
 {
+	uint8_t i;
 	if ( c > 0 )
 	{
 		I2C_DATA_HI();
@@ -950,6 +956,7 @@ void I2C_WriteBit( unsigned char c )
 
 unsigned char I2C_ReadBit()
 {
+	uint8_t i;
 	I2C_DATA_HI();
 
 	I2C_CLOCK_HI();
@@ -965,6 +972,7 @@ unsigned char I2C_ReadBit()
 
 void I2C_Init()
 {
+	uint8_t i;
 	I2C_PORT &= ~( ( 1 << I2C_DAT ) | ( 1 << I2C_CLK ) );
 
 	I2C_CLOCK_HI();
@@ -975,6 +983,7 @@ void I2C_Init()
 
 void I2C_Start()
 {
+	uint8_t i;
 	// set both to high at the same time
 	I2C_DDR &= ~( ( 1 << I2C_DAT ) | ( 1 << I2C_CLK ) );
 	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
@@ -988,6 +997,7 @@ void I2C_Start()
 
 void I2C_Stop()
 {
+	uint8_t i;
 	I2C_DATA_LO();
 	I2C_CLOCK_LO();
 	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
@@ -1001,7 +1011,8 @@ void I2C_Stop()
 
 unsigned char I2C_Write( unsigned char c )
 {
-	for ( char i=0;i<8;i++)
+	uint8_t i;
+	for (i=0;i<8;i++)
 	{
 		I2C_WriteBit( c & 128 );
 
@@ -1013,9 +1024,10 @@ unsigned char I2C_Write( unsigned char c )
 
 unsigned char I2C_Read( unsigned char ack )
 {
+	uint8_t i;
 	unsigned char res = 0;
 
-	for ( char i=0;i<8;i++)
+	for (i=0;i<8;i++)
 	{
 		res <<= 1;
 		res |= I2C_ReadBit();
@@ -1412,7 +1424,7 @@ static inline void initSerialNumber()
     }
 
     /* default serial number ... */
-    if(eepromProblem)
+    if(eepromProblem != 0)
     {
     	eeprom_write_byte((EE_addr+0),'5');
     	eeprom_write_byte((EE_addr+1),'1');
