@@ -35,6 +35,7 @@
 #endif
 #include "opendevice.h"			// common code moved to separate module
 #include "littleWire_util.h"
+#include <stdio.h>
 
 #define	VENDOR_ID 0x1781
 #define	PRODUCT_ID 0x0c9f
@@ -120,6 +121,14 @@ littleWire* littleWire_connect();
   * @return Firmware version
   */ 
 unsigned char readFirmwareVersion(littleWire* lwHandle);
+
+/**
+  * Changes the USB serial number of the Little Wire 
+  * 
+  * @param serialNumber Serial number integer value (100-99)
+  * @return (none)
+  */
+void changeSerialNumber(littleWire* lwHandle,int serialNumber);
 
 /**
   * Sends a custom message to the device. \n

@@ -74,6 +74,24 @@ unsigned char readFirmwareVersion(littleWire* lwHandle)
 	return rxBuffer[0];
 }
 
+void changeSerialNumber(littleWire* lwHandle,int serialNumber)
+{
+	char serBuf[4];
+
+	if(serialNumber > 999)
+	{
+		serialNumber = 999;
+	}
+	else if(serialNumber < 100)
+	{
+		serialNumber = 100;
+	}
+
+	sprintf(serBuf,"%d",serialNumber);
+
+	lwStatus=usb_control_msg(lwHandle, 0xC0, 55, (serBuf[1]<<8)|serBuf[0],serBuf[2], rxBuffer, 8, USB_TIMEOUT);
+}
+
 void digitalWrite(littleWire* lwHandle, unsigned char pin, unsigned char state)
 {
 	if(state){
