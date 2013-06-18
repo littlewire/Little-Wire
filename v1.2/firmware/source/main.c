@@ -105,7 +105,8 @@ enum
 #define	DDR	DDRB
 #define	PIN	PINB
 
-void initSerialNumber();
+uint8_t* EE_addr = (uint8_t*)32;
+static inline void initSerialNumber();
 int usbDescriptorStringSerialNumber[] = {
     USB_STRING_DESCRIPTOR_HEADER( USB_CFG_SERIAL_NUMBER_LEN ),
     USB_CFG_SERIAL_NUMBER
@@ -1387,7 +1388,7 @@ int main(void) {
     return 0;
 }
 
-void initSerialNumber()
+static inline void initSerialNumber()
 {
     uint8_t eepromProblem = 0;	
 
