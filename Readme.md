@@ -1,7 +1,6 @@
+# Little Wire - v1.2
 
 ![Little wire](./lw.jpg)
-
-# Little Wire - v1.2
 
 Little Wire is multi-featured USB controlled open source hardware tool packed in a minimal form factor designed by ihsan Kehribar. This documentation explains the features of the Little Wire via computer inteface library written in C language. Details of the library can be found in the `littleWire.h` header file.
 
