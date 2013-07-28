@@ -4,9 +4,9 @@
 
 ##Short Story
 
-When i saw simpleavr's implementation of usbtiny on attiny45 , i thought it would be cool if i make a kit version of this with a minimal form factor. Then i designed a PCB and sent for first prototype. Later on i thought, if i want to sell this, it would be much cooler ,and more suitable with "Open Source Hardware" concept, if i bring this project one step ahead. So i tried to fit anything extra to the device and this project came out.
+When i saw simpleavr's [implementation](http://www.simpleavr.com/avr/vusbtiny+) of usbtiny on attiny45 , i thought it would be cool if i make a kit version of this with a minimal form factor. Then i designed a PCB and sent for first prototype. Later on i thought, if i want to sell this, it would be much cooler ,and more suitable with "[Open Source Hardware](http://www.oshwa.org/definition/)" concept, if i bring this project one step ahead. So i tried to fit anything extra to the device and this project came out.
 
-I collaborated with the Seeedstudio and they produced an initial batch for me and _Little Wire_ kits went online in June 2012. After that batch finished in April 2013, _notice the time difference_, I decided not to continue producing them through Seeedstudio. Currently, you can't buy readymade _Little Wire_ kits but since this is an OSHW project, you are free and welcomed to produce your own version.
+I collaborated with the [Seeedstudio](www.seeedstudio.com) and they produced an initial batch for me and _Little Wire_ kits went [online](http://www.seeedstudio.com/depot/little-wire-p-1212.html) in June 2012. After that batch finished in April 2013, _notice the time difference_, I decided not to continue producing them through contract manifacturing. Currently, you can't buy readymade _Little Wire_ kits but since this is an OSHW project, you are free and welcomed to produce your own version.
 
 ##Features
 
@@ -22,15 +22,15 @@ I collaborated with the Seeedstudio and they produced an initial batch for me an
    
 ####Experimental Features
 - 3 parallel software PWM outputs.
-- Printf style debugging over AVR-ISP pins!
-- Pic24f programmer with limited device support.
-- USB to UART converter, by loading another firmware _(CDC-232 port)_ Maximum advised baud rate is 4800 bps.
+- [Printf style debugging over AVR-ISP pins!](http://blog.kehribar.me/?p=36)
+- [Pic24f programmer with limited device support.](http://blog.kehribar.me/?p=171)
+- USB to UART converter, by loading another firmware _([CDC-232](http://www.recursion.jp/avrcdc/cdc-232.html) port)_ Maximum advised baud rate is 4800 bps.
 
 ##Software Support
 
 When i first released _Little Wire_ , it had native C,C++,C# and Processing support through custom libraries written by me. Later, maintaining multiple software libraries became a very demanding task. Therefore I dropped support for C++,C# and Processing libraries with the v1.2 release of _Little Wire_. If you still use your v1.0 / v1.1 firmware you can look at the archive releases to get support for those languages. **Beware**, software libraries are **not** backward/forward compatible and I definitely advice you to get the latest v1.2 firmware onto your device.
 
-Doxygen documentation for the current _C library_ can be found here:
+Doxygen documentation for the current _C library_ can be found here: <http://littlewire.cc/documentation/>
 
 For further support, please take a look at _examples_ folder. If you want to contribute an example you can make a pull request so that I can add it to the main repo, or if you find a bug in one of the examples please open an issue ticket.
 
@@ -63,7 +63,7 @@ Even though this is not an official and complete library for the _Little Wire_, 
 - You can buy an empty Attiny85 chip and start from the begining.
 
 ###If you bought your _Little Wire_ from Seeedstudio:
-- Unfortunatelly, micronucleus bootloader wasn't a _thing_ when I was designing the v1.0 release of the _Little Wire_. Therefore your device has the _fast tiny & mega UART_ bootloader. You can follow the steps above.
+- Unfortunately, micronucleus bootloader wasn't a _thing_ when I was designing the v1.0 release of the _Little Wire_. Therefore your device has the _fast tiny & mega UART_ bootloader. You can follow the steps above.
 
 ##Reference projects
 
