@@ -65,6 +65,123 @@ Even though this is not an official and complete library for the _Little Wire_, 
 ###If you bought your _Little Wire_ from Seeedstudio:
 - Unfortunately, micronucleus bootloader wasn't a _thing_ when I was designing the v1.0 release of the _Little Wire_. Therefore your device has the _fast tiny & mega UART_ bootloader. You can follow the steps above.
 
+##Pin Mapping
+
+<table style="text-align: left;" border="1" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; text-align: left; text-decoration: underline;">Silkscreen
+      </td>
+      <td style="vertical-align: top;"><span style="text-decoration: underline;">usbtinyisp</span><br>
+      </td>
+      <td style="vertical-align: top; text-align: left; text-decoration: underline;">Hard PWM<br>
+      </td>
+      <td style="vertical-align: top; text-align: left; text-decoration: underline;">Soft PWM<br>
+      </td>
+      <td style="vertical-align: top; text-align: left; text-decoration: underline;">ADC<br>
+      </td>
+      <td style="vertical-align: top;"><span style="text-decoration: underline;">I2C</span><br>
+      </td>
+      <td style="vertical-align: top;"><span style="text-decoration: underline;">SPI</span><br>
+      </td>
+      <td style="vertical-align: top;"><span style="text-decoration: underline;">Onewire</span><br>
+      </td>
+      <td style="vertical-align: top;"><span style="text-decoration: underline;">WS2812</span><br>
+      </td>
+      <td style="vertical-align: top;"><span style="text-decoration: underline;">CDC-232</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: left;">pin1
+      </td>
+      <td style="vertical-align: top;">MISO
+      </td>
+      <td style="vertical-align: top; text-align: left;">CH_B
+      </td>
+      <td style="vertical-align: top; text-align: left;">CH_2
+      </td>
+      <td style="vertical-align: top; text-align: left;">-
+      </td>
+      <td style="vertical-align: top;">-
+      </td>
+      <td style="vertical-align: top;">DO
+      </td>
+	  <td style="vertical-align: top;">-
+      </td>
+      <td style="vertical-align: top;">DATA
+      </td>
+      <td style="vertical-align: top;">TX
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: left;">pin2
+      </td>
+      <td style="vertical-align: top;">SCK
+      </td>
+      <td style="vertical-align: top; text-align: left;">-
+      </td>
+      <td style="vertical-align: top; text-align: left;">CH_3
+      </td>
+      <td style="vertical-align: top; text-align: left;">CH_1
+      </td>
+      <td style="vertical-align: top;">SCL
+      </td>
+      <td style="vertical-align: top;">SCK
+      </td>
+	  <td style="vertical-align: top;">DATA
+      </td>
+      <td style="vertical-align: top;">DATA
+      </td>
+      <td style="vertical-align: top;">-<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pin3
+      </td>
+      <td style="vertical-align: top;">RESET
+      </td>
+      <td style="vertical-align: top;">-
+      </td>
+      <td style="vertical-align: top;">-
+      </td>
+      <td style="vertical-align: top;">CH_0
+      </td>
+      <td style="vertical-align: top;">-
+      </td>
+      <td style="vertical-align: top;">CS
+      </td>
+	  <td style="vertical-align: top;">-
+      </td>
+      <td style="vertical-align: top;">DATA
+      </td>
+      <td style="vertical-align: top;">-
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pin4
+      </td>
+      <td style="vertical-align: top;">MOSI
+      </td>
+      <td style="vertical-align: top;">CH_A
+      </td>
+      <td style="vertical-align: top;">CH_1
+      </td>
+      <td style="vertical-align: top;">-
+      </td>
+      <td style="vertical-align: top;">SDA
+      </td>
+      <td style="vertical-align: top;">DI
+      </td>
+	  <td style="vertical-align: top;">-
+      </td>
+      <td style="vertical-align: top;">DATA
+      </td>      
+      <td style="vertical-align: top;">RX
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 ##Reference projects
 
 - This project is proudly and heavily based on: 
@@ -76,7 +193,7 @@ Even though this is not an official and complete library for the _Little Wire_, 
 
 ##Contact
 
-For any reason, you can contact me through: < ihsan{at}kehribar{dot}me > 
+For any reason, you can contact me through: _ihsan{at}kehribar{dot}me_
 
 ##Please note: 
 
