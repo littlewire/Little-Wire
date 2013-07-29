@@ -26,6 +26,9 @@ I collaborated with the [Seeedstudio](www.seeedstudio.com) and they produced an 
 - [Pic24f programmer with limited device support.](http://blog.kehribar.me/?p=171)
 - USB to UART converter, by loading another firmware _([CDC-232](http://www.recursion.jp/avrcdc/cdc-232.html) port)_ Maximum advised baud rate is 4800 bps.
 
+#####Note:
+This tool has to take instructions at run-time over USB. It can't work in a computerless environment.
+
 ##Software Support
 
 When i first released _Little Wire_ , it had native C,C++,C# and Processing support through custom libraries written by me. Later, maintaining multiple software libraries became a very demanding task. Therefore I dropped support for C++,C# and Processing libraries with the v1.2 release of _Little Wire_. If you still use your v1.0 / v1.1 firmware you can look at the archive releases to get support for those languages. **Beware**, software libraries are **not** backward/forward compatible and I definitely advice you to get the latest v1.2 firmware onto your device.
@@ -65,123 +68,20 @@ Even though this is not an official and complete library for the _Little Wire_, 
 ###If you bought your _Little Wire_ from Seeedstudio:
 - Unfortunately, micronucleus bootloader wasn't a _thing_ when I was designing the v1.0 release of the _Little Wire_. Therefore your device has the _fast tiny & mega UART_ bootloader. You can follow the steps above.
 
+##Where are the pre-compiled binaries, drivers and archives?
+
+You can find them from the _Little Wire_ web page: <http://littlewire.cc/downloads.html>
+
 ##Pin Mapping
 
-<table style="text-align: left;" border="1" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr>
-      <td style="vertical-align: top; text-align: left; text-decoration: underline;">Silkscreen
-      </td>
-      <td style="vertical-align: top;"><span style="text-decoration: underline;">usbtinyisp</span><br>
-      </td>
-      <td style="vertical-align: top; text-align: left; text-decoration: underline;">Hard PWM<br>
-      </td>
-      <td style="vertical-align: top; text-align: left; text-decoration: underline;">Soft PWM<br>
-      </td>
-      <td style="vertical-align: top; text-align: left; text-decoration: underline;">ADC<br>
-      </td>
-      <td style="vertical-align: top;"><span style="text-decoration: underline;">I2C</span><br>
-      </td>
-      <td style="vertical-align: top;"><span style="text-decoration: underline;">SPI</span><br>
-      </td>
-      <td style="vertical-align: top;"><span style="text-decoration: underline;">Onewire</span><br>
-      </td>
-      <td style="vertical-align: top;"><span style="text-decoration: underline;">WS2812</span><br>
-      </td>
-      <td style="vertical-align: top;"><span style="text-decoration: underline;">CDC-232</span><br>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: left;">pin1
-      </td>
-      <td style="vertical-align: top;">MISO
-      </td>
-      <td style="vertical-align: top; text-align: left;">CH_B
-      </td>
-      <td style="vertical-align: top; text-align: left;">CH_2
-      </td>
-      <td style="vertical-align: top; text-align: left;">-
-      </td>
-      <td style="vertical-align: top;">-
-      </td>
-      <td style="vertical-align: top;">DO
-      </td>
-	  <td style="vertical-align: top;">-
-      </td>
-      <td style="vertical-align: top;">DATA
-      </td>
-      <td style="vertical-align: top;">TX
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: left;">pin2
-      </td>
-      <td style="vertical-align: top;">SCK
-      </td>
-      <td style="vertical-align: top; text-align: left;">-
-      </td>
-      <td style="vertical-align: top; text-align: left;">CH_3
-      </td>
-      <td style="vertical-align: top; text-align: left;">CH_1
-      </td>
-      <td style="vertical-align: top;">SCL
-      </td>
-      <td style="vertical-align: top;">SCK
-      </td>
-	  <td style="vertical-align: top;">DATA
-      </td>
-      <td style="vertical-align: top;">DATA
-      </td>
-      <td style="vertical-align: top;">-<br>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">pin3
-      </td>
-      <td style="vertical-align: top;">RESET
-      </td>
-      <td style="vertical-align: top;">-
-      </td>
-      <td style="vertical-align: top;">-
-      </td>
-      <td style="vertical-align: top;">CH_0
-      </td>
-      <td style="vertical-align: top;">-
-      </td>
-      <td style="vertical-align: top;">CS
-      </td>
-	  <td style="vertical-align: top;">-
-      </td>
-      <td style="vertical-align: top;">DATA
-      </td>
-      <td style="vertical-align: top;">-
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;">pin4
-      </td>
-      <td style="vertical-align: top;">MOSI
-      </td>
-      <td style="vertical-align: top;">CH_A
-      </td>
-      <td style="vertical-align: top;">CH_1
-      </td>
-      <td style="vertical-align: top;">-
-      </td>
-      <td style="vertical-align: top;">SDA
-      </td>
-      <td style="vertical-align: top;">DI
-      </td>
-	  <td style="vertical-align: top;">-
-      </td>
-      <td style="vertical-align: top;">DATA
-      </td>      
-      <td style="vertical-align: top;">RX
-      </td>
-    </tr>
-  </tbody>
-</table>
-
++----------+----------+--------+--------+----+---+---+-------+------+-------+
+|Silkscreen|usbtinyisp|Hard PWM|Soft PWM|ADC |I2C|SPI|Onewire|WS2812|CDC-232|
+|----------|----------|--------|--------|----|---|---|-------|------|-------|
+|pin1      |MISO      |CH_B    |CH_2    |-   |-	 |DO |-      |DATA  |TX     |
+|pin2      |SCK       |-       |CH_3    |CH_1|SCL|SCK|DATA   |DATA  |-      |
+|pin3      |RESET     |-       |-       |CH_0|-  |CS |-      |DATA  |-      |
+|pin4      |MOSI      |CH_A    |CH_1    |-   |SDA|DI |-      |DATA  |RX     |
++----------+----------+--------+--------+----+---+---+-------+------+-------+
 ##Reference projects
 
 - This project is proudly and heavily based on: 
