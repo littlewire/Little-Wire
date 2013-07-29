@@ -77,7 +77,7 @@ You can find them from the _Little Wire_ web page: <http://littlewire.cc/downloa
 +----------+----------+--------+--------+----+---+---+-------+------+-------+
 |Silkscreen|usbtinyisp|Hard PWM|Soft PWM|ADC |I2C|SPI|Onewire|WS2812|CDC-232|
 |----------|----------|--------|--------|----|---|---|-------|------|-------|
-|pin1      |MISO      |CH_B    |CH_2    |-   |-	 |DO |-      |DATA  |TX     |
+|pin1      |MISO      |CH_B    |CH_2    |-   |-  |DO |-      |DATA  |TX     |
 |pin2      |SCK       |-       |CH_3    |CH_1|SCL|SCK|DATA   |DATA  |-      |
 |pin3      |RESET     |-       |-       |CH_0|-  |CS |-      |DATA  |-      |
 |pin4      |MOSI      |CH_A    |CH_1    |-   |SDA|DI |-      |DATA  |RX     |
