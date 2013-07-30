@@ -1,5 +1,0 @@
-bin\Release\Firmware Updater.exe
-obj\Release\ResolveAssemblyReference.cache
-obj\Release\Firmware_Updater.MainForm.resources
-obj\Release\Firmware Updater.csproj.GenerateResource.Cache
-obj\Release\Firmware Updater.exe

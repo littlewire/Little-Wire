@@ -1,4 +1,0 @@
-bin
-obj
-*.suo
-littleWire.cs # There should only be one copy of this in the repo, under ../library
