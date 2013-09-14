@@ -2,6 +2,12 @@
 
  -----------------------------------------------------------
  - Little Wire 
+ - Firmware Version: 1.3
+ - Modified by: ihsan Kehribar, 2013 September
+ -----------------------------------------------------------
+
+ -----------------------------------------------------------
+ - Little Wire 
  - Firmware Version: 1.2
  - Modified by: ihsan Kehribar, 2013 April
  -----------------------------------------------------------
@@ -58,7 +64,7 @@
 #define delayMicroseconds(value) _delay_us(value);
 #define sbi(register,bit) (register|=(1<<bit))
 #define cbi(register,bit) (register&=~(1<<bit))
-const uint8_t LITTLE_WIRE_VERSION = 0x12;	
+const uint8_t LITTLE_WIRE_VERSION = 0x13;	
 enum
 {
 	// Generic requests
@@ -941,8 +947,9 @@ void I2C_WriteBit( unsigned char c )
 	{
 		I2C_DATA_LO();
 	}
+	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 
-	I2C_CLOCK_HI();
+	I2C_CLOCK_HI();	
 	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 
 	I2C_CLOCK_LO();
@@ -952,17 +959,20 @@ void I2C_WriteBit( unsigned char c )
 	{
 		I2C_DATA_LO();
 	}
+	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 }
 
 unsigned char I2C_ReadBit()
 {
 	uint8_t i;
-	I2C_DATA_HI();
+	I2C_DATA_HI();	
+	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 
-	I2C_CLOCK_HI();
+	I2C_CLOCK_HI();		
 	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 
 	unsigned char c = I2C_PIN;
+	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 
 	I2C_CLOCK_LO();
 	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
@@ -999,6 +1009,8 @@ void I2C_Stop()
 {
 	uint8_t i;
 	I2C_DATA_LO();
+	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
+	
 	I2C_CLOCK_LO();
 	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 	
@@ -1032,6 +1044,8 @@ unsigned char I2C_Read( unsigned char ack )
 		res <<= 1;
 		res |= I2C_ReadBit();
 	}
+
+	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 
 	if ( ack > 0)
 	{
