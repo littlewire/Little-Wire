@@ -91,7 +91,7 @@ int littlewire_search()
               lwResults[lw_totalDevices].lw_device = dev;
             }
           }
-          usb_close(dev);
+          usb_close(udev);
           lw_totalDevices++;        
         }
       }
