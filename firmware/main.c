@@ -170,7 +170,7 @@ static uint8_t ws2812_ptr=0;
 
 // ----------------------------------------------------------------------
 
-
+#if 0
 // MCLR	0x04 (100)  => SCK 	-pin2
 // PGD	0x02 (010)  => MISO -pin1
 // PGC	0x01 (001)  => MOSI -pin4
@@ -251,6 +251,8 @@ static inline void PinByte(uint8_t *value)
 	}	
 	PORTB &= ~0x02; //deactivate pull-up...
 }
+
+#endif
 
 // ----------------------------------------------------------------------
 // Delay exactly <sck_period> times 0.5 microseconds (6 cycles).
@@ -768,6 +770,7 @@ uchar	usbFunctionSetup(uchar data[8])
 		jobState=6;
 		return 0;
 	}
+#if 0
 	// --- experimental --
 	if( req == 52 ) /* pic24f programming? */
 	{
@@ -786,9 +789,8 @@ uchar	usbFunctionSetup(uchar data[8])
 		jobState=16;
 		return 0;
 	}	
-
+#endif
 // WS2812 Support - T. Böscke May 26th, 2013
-	
 	if( req == 54 ) /* WS2812_write */
 	{
 
@@ -825,7 +827,7 @@ uchar	usbFunctionSetup(uchar data[8])
 		
 		return 0;		
 	}
- 
+#if 0 
 	if ((req & 0xF0) == 0xD0) /* pic24f send bytes */
 	{
 		rxBuffer[0]=req&0x07; // length
@@ -838,6 +840,7 @@ uchar	usbFunctionSetup(uchar data[8])
 		jobState=14;				
 		return 0;
 	}
+#endif
 	// --- experimental --	
 	if ((req & 0xF0) == 0xE0) // Special multiple I2C message send function
 	{
@@ -1332,6 +1335,7 @@ int main(void) {
 				sendBuffer[8]=rxBuffer[1];				
 				jobState=0;			
 			break;
+		#if 0
 			case 12: /* pic24f - Clock Control Bits */
 				ClockControlBits(rxBuffer[1]);
 				jobState=0;
@@ -1368,7 +1372,7 @@ int main(void) {
 				}
 				jobState=0;
 			break;
-			
+		#endif
 			case 17: /* write ws2812 */
 			_delay_ms(1); // Hack: Make sure USB communication has finished before atomic block.
 				ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
