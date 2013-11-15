@@ -2,6 +2,12 @@
 
  -----------------------------------------------------------
  - Little Wire 
+ - Firmware Version: 1.3
+ - Modified by: ihsan Kehribar, 2013 September
+ -----------------------------------------------------------
+
+ -----------------------------------------------------------
+ - Little Wire 
  - Firmware Version: 1.2
  - Modified by: ihsan Kehribar, 2013 April
  -----------------------------------------------------------
@@ -58,7 +64,7 @@
 #define delayMicroseconds(value) _delay_us(value);
 #define sbi(register,bit) (register|=(1<<bit))
 #define cbi(register,bit) (register&=~(1<<bit))
-const uint8_t LITTLE_WIRE_VERSION = 0x12;	
+const uint8_t LITTLE_WIRE_VERSION = 0x13;	
 enum
 {
 	// Generic requests
@@ -164,7 +170,7 @@ static uint8_t ws2812_ptr=0;
 
 // ----------------------------------------------------------------------
 
-
+#if 0
 // MCLR	0x04 (100)  => SCK 	-pin2
 // PGD	0x02 (010)  => MISO -pin1
 // PGC	0x01 (001)  => MOSI -pin4
@@ -245,6 +251,8 @@ static inline void PinByte(uint8_t *value)
 	}	
 	PORTB &= ~0x02; //deactivate pull-up...
 }
+
+#endif
 
 // ----------------------------------------------------------------------
 // Delay exactly <sck_period> times 0.5 microseconds (6 cycles).
@@ -762,6 +770,7 @@ uchar	usbFunctionSetup(uchar data[8])
 		jobState=6;
 		return 0;
 	}
+#if 0
 	// --- experimental --
 	if( req == 52 ) /* pic24f programming? */
 	{
@@ -780,9 +789,8 @@ uchar	usbFunctionSetup(uchar data[8])
 		jobState=16;
 		return 0;
 	}	
-
+#endif
 // WS2812 Support - T. Böscke May 26th, 2013
-	
 	if( req == 54 ) /* WS2812_write */
 	{
 
@@ -819,7 +827,7 @@ uchar	usbFunctionSetup(uchar data[8])
 		
 		return 0;		
 	}
- 
+#if 0 
 	if ((req & 0xF0) == 0xD0) /* pic24f send bytes */
 	{
 		rxBuffer[0]=req&0x07; // length
@@ -832,6 +840,7 @@ uchar	usbFunctionSetup(uchar data[8])
 		jobState=14;				
 		return 0;
 	}
+#endif
 	// --- experimental --	
 	if ((req & 0xF0) == 0xE0) // Special multiple I2C message send function
 	{
@@ -941,8 +950,9 @@ void I2C_WriteBit( unsigned char c )
 	{
 		I2C_DATA_LO();
 	}
+	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 
-	I2C_CLOCK_HI();
+	I2C_CLOCK_HI();	
 	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 
 	I2C_CLOCK_LO();
@@ -952,17 +962,20 @@ void I2C_WriteBit( unsigned char c )
 	{
 		I2C_DATA_LO();
 	}
+	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 }
 
 unsigned char I2C_ReadBit()
 {
 	uint8_t i;
-	I2C_DATA_HI();
+	I2C_DATA_HI();	
+	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 
-	I2C_CLOCK_HI();
+	I2C_CLOCK_HI();		
 	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 
 	unsigned char c = I2C_PIN;
+	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 
 	I2C_CLOCK_LO();
 	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
@@ -999,6 +1012,8 @@ void I2C_Stop()
 {
 	uint8_t i;
 	I2C_DATA_LO();
+	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
+	
 	I2C_CLOCK_LO();
 	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 	
@@ -1032,6 +1047,8 @@ unsigned char I2C_Read( unsigned char ack )
 		res <<= 1;
 		res |= I2C_ReadBit();
 	}
+
+	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 
 	if ( ack > 0)
 	{
@@ -1318,6 +1335,7 @@ int main(void) {
 				sendBuffer[8]=rxBuffer[1];				
 				jobState=0;			
 			break;
+		#if 0
 			case 12: /* pic24f - Clock Control Bits */
 				ClockControlBits(rxBuffer[1]);
 				jobState=0;
@@ -1354,7 +1372,7 @@ int main(void) {
 				}
 				jobState=0;
 			break;
-			
+		#endif
 			case 17: /* write ws2812 */
 			_delay_ms(1); // Hack: Make sure USB communication has finished before atomic block.
 				ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
