@@ -14,7 +14,7 @@
 #include "littleWire.h"
 #include "littleWire_util.h"
 
-#define LED		PIN2		// LED is connected to the pin2
+#define LED	PIN1		// LED is connected to the pin2
 #define DELAY	500 		// Delay, in miliseconds
 
 unsigned char version;
