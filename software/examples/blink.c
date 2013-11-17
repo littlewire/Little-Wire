@@ -78,7 +78,8 @@ int main(void)
 
 	/* In order to change the serial number of the current connected device, use the following function. */
 	/* You need to unplug-plug to see the change. */
-	// changeSerialNumber(lw,752);
+	/* Serial numbers have to be between 100-999 */
+	// changeSerialNumber(lw,152);
 
 	/*------------------------------------------------------------------------------------------------------*/
 
