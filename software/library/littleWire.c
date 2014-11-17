@@ -91,9 +91,9 @@ int littlewire_search()
               lwResults[lw_totalDevices].lw_device = dev;
               lw_totalDevices++;
             } else {
-	      printf("Connection error! Try creating a udev rule or running with sudo.\n");
-	    }
-	  }
+              printf("Connection error! Try creating a udev rule or running with sudo.\n");
+            }
+          }
           usb_close(udev);
         }
       }
