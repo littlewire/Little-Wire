@@ -30,6 +30,13 @@
 /*****************************************************************************/
 #include "littleWire.h"
 
+// external variables
+lwCollection lwResults[16];
+int lw_totalDevices;
+unsigned char rxBuffer[RX_BUFFER_SIZE]; /* This has to be unsigned for the data's sake */
+unsigned char ROM_NO[8];
+int lwStatus;
+
 unsigned char	crc8;
 int		LastDiscrepancy;
 int 	LastFamilyDiscrepancy;
