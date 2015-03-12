@@ -36,6 +36,7 @@
 #include "opendevice.h"			// common code moved to separate module
 #include "littleWire_util.h"
 #include <stdio.h>
+#include <stdint.h>
 
 #define	VENDOR_ID 0x1781
 #define	PRODUCT_ID 0x0c9f
@@ -92,6 +93,15 @@
 #define MISO_PIN PIN1
 #define MOSI_PIN PIN4
 #define RESET_PIN PIN3
+
+#define DHT11 0
+#define DHT22 1
+
+typedef struct dht_reading {
+  uint16_t humid;
+  uint16_t temp;
+  uint8_t error;
+} dht_reading;
 
 extern unsigned char rxBuffer[RX_BUFFER_SIZE]; /* This has to be unsigned for the data's sake */
 extern unsigned char ROM_NO[8];
@@ -557,6 +567,7 @@ void ws2812_preload(littleWire* lwHandle, unsigned char r,unsigned char g,unsign
 
   /*! @} */
   
+dht_reading dht_read(littleWire* lwHandle, unsigned char type);
 
 /**
 * @mainpage Introduction

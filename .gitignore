@@ -7,6 +7,7 @@ software/adc
 software/blink
 software/blink_ws2812
 software/button
+software/dht11
 software/debugConsole
 software/fade_ws2812
 software/hardwarePWM
@@ -19,3 +20,6 @@ software/rgb_cycle_ws2812
 software/servo
 software/softPWM
 software/spi_LTC1448
+
+firmware/main.hex
+firmware/main.elf
