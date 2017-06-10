@@ -11,7 +11,7 @@
 
 ##Note
 
-I didn't had the littlewire.cc domain/website when I produced/designed this board, therefore schematic and board files are signed with my personal webpage which now redirects to the littlewire.cc
+I didn't had the littlewire.github.io domain/website when I produced/designed this board, therefore schematic and board files are signed with my personal webpage which now redirects to the littlewire.github.io
 
 ##Licence
 

@@ -1,6 +1,6 @@
-#Little Wire
+# Little Wire
 
-For more details: <http://littlewire.cc>
+For more details: <http://littlewire.github.io>
 
 Current version is: **v1.3**
 
