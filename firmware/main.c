@@ -64,7 +64,7 @@
 #define delayMicroseconds(value) _delay_us(value);
 #define sbi(register,bit) (register|=(1<<bit))
 #define cbi(register,bit) (register&=~(1<<bit))
-const uint8_t LITTLE_WIRE_VERSION = 0x13;	
+const uint8_t LITTLE_WIRE_VERSION = 0x14;	
 enum
 {
 	// Generic requests
@@ -827,6 +827,13 @@ uchar	usbFunctionSetup(uchar data[8])
 		
 		return 0;		
 	}
+	if( req == 56) /* dht read */
+	{
+		rxBuffer[0]=data[2];
+		jobState=18;
+		return 0;
+	}
+
 #if 0 
 	if ((req & 0xF0) == 0xD0) /* pic24f send bytes */
 	{
@@ -1062,6 +1069,113 @@ unsigned char I2C_Read( unsigned char ack )
 	for(i=0;i<I2C_DELAY;i++) _delay_us(1); /* Small delay */
 
 	return res;
+}
+
+#define DHT11 0
+#define DHT22 1
+
+#define DHT_TIMEOUT 255
+#define DHT_DELAY 10
+#define DHT_LEN 4
+
+#define DHT_SUCCESS 0
+#define DHT_TIMEOUT_ERR 128
+#define DHT_CHECKSUM_ERR 255
+
+uint8_t DHT_Read(unsigned char type) {
+    uint8_t timeout = 0;
+    uint8_t len = 0;
+    uint8_t bit_index = 7;
+    uint8_t byte_index = 0;
+
+    uint16_t f;
+
+    pinMode(B,DATA_PIN,OUTPUT);
+
+    sendBuffer[0] = 0; sendBuffer[1] = 0; sendBuffer[2] = 0; sendBuffer[3] = 0; sendBuffer[4] = 0;
+
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+      digitalWrite(B,DATA_PIN, LOW);
+      _delay_ms(18);
+      digitalWrite(B,DATA_PIN, HIGH);
+      _delay_us(40);
+
+      pinMode(B, DATA_PIN, INPUT);
+      internalPullup(B, DATA_PIN, DISABLE);
+
+      timeout = DHT_TIMEOUT;
+      while(!digitalRead(B, DATA_PIN)) { // Wait for 1
+        if (timeout-- == 0) {
+          return DHT_TIMEOUT_ERR;
+        }
+      }
+
+      timeout = DHT_TIMEOUT;
+      while(digitalRead(B, DATA_PIN)) { // Wait for 0
+          _delay_us(1);
+        if (timeout-- == 0) {
+          return DHT_TIMEOUT_ERR;
+        }
+      }
+
+
+      for (uint8_t i = 0; i < 40; i++) {
+        timeout = DHT_TIMEOUT;
+        while(!digitalRead(B, DATA_PIN)) { // Wait for 1
+          if (timeout-- == 0) {
+            return DHT_TIMEOUT_ERR;
+          }
+        }
+
+        len = 0;
+        timeout = DHT_TIMEOUT;
+        while(digitalRead(B, DATA_PIN)) { // Wait for 0
+          _delay_us(DHT_DELAY);
+          if (len++ == DHT_TIMEOUT) {
+            return DHT_TIMEOUT_ERR;
+          }
+        }
+
+        if (len >= DHT_LEN) {
+          sendBuffer[byte_index] |= (1 << bit_index);
+        }
+
+        if (bit_index == 0) {
+          bit_index = 7;
+          byte_index++;
+        } else {
+          bit_index--;
+        }
+
+      }
+    }
+
+    uint16_t checksum = sendBuffer[0] + sendBuffer[1] + sendBuffer[2] + sendBuffer[3];
+    if (sendBuffer[4] != (checksum & 0x00FF)) {
+      return DHT_CHECKSUM_ERR;
+    }
+
+    if (type == DHT11) {
+      // Expand DHT11 values to DHT22 format
+      f = sendBuffer[0];
+      f *= 10;
+      sendBuffer[0] = 0x00FF & f;
+      sendBuffer[1] = 0x00FF & (f >> 8);
+
+      f = sendBuffer[2];
+      f *= 10;
+      sendBuffer[2] = 0x00FF & f;
+      sendBuffer[3] = 0x00FF & (f >> 8);
+    } else if (type == DHT22) {
+      f = sendBuffer[1];
+      sendBuffer[1] = sendBuffer[0];
+      sendBuffer[0] = f;
+
+      f = sendBuffer[3];
+      sendBuffer[3] = sendBuffer[2];
+      sendBuffer[2] = f;
+    }
+    return 0;
 }
 // ----------------------------------------------------------------------------
 
@@ -1382,7 +1496,13 @@ int main(void) {
 				}				
 				jobState=0;
 			break;
-						
+      case 18: /* dht11/dht22 read */				
+        sendBuffer[4] = DHT_Read(rxBuffer[0]); // error msg
+        sendBuffer[8] = 5;
+
+				jobState=0;
+			break;
+					
 			default:
 				jobState=0;
 			break;

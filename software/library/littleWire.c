@@ -389,7 +389,19 @@ void ws2812_preload(littleWire* lwHandle, unsigned char r,unsigned char g,unsign
 {
 	lwStatus=usb_control_msg(lwHandle, 0xC0, 54, (g<<8) | 0x20, (b<<8) | r, rxBuffer, 8, USB_TIMEOUT);
 }
+
+dht_reading dht_read(littleWire* lwHandle, unsigned char type)
+{
+  lwStatus=usb_control_msg(lwHandle, 0xC0, 56, type, 0, rxBuffer, 8, USB_TIMEOUT);
 	
+	delay(100);
+
+  lwStatus=usb_control_msg(lwHandle, 0xC0, 40, 0, 0, rxBuffer, 8, USB_TIMEOUT);
+
+  return *(dht_reading*) (void*) rxBuffer;
+}
+
+
 int customMessage(littleWire* lwHandle,unsigned char* receiveBuffer,unsigned char command,unsigned char d1,unsigned char d2, unsigned char d3, unsigned char d4)
 {
 	int i;
